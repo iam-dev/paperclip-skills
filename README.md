@@ -1,6 +1,31 @@
 # @paperclip/skills
 
-Adversarial debate skills and agent assets for [Paperclip](https://github.com/paperclipai/paperclip) AI agents. Includes C-suite brainstorm skills, code review debates, sprint QA debates, and option evaluation debates.
+Adversarial debate skills and agent assets for [Paperclip](https://github.com/paperclipai/paperclip) AI agents.
+
+## The Problem
+
+AI agents deciding alone produce bad outcomes. A single agent reviewing code rubber-stamps it. A single agent evaluating a strategy confirms its own bias. A single agent picking between options chooses the first one that sounds reasonable. This is the sycophancy problem — and it gets worse the more autonomous your agents become.
+
+The root cause: **no tension**. When one agent proposes and the same agent evaluates, there's no adversarial pressure. No one is incentivized to find the flaw, challenge the assumption, or stress-test the mitigation. The result is confident-sounding decisions that fall apart in production, in the market, or in the org.
+
+## The Solution
+
+Competing incentives. Instead of one agent doing everything, split the work across agents that are **scored differently**:
+
+- A **finder** who gets points for every issue found will over-report — and that's the point
+- An **adversary** who gets points for killing false positives will be ruthlessly skeptical — and that's the point
+- A **referee** who gets points only for correct rulings has no bias in either direction
+
+This pattern — borrowed from adversarial ML, red-teaming, and structured analytic techniques — produces decisions that survive contact with reality because they've already survived a rigorous internal debate.
+
+This package provides **7 debate protocols** and **8 agent groups** covering four domains:
+
+| Domain | Problem | Debate |
+|--------|---------|--------|
+| **Strategic decisions** | CEO/CTO/CMO/COO deciding alone = confirmation bias | Brainstorm: proposer vs challenger vs decider |
+| **Code quality** | Single reviewer = rubber-stamping | Adversarial review: finder vs adversary vs referee |
+| **Implementation quality** | Self-evaluation = grade inflation | Eval debate: advocate vs critic vs arbiter |
+| **Option selection** | First reasonable option wins = unexplored alternatives | Skill debate: advocate vs critic vs arbiter |
 
 ## Skills
 
