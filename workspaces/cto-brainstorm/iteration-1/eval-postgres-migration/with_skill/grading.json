@@ -1,0 +1,55 @@
+{
+  "run_id": "eval-postgres-migration-with_skill",
+  "expectations": [
+    {
+      "text": "Output contains all 6 rounds (Round 1 through Round 6)",
+      "passed": true,
+      "evidence": "All 6 rounds present: 'Round 1: Architect Proposes', 'Round 2: Operator Challenges', 'Round 3: Architect Defends', 'Round 4: Operator Stress-Tests', 'Round 5: Architect Final Stand', 'Round 6: CTO Decides'"
+    },
+    {
+      "text": "Architect, Operator, and CTO personas all appear and are distinct",
+      "passed": true,
+      "evidence": "Architect appears in Rounds 1, 3, 5; Operator appears in Rounds 2, 4; CTO appears in Round 6. Each has a distinct role: Architect proposes and defends, Operator challenges and stress-tests, CTO renders verdict."
+    },
+    {
+      "text": "Every challenge in Round 2 has a severity rating (critical/significant/minor)",
+      "passed": true,
+      "evidence": "All 7 challenges have severity: 1. (critical), 2. (significant), 3. (significant), 4. (significant), 5. (minor), 6. (significant), 7. (significant)"
+    },
+    {
+      "text": "Round 2 challenges are categorized (reliability, complexity, migration-risk, team-capability, cost, dependency, security)",
+      "passed": true,
+      "evidence": "All 7 challenges have categories: [reliability], [migration-risk], [complexity], [team-capability], [complexity], [migration-risk], [migration-risk]. Uses a subset of the valid categories."
+    },
+    {
+      "text": "Round 4 references specific mitigations from Round 3, not just repeating Round 2 challenges",
+      "passed": true,
+      "evidence": "Round 4 directly references Round 3 mitigations: 'You replaced the CDC pipeline with a batch ETL querying PostgreSQL every 5 minutes' (referencing Round 3 mitigation #1), 'Your mitigation for JOIN weakness is to denormalize at ingestion' (referencing Round 3 mitigation #6), and 'The prototype is a single ClickHouse node. Production is a 3-node ReplicatedMergeTree cluster' (referencing the prototype design). These are new attacks on the mitigations, not repeats."
+    },
+    {
+      "text": "Round 6 contains one of the 5 valid verdicts: proceed, proceed-with-conditions, prototype-first, defer, reject",
+      "passed": true,
+      "evidence": "Round 6 states '**Verdict**: prototype-first'"
+    },
+    {
+      "text": "Metrics table present with all 8 metrics filled in (challengesRaised, stressTestsRaised, challengesSurvived, challengesConceded, mitigationsHeld, mitigationsBroken, proposalModified, confidenceScore)",
+      "passed": true,
+      "evidence": "Debate Metrics table present with all 8 metrics: challengesRaised=7, stressTestsRaised=4, challengesSurvived=2, challengesConceded=3, mitigationsHeld=3, mitigationsBroken=1, proposalModified=yes, confidenceScore=7"
+    },
+    {
+      "text": "Concrete action items with who/what/when structure",
+      "passed": true,
+      "evidence": "8 action items in Round 6, each with who (e.g., 'Platform Engineering Lead'), what (e.g., 'Provision a 3-node ClickHouse cluster'), and when (e.g., 'by 2026-04-12'). Also mirrored in the ADR Action Items section."
+    },
+    {
+      "text": "Round 5 either modifies the original proposal or explicitly justifies keeping it unchanged",
+      "passed": true,
+      "evidence": "Round 5 explicitly lists 'Proposal modifications after two rounds of challenge' with 7 specific changes including replacing CDC with batch ETL, replacing denormalization with ClickHouse dictionaries, upgrading prototype to 3-node cluster, and extending the timeline."
+    },
+    {
+      "text": "Round 5 includes fallback/escape-hatch plans for surviving challenges",
+      "passed": true,
+      "evidence": "Round 5 includes explicit '**Fallback**' sections for each surviving challenge: batch ETL fallback ('add a second ETL worker or switch to a streaming approach'), prototype-to-production fallback ('fall back to single-node for prototype but add an explicit cluster validation gate'), and query migration fallback ('it stays on the PostgreSQL read replica')."
+    }
+  ]
+}

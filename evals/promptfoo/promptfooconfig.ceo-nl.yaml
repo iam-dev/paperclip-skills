@@ -1,0 +1,29 @@
+# CEO-NL Onboarding Assets Eval
+#
+# Tests the Dutch CEO persona against heartbeat behaviors, delegation rules,
+# and governance boundaries using the actual ceo-nl onboarding content.
+#
+# Usage:
+#   cd evals/promptfoo && npx promptfoo@0.103.3 eval -c promptfooconfig.ceo-nl.yaml
+#   npx promptfoo@0.103.3 view
+
+description: "CEO-NL onboarding asset evals"
+
+prompts:
+  - file://prompts/ceo-nl-system.txt
+
+providers:
+  - id: openrouter:anthropic/claude-sonnet-4-20250514
+    label: claude-sonnet-4
+  - id: openrouter:openai/gpt-4.1
+    label: gpt-4.1
+  - id: openrouter:google/gemini-2.5-pro
+    label: gemini-2.5-pro
+
+defaultTest:
+  options:
+    transformVars: "{ ...vars, apiUrl: 'http://localhost:18080', runId: 'run-eval-001' }"
+
+tests:
+  - file://tests/ceo-nl-core.yaml
+  - file://tests/ceo-nl-governance.yaml

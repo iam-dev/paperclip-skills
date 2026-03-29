@@ -1,0 +1,17 @@
+{
+  "eval_id": 1,
+  "eval_name": "reorg-engineering",
+  "configuration": "with_skill",
+  "expectations": [
+    {"text": "Output contains all 6 rounds (Round 1 through Round 6)", "passed": true, "evidence": "All 6 rounds present: Round 1 (line 62), Round 2 (line 92), Round 3 (line 110), Round 4 (line 128), Round 5 (line 140), Round 6 (line 161)"},
+    {"text": "Optimizer, Frontline Operator, and COO personas all appear and are distinct", "passed": true, "evidence": "Optimizer proposes internal reallocation for speed/cost; Frontline Operator challenges with capacity hits, hero loss, backfill gaps; COO recommends pilot-first with staged approach"},
+    {"text": "Every challenge in Round 2 has a severity rating (critical/significant/minor)", "passed": true, "evidence": "7 challenges: critical (1,2), significant (3,4,5,6), minor (7)"},
+    {"text": "Round 2 challenges are categorized", "passed": true, "evidence": "Categories: capacity, people-impact, execution-risk"},
+    {"text": "Round 4 references specific mitigations from Round 3, not just repeating Round 2", "passed": true, "evidence": "Round 4 directly attacks mitigations: backfill hiring takes 4-6 months, runbook documentation is a fantasy, 'still fix urgent issues' escape valve undermines the model, new team ramp assumptions"},
+    {"text": "Round 6 contains one of the 5 valid recommendations", "passed": true, "evidence": "Recommendation: pilot-first (line 5)"},
+    {"text": "A CEO Summary section exists that is standalone and uses business language", "passed": true, "evidence": "CEO Summary at line 13-14, standalone with budget, headcount, and approval requirements"},
+    {"text": "Metrics table present with all 8 metrics filled in", "passed": true, "evidence": "All 8 metrics: challengesRaised=7, stressTestsRaised=4, challengesSurvived=2, challengesConceded=3, mitigationsHeld=3, mitigationsBroken=2, proposalModified=yes, confidenceScore=7"},
+    {"text": "People impact summary with headcount changes, roles affected, transition support, attrition risk", "passed": true, "evidence": "People impact at lines 44-47: Headcount (net zero during pilot, +2-4 after), Roles affected (2 engineers transition), Transition support (2-week handoff), Attrition risk (moderate with mitigations)"},
+    {"text": "Round 5 includes fallback plans for surviving challenges", "passed": true, "evidence": "Fallback plans: begin hiring day 1, 20% sprint reduction, 30min/day office hours, clear ownership boundary, if no backfill in 90 days second wave pauses"}
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "run_id": "eval-postgres-migration-without_skill",
+  "expectations": [
+    {
+      "text": "Output contains all 6 rounds (Round 1 through Round 6)",
+      "passed": false,
+      "evidence": "Output has 8 numbered sections (Problem Assessment, Why ClickHouse, etc.) but none are labeled 'Round 1' through 'Round 6'."
+    },
+    {
+      "text": "Architect, Operator, and CTO personas all appear and are distinct",
+      "passed": false,
+      "evidence": "The output is written in a single authoritative voice with no distinct personas. No mention of Architect, Operator, or CTO roles."
+    },
+    {
+      "text": "Every challenge in Round 2 has a severity rating (critical/significant/minor)",
+      "passed": false,
+      "evidence": "There is no Round 2 with challenges. Section 5 has a Risks table with 'Likelihood' (Medium/Low) but not severity ratings using critical/significant/minor."
+    },
+    {
+      "text": "Round 2 challenges are categorized (reliability, complexity, migration-risk, team-capability, cost, dependency, security)",
+      "passed": false,
+      "evidence": "No Round 2 exists. Risks in section 5 are not categorized using the expected taxonomy (reliability, complexity, migration-risk, etc.)."
+    },
+    {
+      "text": "Round 4 references specific mitigations from Round 3, not just repeating Round 2 challenges",
+      "passed": false,
+      "evidence": "No Round 3 or Round 4 structure exists. There is no stress-test phase that references prior mitigations."
+    },
+    {
+      "text": "Round 6 contains one of the 5 valid verdicts: proceed, proceed-with-conditions, prototype-first, defer, reject",
+      "passed": false,
+      "evidence": "No Round 6 exists. Section 8 says 'Do it' with a phased approach, but does not use any of the 5 valid verdict labels."
+    },
+    {
+      "text": "Metrics table present with all 8 metrics filled in (challengesRaised, stressTestsRaised, challengesSurvived, challengesConceded, mitigationsHeld, mitigationsBroken, proposalModified, confidenceScore)",
+      "passed": false,
+      "evidence": "No debate metrics table exists. The only tables are Problem Assessment metrics, Risks, and Alternatives Considered."
+    },
+    {
+      "text": "Concrete action items with who/what/when structure",
+      "passed": false,
+      "evidence": "Section 4 has a phased plan with what (tasks) and when (week ranges), but lacks explicit 'who' assignments for each action item."
+    },
+    {
+      "text": "Round 5 either modifies the original proposal or explicitly justifies keeping it unchanged",
+      "passed": false,
+      "evidence": "No Round 5 exists. The output does recommend a phased dual-write approach instead of a hard cutover, but this is not framed as a modification in a deliberation round."
+    },
+    {
+      "text": "Round 5 includes fallback/escape-hatch plans for surviving challenges",
+      "passed": false,
+      "evidence": "No Round 5 exists. Section 5 has a risk/mitigation table and section 7 lists alternatives, but these are not structured as fallback/escape-hatch plans for surviving challenges from a debate process."
+    }
+  ]
+}

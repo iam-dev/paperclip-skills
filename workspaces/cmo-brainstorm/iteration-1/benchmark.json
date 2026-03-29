@@ -1,0 +1,88 @@
+{
+  "skill_name": "cmo-brainstorm",
+  "iteration": 1,
+  "timestamp": "2026-03-29",
+  "configurations": [
+    {
+      "name": "with_skill",
+      "description": "Using cmo-brainstorm skill (6-round adversarial debate with CEO Decision Brief)",
+      "results": [
+        {
+          "eval_name": "positioning-pivot",
+          "pass_rate": 1.0,
+          "passed": 10,
+          "total": 10,
+          "total_tokens": 21848,
+          "duration_seconds": 168.4
+        },
+        {
+          "eval_name": "rebrand-vs-performance",
+          "pass_rate": 1.0,
+          "passed": 10,
+          "total": 10,
+          "total_tokens": 21775,
+          "duration_seconds": 155.9
+        },
+        {
+          "eval_name": "freemium-launch",
+          "pass_rate": 1.0,
+          "passed": 10,
+          "total": 10,
+          "total_tokens": 22053,
+          "duration_seconds": 164.0
+        }
+      ],
+      "aggregate": {
+        "mean_pass_rate": 1.0,
+        "stddev_pass_rate": 0.0,
+        "mean_tokens": 21892,
+        "stddev_tokens": 115,
+        "mean_duration_seconds": 162.8,
+        "stddev_duration_seconds": 5.2
+      }
+    },
+    {
+      "name": "without_skill",
+      "description": "Baseline — no skill, standard Claude response",
+      "results": [
+        {
+          "eval_name": "positioning-pivot",
+          "pass_rate": 0.0,
+          "passed": 0,
+          "total": 10,
+          "total_tokens": 11957,
+          "duration_seconds": 65.8
+        },
+        {
+          "eval_name": "rebrand-vs-performance",
+          "pass_rate": 0.0,
+          "passed": 0,
+          "total": 10,
+          "total_tokens": 11516,
+          "duration_seconds": 53.6
+        },
+        {
+          "eval_name": "freemium-launch",
+          "pass_rate": 0.0,
+          "passed": 0,
+          "total": 10,
+          "total_tokens": 11265,
+          "duration_seconds": 45.2
+        }
+      ],
+      "aggregate": {
+        "mean_pass_rate": 0.0,
+        "stddev_pass_rate": 0.0,
+        "mean_tokens": 11579,
+        "stddev_tokens": 286,
+        "mean_duration_seconds": 54.9,
+        "stddev_duration_seconds": 8.5
+      }
+    }
+  ],
+  "delta": {
+    "pass_rate": "+100%",
+    "tokens": "+89% (22K vs 12K)",
+    "duration": "+197% (163s vs 55s)"
+  }
+}

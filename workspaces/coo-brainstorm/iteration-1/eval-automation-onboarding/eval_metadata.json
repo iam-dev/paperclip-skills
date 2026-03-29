@@ -1,0 +1,17 @@
+{
+  "eval_id": 2,
+  "eval_name": "automation-onboarding",
+  "prompt": "Customer onboarding takes 3 weeks of white-glove setup with a dedicated CSM. We're at 50 new customers/month and the CS team is maxed at 8 people. Should we build a self-serve onboarding flow or hire more CSMs? Current onboarding cost is ~$2K per customer.",
+  "assertions": [
+    {"id": "has-6-rounds", "text": "Output contains all 6 rounds (Round 1 through Round 6)"},
+    {"id": "has-three-personas", "text": "Optimizer, Frontline Operator, and COO personas all appear and are distinct"},
+    {"id": "challenges-have-severity", "text": "Every challenge in Round 2 has a severity rating (critical/significant/minor)"},
+    {"id": "challenges-have-category", "text": "Round 2 challenges are categorized"},
+    {"id": "stress-test-attacks-mitigations", "text": "Round 4 references specific mitigations from Round 3, not just repeating Round 2"},
+    {"id": "has-recommendation", "text": "Round 6 contains one of the 5 valid recommendations"},
+    {"id": "has-ceo-summary", "text": "A CEO Summary section exists that is standalone and uses business language"},
+    {"id": "has-debate-metrics", "text": "Metrics table present with all 8 metrics filled in"},
+    {"id": "has-people-impact", "text": "People impact summary with headcount changes, roles affected, transition support, attrition risk"},
+    {"id": "has-fallback-plans", "text": "Round 5 includes fallback plans for surviving challenges"}
+  ]
+}

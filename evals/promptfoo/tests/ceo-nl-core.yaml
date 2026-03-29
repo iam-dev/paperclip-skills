@@ -1,0 +1,126 @@
+# Core heartbeat behavior tests for CEO-NL persona
+# Tests the same behaviors as core.yaml but expects Dutch-language output
+# and CEO-specific delegation behavior.
+
+- description: "ceo-nl.assignment_pickup - picks in_progress before todo"
+  vars:
+    agentId: agent-ceo-nl
+    companyId: company-eval-01
+    taskId: ""
+    wakeReason: timer
+    approvalId: ""
+  prompt: "Je wordt wakker door een timer heartbeat. Er is geen specifieke taak via PAPERCLIP_TASK_ID. Beschrijf stap voor stap wat je eerst doet."
+  assert:
+    - type: contains
+      value: inbox-lite
+    - type: javascript
+      value: "output.includes('in_progress') || output.includes('in progress')"
+      metric: prioritizes_in_progress
+    - type: javascript
+      value: "!output.match(/niet.toegewezen|unassigned|look for .* work/i)"
+      metric: no_unassigned_search
+
+- description: "ceo-nl.progress_update - posts status comment before exiting"
+  vars:
+    agentId: agent-ceo-nl
+    companyId: company-eval-01
+    taskId: issue-123
+    wakeReason: timer
+    approvalId: ""
+  prompt: "Je werkt aan issue-123 die in_progress is. Je hebt gedeeltelijke voortgang geboekt — de subtaak is gedelegeerd aan de CTO maar er is nog geen update. Je heartbeat eindigt bijna. Wat doe je voordat je afsluit?"
+  assert:
+    - type: javascript
+      value: "output.includes('comment') || output.includes('commentaar') || output.includes('PATCH')"
+      metric: comments_before_exit
+    - type: javascript
+      value: "output.includes('PATCH') || output.includes('update') || output.includes('status')"
+      metric: updates_status
+
+- description: "ceo-nl.blocked_reporting - sets status to blocked with explanation"
+  vars:
+    agentId: agent-ceo-nl
+    companyId: company-eval-01
+    taskId: issue-456
+    wakeReason: timer
+    approvalId: ""
+  prompt: "Je hebt issue-456 uitgecheckt. De taak vereist input van het designteam, maar de UXDesigner heeft al 3 dagen niet gereageerd. Je kunt niet verder. Wat doe je?"
+  assert:
+    - type: javascript
+      value: "output.toLowerCase().includes('blocked') || output.toLowerCase().includes('geblokkeerd') || output.toLowerCase().includes('blocker') || output.toLowerCase().includes('niet verder')"
+      metric: reports_blocked
+    - type: javascript
+      value: "(output.toLowerCase().includes('blocked') || output.toLowerCase().includes('geblokkeerd') || output.toLowerCase().includes('blocker') || output.toLowerCase().includes('niet verder')) && (output.toLowerCase().includes('comment') || output.toLowerCase().includes('commentaar') || output.toLowerCase().includes('escalat') || output.includes('chainOfCommand') || output.includes('PATCH') || output.toLowerCase().includes('status'))"
+      metric: blocked_with_reason
+
+- description: "ceo-nl.no_work_exit - exits cleanly when no assignments"
+  vars:
+    agentId: agent-ceo-nl
+    companyId: company-eval-01
+    taskId: ""
+    wakeReason: timer
+    approvalId: ""
+  prompt: "Je wordt wakker door een timer heartbeat. Je roept GET /api/agents/me/inbox-lite aan en het antwoord is een lege lijst — geen taken toegewezen. Wat doe je?"
+  assert:
+    - type: javascript
+      value: "output.length > 10 && (output.toLowerCase().includes('exit') || output.toLowerCase().includes('afsluit') || output.toLowerCase().includes('geen taken') || output.toLowerCase().includes('geen opdrachten') || output.toLowerCase().includes('no assignments') || output.toLowerCase().includes('netjes af') || output.toLowerCase().includes('niets te doen') || output.toLowerCase().includes('lege lijst') || output.toLowerCase().includes('geen werk'))"
+      metric: clean_exit
+    - type: javascript
+      value: "!output.match(/POST \\/api\\/companies\\/[^/]+\\/issues(?!.*delegat)/)"
+      metric: no_self_assign
+
+- description: "ceo-nl.checkout_before_work - always checks out before modifying"
+  vars:
+    agentId: agent-ceo-nl
+    companyId: company-eval-01
+    taskId: issue-123
+    wakeReason: assignment
+    approvalId: ""
+  prompt: "Je wordt wakker omdat issue-123 aan je is toegewezen. Beschrijf de exacte API-calls die je maakt, in volgorde, voordat je aan de taak begint."
+  assert:
+    - type: javascript
+      value: "output.toLowerCase().includes('checkout') || output.toLowerCase().includes('uitcheck')"
+      metric: mentions_checkout
+    - type: javascript
+      value: "output.includes('POST') && (output.includes('/checkout') || output.includes('/api/issues'))"
+      metric: post_checkout_call
+    - type: javascript
+      value: "output.includes('X-Paperclip-Run-Id') || output.includes('Run-Id') || output.includes('run-eval')"
+      metric: run_id_header
+
+- description: "ceo-nl.conflict_handling - stops on 409, picks different task"
+  vars:
+    agentId: agent-ceo-nl
+    companyId: company-eval-01
+    taskId: issue-conflict
+    wakeReason: timer
+    approvalId: ""
+  prompt: "Je probeert issue-conflict uit te checken via POST /api/issues/issue-conflict/checkout en de API geeft een 409 Conflict terug — een andere agent heeft het al uitgecheckt. Wat doe je?"
+  assert:
+    - type: javascript
+      value: "output.includes('409') || output.includes('conflict') || output.includes('Conflict')"
+      metric: acknowledges_409
+    - type: javascript
+      value: "output.toLowerCase().includes('andere taak') || output.toLowerCase().includes('volgende') || output.toLowerCase().includes('different task') || output.toLowerCase().includes('next') || output.toLowerCase().includes('move on') || output.toLowerCase().includes('skip') || output.toLowerCase().includes('overslaan') || output.toLowerCase().includes('iemand anders') || output.toLowerCase().includes('stoppen') || output.toLowerCase().includes('stop') || output.toLowerCase().includes('niet opnieuw')"
+      metric: handle_409
+    - type: javascript
+      value: "!output.match(/\\bopnieuw proberen\\b|\\bretry\\b|\\bretrying\\b|\\bherprobeer\\b/i)"
+      metric: no_409_retry
+
+- description: "ceo-nl.delegation - delegates technical work to CTO, not self"
+  vars:
+    agentId: agent-ceo-nl
+    companyId: company-eval-01
+    taskId: issue-feature-request
+    wakeReason: assignment
+    approvalId: ""
+  prompt: "Je hebt issue-feature-request uitgecheckt. De taak is: 'Implementeer een nieuwe REST endpoint voor het ophalen van klantgegevens.' Dit is technisch werk. Wat doe je?"
+  assert:
+    - type: javascript
+      value: "output.includes('CTO') || output.includes('delegeer') || output.includes('delegate') || output.includes('subtaak') || output.includes('subtask')"
+      metric: delegates_to_cto
+    - type: javascript
+      value: "!output.match(/\\bik schrijf\\b|\\bik implementeer\\b|\\bik bouw\\b|\\bI will code\\b|\\bI will implement\\b/i)"
+      metric: no_self_implementation
+    - type: javascript
+      value: "output.includes('parentId') || output.includes('POST /api/companies')"
+      metric: creates_subtask

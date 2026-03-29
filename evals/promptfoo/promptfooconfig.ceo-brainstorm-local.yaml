@@ -1,0 +1,28 @@
+# CEO-Brainstorm (English) Onboarding Assets Eval
+#
+# Tests the English CEO persona with brainstorm skill against heartbeat behaviors,
+# delegation rules, governance boundaries, and strategic brainstorm invocation.
+#
+# Usage:
+#   cd evals/promptfoo && npx promptfoo@latest eval -c promptfooconfig.ceo-brainstorm-local.yaml
+#   npx promptfoo@latest view
+
+description: "CEO-brainstorm onboarding asset evals"
+
+evaluateOptions:
+  maxConcurrency: 2
+
+prompts:
+  - file://prompts/ceo-brainstorm-system.txt
+
+providers:
+  - id: file://providers/claude-cli.cjs
+    label: claude-code-local
+
+defaultTest:
+  options:
+    transformVars: "{ ...vars, apiUrl: 'http://localhost:18080', runId: 'run-eval-001' }"
+
+tests:
+  - file://tests/ceo-brainstorm-core.yaml
+  - file://tests/ceo-brainstorm-governance.yaml

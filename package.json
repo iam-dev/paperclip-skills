@@ -1,0 +1,36 @@
+{
+  "name": "@iam-dev/paperclip-skills",
+  "version": "0.1.0",
+  "description": "Adversarial brainstorm skills and agent assets for Paperclip AI agents",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "skills",
+    "agents",
+    "workspaces"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "test": "node --test dist/**/*.test.js"
+  },
+  "keywords": [
+    "paperclip",
+    "skills",
+    "brainstorm",
+    "adversarial-debate",
+    "ai-agents",
+    "decision-making"
+  ],
+  "author": "iam-dev",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iam-dev/paperclip-skills.git"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "typescript": "^5.7.0"
+  }
+}

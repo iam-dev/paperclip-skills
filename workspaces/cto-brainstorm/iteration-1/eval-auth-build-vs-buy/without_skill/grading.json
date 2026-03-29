@@ -1,0 +1,55 @@
+{
+  "run_id": "eval-auth-build-vs-buy-without_skill",
+  "expectations": [
+    {
+      "text": "Output contains all 6 rounds (Round 1 through Round 6)",
+      "passed": false,
+      "evidence": "The output contains no round structure at all. It is a single decision document with sections like 'Analysis', 'Why Auth0 Migration Is the Wrong Move', 'Hardening Plan', etc. No 'Round 1' through 'Round 6' labels appear."
+    },
+    {
+      "text": "Architect, Operator, and CTO personas all appear and are distinct",
+      "passed": false,
+      "evidence": "No distinct personas appear in the output. The document is written from a single analytical voice without any named persona roles such as Architect, Operator, or CTO."
+    },
+    {
+      "text": "Every challenge in Round 2 has a severity rating (critical/significant/minor)",
+      "passed": false,
+      "evidence": "There is no Round 2 and no challenges with severity ratings. The document raises concerns (e.g., silent failure pattern, token expiration confusion) but none are tagged with critical/significant/minor labels."
+    },
+    {
+      "text": "Round 2 challenges are categorized (reliability, complexity, migration-risk, team-capability, cost, dependency, security)",
+      "passed": false,
+      "evidence": "No Round 2 exists. The root cause analysis table uses ad-hoc categories like 'Token expiration confusion' and 'Deployment mode misconfiguration' rather than the specified category taxonomy."
+    },
+    {
+      "text": "Round 4 references specific mitigations from Round 3, not just repeating Round 2 challenges",
+      "passed": false,
+      "evidence": "There are no Round 3 or Round 4 sections in the output. The document does not follow a challenge-mitigation-stress-test structure."
+    },
+    {
+      "text": "Round 6 contains one of the 5 valid verdicts: proceed, proceed-with-conditions, prototype-first, defer, reject",
+      "passed": false,
+      "evidence": "There is no Round 6. The 'Final Verdict' section recommends hardening but does not use any of the five valid verdict keywords (proceed, proceed-with-conditions, prototype-first, defer, reject)."
+    },
+    {
+      "text": "Metrics table present with all 8 metrics filled in (challengesRaised, stressTestsRaised, challengesSurvived, challengesConceded, mitigationsHeld, mitigationsBroken, proposalModified, confidenceScore)",
+      "passed": false,
+      "evidence": "No debate metrics table is present. The document contains a 'Cost Comparison Summary' table but none of the 8 required metrics (challengesRaised, stressTestsRaised, etc.)."
+    },
+    {
+      "text": "Concrete action items with who/what/when structure",
+      "passed": false,
+      "evidence": "The hardening plan has concrete action items (e.g., 'Add structured auth failure logging', 'Implement agent JWT refresh') organized by sprint, but they lack explicit who/what/when structure — no named owners or specific dates are assigned."
+    },
+    {
+      "text": "Round 5 either modifies the original proposal or explicitly justifies keeping it unchanged",
+      "passed": false,
+      "evidence": "There is no Round 5 in the output. The document does recommend hardening over Auth0 migration but not within a Round 5 framework."
+    },
+    {
+      "text": "Round 5 includes fallback/escape-hatch plans for surviving challenges",
+      "passed": false,
+      "evidence": "There is no Round 5. The document does include a 'Decision Framework: When Auth0 Would Make Sense' section listing conditions for revisiting the buy decision, which is conceptually similar to a fallback plan, but it is not within any Round 5 structure."
+    }
+  ]
+}

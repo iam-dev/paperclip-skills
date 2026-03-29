@@ -1,0 +1,17 @@
+{
+  "eval_id": 0,
+  "eval_name": "outsource-support",
+  "prompt": "We're handling 2000 support tickets/month with 5 full-time agents. Response times are slipping (24hr avg, SLA is 12hr). Should we outsource tier-1 to a BPO or hire 3 more internal agents? Current cost is $35K/month fully loaded.",
+  "assertions": [
+    {"id": "has-6-rounds", "text": "Output contains all 6 rounds (Round 1 through Round 6)"},
+    {"id": "has-three-personas", "text": "Optimizer, Frontline Operator, and COO personas all appear and are distinct"},
+    {"id": "challenges-have-severity", "text": "Every challenge in Round 2 has a severity rating (critical/significant/minor)"},
+    {"id": "challenges-have-category", "text": "Round 2 challenges are categorized (execution-risk, people-impact, capacity, etc.)"},
+    {"id": "stress-test-attacks-mitigations", "text": "Round 4 references specific mitigations from Round 3, not just repeating Round 2"},
+    {"id": "has-recommendation", "text": "Round 6 contains one of the 5 valid recommendations"},
+    {"id": "has-ceo-summary", "text": "A CEO Summary section exists that is standalone and uses business language"},
+    {"id": "has-debate-metrics", "text": "Metrics table present with all 8 metrics filled in"},
+    {"id": "has-people-impact", "text": "People impact summary with headcount changes, roles affected, transition support, attrition risk"},
+    {"id": "has-fallback-plans", "text": "Round 5 includes fallback plans for surviving challenges"}
+  ]
+}

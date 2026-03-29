@@ -1,0 +1,17 @@
+{
+  "eval_id": 0,
+  "eval_name": "positioning-pivot",
+  "prompt": "We're a B2B SaaS tool positioned for enterprise. Our self-serve signups are growing 20% MoM but enterprise deals are flat. Should we pivot our positioning to SMB/mid-market, or double down on enterprise with more sales investment?",
+  "assertions": [
+    {"id": "has-6-rounds", "text": "Output contains all 6 rounds (Round 1 through Round 6)", "type": "structural"},
+    {"id": "has-three-personas", "text": "Growth Strategist, Brand Guardian, and CMO personas all appear and are distinct", "type": "structural"},
+    {"id": "challenges-have-severity", "text": "Every challenge in Round 2 has a severity rating (critical/significant/minor)", "type": "structural"},
+    {"id": "challenges-have-category", "text": "Round 2 challenges are categorized (brand-risk, audience-assumption, channel-viability, etc.)", "type": "structural"},
+    {"id": "stress-test-attacks-mitigations", "text": "Round 4 references specific mitigations from Round 3, not just repeating Round 2", "type": "semantic"},
+    {"id": "has-recommendation", "text": "Round 6 contains one of the 5 valid recommendations (approve, approve-with-conditions, pilot-first, defer, reject)", "type": "structural"},
+    {"id": "has-ceo-summary", "text": "A CEO Summary section exists that is standalone and uses business language, not marketing jargon", "type": "semantic"},
+    {"id": "has-debate-metrics", "text": "Metrics table present with all 8 metrics filled in", "type": "structural"},
+    {"id": "has-budget-impact", "text": "Budget impact section with original ask, revised ask (if changed), and expected ROI", "type": "structural"},
+    {"id": "has-fallback-plans", "text": "Round 5 includes fallback plans for surviving challenges", "type": "semantic"}
+  ]
+}

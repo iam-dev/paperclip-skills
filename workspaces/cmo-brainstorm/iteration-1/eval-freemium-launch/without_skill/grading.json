@@ -1,0 +1,15 @@
+{
+  "run_id": "eval-freemium-launch-without_skill",
+  "expectations": [
+    {"text": "Output contains all 6 rounds (Round 1 through Round 6)", "passed": false, "evidence": "No round structure"},
+    {"text": "Growth Strategist, Brand Guardian, and CMO personas all appear and are distinct", "passed": false, "evidence": "Single voice"},
+    {"text": "Every challenge in Round 2 has a severity rating (critical/significant/minor)", "passed": false, "evidence": "No severity-rated challenges"},
+    {"text": "Round 2 challenges are categorized", "passed": false, "evidence": "No categories"},
+    {"text": "Round 4 references specific mitigations from Round 3, not just repeating Round 2", "passed": false, "evidence": "No stress-testing"},
+    {"text": "Round 6 contains one of the 5 valid recommendations", "passed": false, "evidence": "Recommends 'do not launch' — not a structured verdict"},
+    {"text": "A CEO Summary section exists that is standalone and uses business language", "passed": false, "evidence": "No CEO Summary section"},
+    {"text": "Metrics table present with all 8 metrics filled in", "passed": false, "evidence": "No debate metrics"},
+    {"text": "Budget impact section with original ask, revised ask, and expected ROI", "passed": false, "evidence": "No structured budget impact"},
+    {"text": "Round 5 includes fallback plans for surviving challenges", "passed": false, "evidence": "Has 'when to revisit' triggers but no structured fallback plans"}
+  ]
+}

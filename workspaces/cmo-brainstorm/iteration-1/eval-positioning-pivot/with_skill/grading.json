@@ -1,0 +1,15 @@
+{
+  "run_id": "eval-positioning-pivot-with_skill",
+  "expectations": [
+    {"text": "Output contains all 6 rounds (Round 1 through Round 6)", "passed": true, "evidence": "All 6 rounds present: Round 1 Growth Strategist Proposes through Round 6 CMO Decides"},
+    {"text": "Growth Strategist, Brand Guardian, and CMO personas all appear and are distinct", "passed": true, "evidence": "Growth Strategist proposes/defends, Brand Guardian challenges/stress-tests, CMO decides and frames for CEO"},
+    {"text": "Every challenge in Round 2 has a severity rating (critical/significant/minor)", "passed": true, "evidence": "All challenges have severity ratings in parentheses"},
+    {"text": "Round 2 challenges are categorized (brand-risk, audience-assumption, channel-viability, etc.)", "passed": true, "evidence": "Categories present in brackets after severity ratings"},
+    {"text": "Round 4 references specific mitigations from Round 3, not just repeating Round 2", "passed": true, "evidence": "Stress-tests attack specific defenses: misdiagnosis risk mitigation, enterprise brand contamination mitigation, etc."},
+    {"text": "Round 6 contains one of the 5 valid recommendations (approve, approve-with-conditions, pilot-first, defer, reject)", "passed": true, "evidence": "Recommendation: pilot-first"},
+    {"text": "A CEO Summary section exists that is standalone and uses business language, not marketing jargon", "passed": true, "evidence": "CEO Summary present, uses revenue/risk/competitive language, not marketing jargon"},
+    {"text": "Metrics table present with all 8 metrics filled in", "passed": true, "evidence": "Debate Metrics table with all 8 metrics filled"},
+    {"text": "Budget impact section with original ask, revised ask (if changed), and expected ROI", "passed": true, "evidence": "Budget request stated in header ($1.2M phased), budget impact detailed in recommendation"},
+    {"text": "Round 5 includes fallback plans for surviving challenges", "passed": true, "evidence": "Fallback plans included for each stress-test response"}
+  ]
+}

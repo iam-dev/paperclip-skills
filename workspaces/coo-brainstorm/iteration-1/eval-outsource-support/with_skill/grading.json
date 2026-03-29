@@ -1,0 +1,17 @@
+{
+  "eval_id": 0,
+  "eval_name": "outsource-support",
+  "configuration": "with_skill",
+  "expectations": [
+    {"text": "Output contains all 6 rounds (Round 1 through Round 6)", "passed": true, "evidence": "All 6 rounds present: Round 1 Optimizer Proposes (line 67), Round 2 Frontline Operator Challenges (line 99), Round 3 Optimizer Defends (line 117), Round 4 Frontline Operator Stress-Tests (line 135), Round 5 Optimizer Final Stand (line 147), Round 6 COO Decides (line 168)"},
+    {"text": "Optimizer, Frontline Operator, and COO personas all appear and are distinct", "passed": true, "evidence": "Optimizer proposes data-driven outsourcing with cost math; Frontline Operator challenges with specific scenarios (knowledge transfer, attrition, valley of death); COO synthesizes with pilot-first recommendation"},
+    {"text": "Every challenge in Round 2 has a severity rating (critical/significant/minor)", "passed": true, "evidence": "7 challenges with severity: critical (1,2), significant (3,4,5,7), minor (6)"},
+    {"text": "Round 2 challenges are categorized", "passed": true, "evidence": "Categories present: execution-risk, people-impact, transition-cost, measurement, quality-risk, dependency"},
+    {"text": "Round 4 references specific mitigations from Round 3, not just repeating Round 2", "passed": true, "evidence": "Round 4 directly attacks Round 3 mitigations: challenges the 'start narrow' runbook approach, the '50% allocation' for senior agents, the temporary contractor proposal, and the hidden cost math"},
+    {"text": "Round 6 contains one of the 5 valid recommendations", "passed": true, "evidence": "Recommendation: pilot-first (line 5)"},
+    {"text": "A CEO Summary section exists that is standalone and uses business language", "passed": true, "evidence": "CEO Summary at line 12-14, standalone with budget, headcount, and timeline details in business language"},
+    {"text": "Metrics table present with all 8 metrics filled in", "passed": true, "evidence": "All 8 metrics present: challengesRaised=7, stressTestsRaised=4, challengesSurvived=2, challengesConceded=3, mitigationsHeld=2, mitigationsBroken=2, proposalModified=yes, confidenceScore=7"},
+    {"text": "People impact summary with headcount changes, roles affected, transition support, attrition risk", "passed": true, "evidence": "People impact summary at lines 47-50 with all 4 required sections: Headcount (+1), Roles affected (5 agents shift), Transition support (briefing, communication), Attrition risk (moderate, with mitigations)"},
+    {"text": "Round 5 includes fallback plans for surviving challenges", "passed": true, "evidence": "Round 5 includes fallback plans: routing layer with 10% miscategorization pause gate, hire team lead FIRST, drop contractor, quality gates before expansion"}
+  ]
+}

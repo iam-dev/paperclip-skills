@@ -1,0 +1,17 @@
+{
+  "eval_id": 1,
+  "eval_name": "reorg-engineering",
+  "configuration": "without_skill",
+  "expectations": [
+    {"text": "Output contains all 6 rounds (Round 1 through Round 6)", "passed": false, "evidence": "No round-based debate. Structured as pros/cons analysis with recommendation."},
+    {"text": "Optimizer, Frontline Operator, and COO personas all appear and are distinct", "passed": false, "evidence": "Single-voice analysis, no personas."},
+    {"text": "Every challenge in Round 2 has a severity rating (critical/significant/minor)", "passed": false, "evidence": "No severity ratings on risks."},
+    {"text": "Round 2 challenges are categorized", "passed": false, "evidence": "No categorized challenges."},
+    {"text": "Round 4 references specific mitigations from Round 3, not just repeating Round 2", "passed": false, "evidence": "No multi-round debate structure."},
+    {"text": "Round 6 contains one of the 5 valid recommendations", "passed": false, "evidence": "Recommendation is 'Hybrid approach' — not one of the 5 valid options."},
+    {"text": "A CEO Summary section exists that is standalone and uses business language", "passed": false, "evidence": "No CEO Summary section."},
+    {"text": "Metrics table present with all 8 metrics filled in", "passed": false, "evidence": "No debate metrics table."},
+    {"text": "People impact summary with headcount changes, roles affected, transition support, attrition risk", "passed": false, "evidence": "Risk table mentions retention but no structured people impact summary."},
+    {"text": "Round 5 includes fallback plans for surviving challenges", "passed": false, "evidence": "No Round 5 or fallback plans."}
+  ]
+}

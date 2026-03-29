@@ -1,0 +1,55 @@
+{
+  "run_id": "eval-realtime-architecture-without_skill",
+  "expectations": [
+    {
+      "text": "Output contains all 6 rounds (Round 1 through Round 6)",
+      "passed": false,
+      "evidence": "The output uses a standard architecture decision format with sections like Rationale, Architecture, Risks. No round-based structure (Round 1 through Round 6) is present."
+    },
+    {
+      "text": "Architect, Operator, and CTO personas all appear and are distinct",
+      "passed": false,
+      "evidence": "No distinct personas appear in the output. The document is written from a single advisory voice."
+    },
+    {
+      "text": "Every challenge in Round 2 has a severity rating (critical/significant/minor)",
+      "passed": false,
+      "evidence": "There is no Round 2. The Risks and Mitigations table uses Likelihood (Low/Medium/High) but not severity ratings of critical/significant/minor."
+    },
+    {
+      "text": "Round 2 challenges are categorized (reliability, complexity, migration-risk, team-capability, cost, dependency, security)",
+      "passed": false,
+      "evidence": "There is no Round 2 and no challenges categorized using the specified taxonomy."
+    },
+    {
+      "text": "Round 4 references specific mitigations from Round 3, not just repeating Round 2 challenges",
+      "passed": false,
+      "evidence": "No Round 3 or Round 4 structure exists in the output."
+    },
+    {
+      "text": "Round 6 contains one of the 5 valid verdicts: proceed, proceed-with-conditions, prototype-first, defer, reject",
+      "passed": false,
+      "evidence": "No Round 6 exists and none of the five valid verdict keywords appear anywhere in the document."
+    },
+    {
+      "text": "Metrics table present with all 8 metrics filled in (challengesRaised, stressTestsRaised, challengesSurvived, challengesConceded, mitigationsHeld, mitigationsBroken, proposalModified, confidenceScore)",
+      "passed": false,
+      "evidence": "No debate metrics table is present. The document contains other tables (extraction signals, conflict resolution, risks) but none with the 8 required metrics."
+    },
+    {
+      "text": "Concrete action items with who/what/when structure",
+      "passed": false,
+      "evidence": "The document has a week-by-week architecture plan (Weeks 1-2, 3-5, 6-7, 8) with tasks, but no assigned owners ('who'). The structure is what/when but missing who."
+    },
+    {
+      "text": "Round 5 either modifies the original proposal or explicitly justifies keeping it unchanged",
+      "passed": false,
+      "evidence": "No Round 5 structure exists. The document does justify the ActionCable recommendation over alternatives, but not within a Round 5 framework."
+    },
+    {
+      "text": "Round 5 includes fallback/escape-hatch plans for surviving challenges",
+      "passed": false,
+      "evidence": "No Round 5 exists. The document does mention AnyCable as an 'escape hatch' and includes extraction thresholds, but these are not within the expected round-based structure."
+    }
+  ]
+}

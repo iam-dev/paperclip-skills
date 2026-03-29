@@ -1,0 +1,17 @@
+{
+  "eval_id": 0,
+  "eval_name": "outsource-support",
+  "configuration": "without_skill",
+  "expectations": [
+    {"text": "Output contains all 6 rounds (Round 1 through Round 6)", "passed": false, "evidence": "No round-based debate structure. Output is a pros/cons analysis with a recommendation section."},
+    {"text": "Optimizer, Frontline Operator, and COO personas all appear and are distinct", "passed": false, "evidence": "No persona-based structure. Single-voice analysis throughout."},
+    {"text": "Every challenge in Round 2 has a severity rating (critical/significant/minor)", "passed": false, "evidence": "No Round 2 or severity ratings. Risks listed at end without severity classification."},
+    {"text": "Round 2 challenges are categorized", "passed": false, "evidence": "No categorized challenges."},
+    {"text": "Round 4 references specific mitigations from Round 3, not just repeating Round 2", "passed": false, "evidence": "No Round 3 or Round 4 structure."},
+    {"text": "Round 6 contains one of the 5 valid recommendations", "passed": false, "evidence": "Recommendation is 'phased hybrid approach' — not one of the 5 valid options (approve/approve-with-conditions/pilot-first/defer/reject)."},
+    {"text": "A CEO Summary section exists that is standalone and uses business language", "passed": false, "evidence": "No CEO Summary section. Has a 'Recommendation' section but not formatted as a standalone CEO brief."},
+    {"text": "Metrics table present with all 8 metrics filled in", "passed": false, "evidence": "No debate metrics table."},
+    {"text": "People impact summary with headcount changes, roles affected, transition support, attrition risk", "passed": false, "evidence": "Brief mention of morale risk but no structured people impact summary."},
+    {"text": "Round 5 includes fallback plans for surviving challenges", "passed": false, "evidence": "No Round 5 or fallback plans."}
+  ]
+}

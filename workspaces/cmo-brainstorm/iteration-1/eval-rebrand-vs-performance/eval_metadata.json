@@ -1,0 +1,17 @@
+{
+  "eval_id": 1,
+  "eval_name": "rebrand-vs-performance",
+  "prompt": "We have $500K marketing budget for H2. Should we invest it in a full rebrand (new visual identity, messaging, website) or put it all into paid acquisition and content? Current brand is 3 years old, feels dated, but pipeline is healthy.",
+  "assertions": [
+    {"id": "has-6-rounds", "text": "Output contains all 6 rounds (Round 1 through Round 6)", "type": "structural"},
+    {"id": "has-three-personas", "text": "Growth Strategist, Brand Guardian, and CMO personas all appear and are distinct", "type": "structural"},
+    {"id": "challenges-have-severity", "text": "Every challenge in Round 2 has a severity rating (critical/significant/minor)", "type": "structural"},
+    {"id": "challenges-have-category", "text": "Round 2 challenges are categorized", "type": "structural"},
+    {"id": "stress-test-attacks-mitigations", "text": "Round 4 references specific mitigations from Round 3, not just repeating Round 2", "type": "semantic"},
+    {"id": "has-recommendation", "text": "Round 6 contains one of the 5 valid recommendations", "type": "structural"},
+    {"id": "has-ceo-summary", "text": "A CEO Summary section exists that is standalone and uses business language", "type": "semantic"},
+    {"id": "has-debate-metrics", "text": "Metrics table present with all 8 metrics filled in", "type": "structural"},
+    {"id": "has-budget-impact", "text": "Budget impact section with original ask, revised ask, and expected ROI", "type": "structural"},
+    {"id": "has-fallback-plans", "text": "Round 5 includes fallback plans for surviving challenges", "type": "semantic"}
+  ]
+}

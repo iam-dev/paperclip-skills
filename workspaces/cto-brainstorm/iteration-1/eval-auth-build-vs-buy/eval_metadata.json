@@ -1,0 +1,17 @@
+{
+  "eval_id": 0,
+  "eval_name": "auth-build-vs-buy",
+  "prompt": "We're getting 500 support tickets/month about auth issues. Should we rip out our custom JWT auth and migrate to Auth0, or invest 2 sprints hardening what we have? Team is 8 engineers, 2 have auth domain knowledge.",
+  "assertions": [
+    {"id": "has-6-rounds", "text": "Output contains all 6 rounds (Round 1 through Round 6)", "type": "structural"},
+    {"id": "has-three-personas", "text": "Architect, Operator, and CTO personas all appear and are distinct", "type": "structural"},
+    {"id": "challenges-have-severity", "text": "Every challenge in Round 2 has a severity rating (critical/significant/minor)", "type": "structural"},
+    {"id": "challenges-have-category", "text": "Round 2 challenges are categorized (reliability, complexity, migration-risk, team-capability, cost, dependency, security)", "type": "structural"},
+    {"id": "stress-test-attacks-mitigations", "text": "Round 4 references specific mitigations from Round 3, not just repeating Round 2 challenges", "type": "semantic"},
+    {"id": "has-verdict", "text": "Round 6 contains one of the 5 valid verdicts: proceed, proceed-with-conditions, prototype-first, defer, reject", "type": "structural"},
+    {"id": "has-debate-metrics", "text": "Metrics table present with all 8 metrics filled in (challengesRaised, stressTestsRaised, challengesSurvived, challengesConceded, mitigationsHeld, mitigationsBroken, proposalModified, confidenceScore)", "type": "structural"},
+    {"id": "has-action-items", "text": "Concrete action items with who/what/when structure", "type": "structural"},
+    {"id": "proposal-modified-or-justified", "text": "Round 5 either modifies the original proposal or explicitly justifies keeping it unchanged", "type": "semantic"},
+    {"id": "has-fallback-plans", "text": "Round 5 includes fallback/escape-hatch plans for surviving challenges", "type": "semantic"}
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "skill_name": "coo-brainstorm",
+  "iteration": 1,
+  "timestamp": "2026-03-29",
+  "configurations": [
+    {
+      "name": "with_skill",
+      "description": "Using coo-brainstorm skill (6-round adversarial debate with CEO Decision Brief)",
+      "results": [
+        {
+          "eval_name": "outsource-support",
+          "pass_rate": 1.0,
+          "passed": 10,
+          "total": 10,
+          "total_tokens": 22286,
+          "duration_seconds": 183.7
+        },
+        {
+          "eval_name": "reorg-engineering",
+          "pass_rate": 1.0,
+          "passed": 10,
+          "total": 10,
+          "total_tokens": 21575,
+          "duration_seconds": 165.8
+        },
+        {
+          "eval_name": "automation-onboarding",
+          "pass_rate": 1.0,
+          "passed": 10,
+          "total": 10,
+          "total_tokens": 22207,
+          "duration_seconds": 180.2
+        }
+      ],
+      "aggregate": {
+        "mean_pass_rate": 1.0,
+        "stddev_pass_rate": 0.0,
+        "mean_tokens": 22023,
+        "stddev_tokens": 313,
+        "mean_duration_seconds": 176.6,
+        "stddev_duration_seconds": 7.8
+      }
+    },
+    {
+      "name": "without_skill",
+      "description": "Baseline — no skill, standard Claude response",
+      "results": [
+        {
+          "eval_name": "outsource-support",
+          "pass_rate": 0.0,
+          "passed": 0,
+          "total": 10,
+          "total_tokens": 11977,
+          "duration_seconds": 60.5
+        },
+        {
+          "eval_name": "reorg-engineering",
+          "pass_rate": 0.0,
+          "passed": 0,
+          "total": 10,
+          "total_tokens": 11394,
+          "duration_seconds": 49.7
+        },
+        {
+          "eval_name": "automation-onboarding",
+          "pass_rate": 0.0,
+          "passed": 0,
+          "total": 10,
+          "total_tokens": 11587,
+          "duration_seconds": 50.6
+        }
+      ],
+      "aggregate": {
+        "mean_pass_rate": 0.0,
+        "stddev_pass_rate": 0.0,
+        "mean_tokens": 11653,
+        "stddev_tokens": 244,
+        "mean_duration_seconds": 53.6,
+        "stddev_duration_seconds": 5.0
+      }
+    }
+  ],
+  "delta": {
+    "pass_rate": "+100%",
+    "tokens": "+89% (22K vs 12K)",
+    "duration": "+230% (177s vs 54s)"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "run_id": "eval-freemium-launch-with_skill",
+  "expectations": [
+    {"text": "Output contains all 6 rounds (Round 1 through Round 6)", "passed": true, "evidence": "All 6 rounds present"},
+    {"text": "Growth Strategist, Brand Guardian, and CMO personas all appear and are distinct", "passed": true, "evidence": "Three distinct personas throughout"},
+    {"text": "Every challenge in Round 2 has a severity rating (critical/significant/minor)", "passed": true, "evidence": "All challenges severity-rated"},
+    {"text": "Round 2 challenges are categorized", "passed": true, "evidence": "Categories in brackets"},
+    {"text": "Round 4 references specific mitigations from Round 3, not just repeating Round 2", "passed": true, "evidence": "Stress-tests attack pilot proposal, conversion assumptions, support costs from Round 3"},
+    {"text": "Round 6 contains one of the 5 valid recommendations", "passed": true, "evidence": "Recommendation: pilot-first"},
+    {"text": "A CEO Summary section exists that is standalone and uses business language", "passed": true, "evidence": "CEO Summary present, standalone, uses revenue/risk language"},
+    {"text": "Metrics table present with all 8 metrics filled in", "passed": true, "evidence": "All 8 metrics filled"},
+    {"text": "Budget impact section with original ask, revised ask, and expected ROI", "passed": true, "evidence": "Budget: $85K pilot, up from $0; full rollout $240K/year with ROI metrics"},
+    {"text": "Round 5 includes fallback plans for surviving challenges", "passed": true, "evidence": "Kill criteria and fallback plans for each stress-test"}
+  ]
+}

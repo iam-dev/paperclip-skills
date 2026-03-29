@@ -1,0 +1,17 @@
+{
+  "eval_id": 2,
+  "eval_name": "automation-onboarding",
+  "configuration": "with_skill",
+  "expectations": [
+    {"text": "Output contains all 6 rounds (Round 1 through Round 6)", "passed": true, "evidence": "All 6 rounds present: Round 1 (line 63), Round 2 (line 95), Round 3 (line 113), Round 4 (line 131), Round 5 (line 143), Round 6 (line 164)"},
+    {"text": "Optimizer, Frontline Operator, and COO personas all appear and are distinct", "passed": true, "evidence": "Optimizer proposes self-serve platform with cost analysis; Frontline Operator challenges with completion rates, CSM attrition, intervention model; COO synthesizes with pilot-first"},
+    {"text": "Every challenge in Round 2 has a severity rating (critical/significant/minor)", "passed": true, "evidence": "7 challenges: significant (1,3,4,5,6), critical (2), minor (7)"},
+    {"text": "Round 2 challenges are categorized", "passed": true, "evidence": "Categories: capacity, quality-risk, people-impact, execution-risk, dependency, measurement"},
+    {"text": "Round 4 references specific mitigations from Round 3, not just repeating Round 2", "passed": true, "evidence": "Round 4 attacks specific mitigations: 48-hour stall trigger creates interrupt-driven hellscape, CSM advisory competes with workload, enterprise specialist retraining underestimated, pilot criteria set to pass"},
+    {"text": "Round 6 contains one of the 5 valid recommendations", "passed": true, "evidence": "Recommendation: pilot-first (line 5)"},
+    {"text": "A CEO Summary section exists that is standalone and uses business language", "passed": true, "evidence": "CEO Summary at lines 13-14, standalone with investment amount, customer impact, and approval requirements"},
+    {"text": "Metrics table present with all 8 metrics filled in", "passed": true, "evidence": "All 8 metrics: challengesRaised=7, stressTestsRaised=4, challengesSurvived=1, challengesConceded=6, mitigationsHeld=3, mitigationsBroken=2, proposalModified=yes, confidenceScore=7"},
+    {"text": "People impact summary with headcount changes, roles affected, transition support, attrition risk", "passed": true, "evidence": "People impact at lines 46-49: Headcount (+1 engineer, neutral CS), Roles affected (all 8 CSMs), Transition support (2-week training, monthly check-ins), Attrition risk (moderate for 1-2 CSMs)"},
+    {"text": "Round 5 includes fallback plans for surviving challenges", "passed": true, "evidence": "Fallback plans: checkpoint model with escalation gates, front-loaded workshops, honest skills gap assessment with severance reserve, tightened unassisted metrics"}
+  ]
+}

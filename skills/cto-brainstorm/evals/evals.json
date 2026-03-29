@@ -1,0 +1,59 @@
+{
+  "skill_name": "cto-brainstorm",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "We're getting 500 support tickets/month about auth issues. Should we rip out our custom JWT auth and migrate to Auth0, or invest 2 sprints hardening what we have? Team is 8 engineers, 2 have auth domain knowledge.",
+      "expected_output": "A structured 6-round adversarial debate with Architect/Operator/CTO personas producing a decision document or ADR with verdict, action items, and debate metrics.",
+      "files": [],
+      "assertions": [
+        {"id": "has-6-rounds", "text": "Output contains all 6 rounds (Round 1 through Round 6)"},
+        {"id": "has-three-personas", "text": "Architect, Operator, and CTO personas all appear and are distinct"},
+        {"id": "challenges-have-severity", "text": "Every challenge in Round 2 has a severity rating (critical/significant/minor)"},
+        {"id": "challenges-have-category", "text": "Round 2 challenges are categorized"},
+        {"id": "stress-test-attacks-mitigations", "text": "Round 4 references specific mitigations from Round 3, not just repeating Round 2"},
+        {"id": "has-verdict", "text": "Round 6 contains one of the 5 valid verdicts"},
+        {"id": "has-debate-metrics", "text": "Metrics table present with all 8 metrics filled in"},
+        {"id": "has-action-items", "text": "Concrete action items with who/what/when"},
+        {"id": "proposal-modified-or-justified", "text": "Round 5 modifies the proposal or justifies keeping it"},
+        {"id": "has-fallback-plans", "text": "Round 5 includes fallback plans for surviving challenges"}
+      ]
+    },
+    {
+      "id": 1,
+      "prompt": "Our PostgreSQL instance is hitting 80% CPU at peak. The data team wants us to move the analytics workload to ClickHouse. We have 3TB of event data, 50M events/day, and the current queries take 15-30 seconds. Should we do it?",
+      "expected_output": "A structured 6-round adversarial debate producing an ADR about the ClickHouse migration with specific failure modes, stress-tested mitigations, and a clear verdict.",
+      "files": [],
+      "assertions": [
+        {"id": "has-6-rounds", "text": "Output contains all 6 rounds (Round 1 through Round 6)"},
+        {"id": "has-three-personas", "text": "Architect, Operator, and CTO personas all appear and are distinct"},
+        {"id": "challenges-have-severity", "text": "Every challenge in Round 2 has a severity rating (critical/significant/minor)"},
+        {"id": "challenges-have-category", "text": "Round 2 challenges are categorized"},
+        {"id": "stress-test-attacks-mitigations", "text": "Round 4 references specific mitigations from Round 3, not just repeating Round 2"},
+        {"id": "has-verdict", "text": "Round 6 contains one of the 5 valid verdicts"},
+        {"id": "has-debate-metrics", "text": "Metrics table present with all 8 metrics filled in"},
+        {"id": "has-action-items", "text": "Concrete action items with who/what/when"},
+        {"id": "proposal-modified-or-justified", "text": "Round 5 modifies the proposal or justifies keeping it"},
+        {"id": "has-fallback-plans", "text": "Round 5 includes fallback plans for surviving challenges"}
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "We're a monolith on Rails serving 200 RPS. Product wants to launch a real-time collaboration feature (think multiplayer editing). Should we extract a WebSocket service in Go/Elixir, or add ActionCable to the monolith? We need to ship in 8 weeks.",
+      "expected_output": "A structured 6-round adversarial debate about the architecture choice with timeline pressure as a key constraint, producing a decision with concrete action items.",
+      "files": [],
+      "assertions": [
+        {"id": "has-6-rounds", "text": "Output contains all 6 rounds (Round 1 through Round 6)"},
+        {"id": "has-three-personas", "text": "Architect, Operator, and CTO personas all appear and are distinct"},
+        {"id": "challenges-have-severity", "text": "Every challenge in Round 2 has a severity rating (critical/significant/minor)"},
+        {"id": "challenges-have-category", "text": "Round 2 challenges are categorized"},
+        {"id": "stress-test-attacks-mitigations", "text": "Round 4 references specific mitigations from Round 3, not just repeating Round 2"},
+        {"id": "has-verdict", "text": "Round 6 contains one of the 5 valid verdicts"},
+        {"id": "has-debate-metrics", "text": "Metrics table present with all 8 metrics filled in"},
+        {"id": "has-action-items", "text": "Concrete action items with who/what/when"},
+        {"id": "proposal-modified-or-justified", "text": "Round 5 modifies the proposal or justifies keeping it"},
+        {"id": "has-fallback-plans", "text": "Round 5 includes fallback plans for surviving challenges"}
+      ]
+    }
+  ]
+}

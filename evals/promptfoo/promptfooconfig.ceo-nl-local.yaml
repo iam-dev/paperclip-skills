@@ -1,0 +1,22 @@
+# CEO-NL Eval using Claude Code CLI as provider (no API key needed)
+#
+# Usage:
+#   cd evals/promptfoo && npx promptfoo@0.103.3 eval -c promptfooconfig.ceo-nl-local.yaml
+#   npx promptfoo@0.103.3 view
+
+description: "CEO-NL onboarding asset evals (local Claude Code)"
+
+prompts:
+  - file://prompts/ceo-nl-system.txt
+
+providers:
+  - id: file://providers/claude-cli.cjs
+    label: claude-code-local
+
+defaultTest:
+  options:
+    transformVars: "{ ...vars, apiUrl: 'http://localhost:18080', runId: 'run-eval-001' }"
+
+tests:
+  - file://tests/ceo-nl-core.yaml
+  - file://tests/ceo-nl-governance.yaml

@@ -1,0 +1,88 @@
+{
+  "skill_name": "cto-brainstorm",
+  "iteration": 1,
+  "timestamp": "2026-03-29",
+  "configurations": [
+    {
+      "name": "with_skill",
+      "description": "Using cto-brainstorm skill (6-round adversarial debate)",
+      "results": [
+        {
+          "eval_name": "auth-build-vs-buy",
+          "pass_rate": 1.0,
+          "passed": 10,
+          "total": 10,
+          "total_tokens": 23958,
+          "duration_seconds": 186.6
+        },
+        {
+          "eval_name": "postgres-migration",
+          "pass_rate": 1.0,
+          "passed": 10,
+          "total": 10,
+          "total_tokens": 25472,
+          "duration_seconds": 210.9
+        },
+        {
+          "eval_name": "realtime-architecture",
+          "pass_rate": 1.0,
+          "passed": 10,
+          "total": 10,
+          "total_tokens": 25621,
+          "duration_seconds": 216.9
+        }
+      ],
+      "aggregate": {
+        "mean_pass_rate": 1.0,
+        "stddev_pass_rate": 0.0,
+        "mean_tokens": 25017,
+        "stddev_tokens": 739,
+        "mean_duration_seconds": 204.8,
+        "stddev_duration_seconds": 13.3
+      }
+    },
+    {
+      "name": "without_skill",
+      "description": "Baseline — no skill, standard Claude response",
+      "results": [
+        {
+          "eval_name": "auth-build-vs-buy",
+          "pass_rate": 0.0,
+          "passed": 0,
+          "total": 10,
+          "total_tokens": 31197,
+          "duration_seconds": 97.2
+        },
+        {
+          "eval_name": "postgres-migration",
+          "pass_rate": 0.0,
+          "passed": 0,
+          "total": 10,
+          "total_tokens": 11739,
+          "duration_seconds": 53.5
+        },
+        {
+          "eval_name": "realtime-architecture",
+          "pass_rate": 0.0,
+          "passed": 0,
+          "total": 10,
+          "total_tokens": 11947,
+          "duration_seconds": 64.4
+        }
+      ],
+      "aggregate": {
+        "mean_pass_rate": 0.0,
+        "stddev_pass_rate": 0.0,
+        "mean_tokens": 18294,
+        "stddev_tokens": 9098,
+        "mean_duration_seconds": 71.7,
+        "stddev_duration_seconds": 18.8
+      }
+    }
+  ],
+  "delta": {
+    "pass_rate": "+100%",
+    "tokens": "+37% (25K vs 18K)",
+    "duration": "+186% (205s vs 72s)"
+  }
+}
