@@ -185,7 +185,7 @@ Environment variables:
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `PAPERCLIP_URL` | `http://localhost:3100` | Base URL of Paperclip server |
-| `PAPERCLIP_COMPANY` | *(creates new)* | Company ID to install into |
+| `PAPERCLIP_COMPANY` | *(creates Demo Company)* | Company ID to install into |
 | `MNEMEBRAIN_URL` | `http://localhost:8000` | MnemeBrain URL for belief engine |
 
 The script tries bulk filesystem import first, then falls back to uploading skill content via the API individually. Agents are created with role mappings and skill assignments. Existing agents are skipped to avoid duplicates.

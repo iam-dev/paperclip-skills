@@ -151,12 +151,12 @@ ensure_company() {
     fi
   fi
 
-  # Create a new company
-  log "No companies found, creating one..."
+  # Create a demo company
+  log "No companies found, creating demo company..."
   local result
-  result=$(api POST "/api/companies" -d '{"name":"Paperclip Skills"}') || die "Failed to create company"
+  result=$(api POST "/api/companies" -d '{"name":"Demo Company"}') || die "Failed to create company"
   COMPANY_ID=$(echo "$result" | jq -r '.id')
-  log "Created company: Paperclip Skills ($COMPANY_ID)"
+  log "Created demo company: Demo Company ($COMPANY_ID)"
 }
 
 # ─── Skill installation ──────────────────────────────────────────────
