@@ -55,7 +55,7 @@ If the task doesn't contain a clear marketing question, extract one from the con
 
 The output is always a **CEO Decision Brief** — a document that gives the CEO everything needed to make the call without having to re-debate the question. The full debate is included as supporting evidence, but the brief leads with the CMO's recommendation, the key trade-offs, and what the CEO needs to approve.
 
-Use the template in `references/ceo-decision-brief-template.md`.
+Use the template in `references/decision-document-template.md`.
 
 ## Competing Incentives
 

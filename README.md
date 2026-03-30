@@ -152,6 +152,44 @@ Referenced by debate agents:
 npm install @iam-dev/paperclip-skills
 ```
 
+### Install into a Running Paperclip Instance
+
+Use `scripts/install.sh` to import skills, create agents, and register scripts into a running Paperclip server:
+
+```bash
+# Install everything (auto-detect Paperclip at localhost:3100)
+bash scripts/install.sh
+
+# Specify Paperclip URL
+bash scripts/install.sh --url http://localhost:3100
+
+# Use an existing company
+bash scripts/install.sh --company-id <id>
+
+# Override import path (for Docker-mounted paths)
+bash scripts/install.sh --source-path /mounted/path
+
+# Only import skills or only create agents
+bash scripts/install.sh --skills-only
+bash scripts/install.sh --agents-only
+
+# Preview what would be installed
+bash scripts/install.sh --dry-run
+
+# Machine-readable output (for scripts/CI)
+bash scripts/install.sh --json
+```
+
+Environment variables:
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `PAPERCLIP_URL` | `http://localhost:3100` | Base URL of Paperclip server |
+| `PAPERCLIP_COMPANY` | *(creates new)* | Company ID to install into |
+| `MNEMEBRAIN_URL` | `http://localhost:8000` | MnemeBrain URL for belief engine |
+
+The script tries bulk filesystem import first, then falls back to uploading skill content via the API individually. Agents are created with role mappings and skill assignments. Existing agents are skipped to avoid duplicates.
+
 ### Belief Engine (optional)
 
 For cross-session memory, install and run [MnemeBrain Lite](https://github.com/mnemebrain/mnemebrain-lite) locally:

@@ -55,7 +55,7 @@ If the task doesn't contain a clear operational question, extract one from the c
 
 ## Output Format
 
-The output is a **CEO Decision Brief** — the COO's recommendation packaged for the CEO to approve, modify, or reject. Use the template in `references/ceo-decision-brief-template.md`.
+The output is a **CEO Decision Brief** — the COO's recommendation packaged for the CEO to approve, modify, or reject. Use the template in `references/decision-document-template.md`.
 
 ## Competing Incentives
 

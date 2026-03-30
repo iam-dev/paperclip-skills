@@ -21,7 +21,11 @@
   "scripts": {
     "build": "tsc",
     "prepublishOnly": "npm run build",
-    "test": "node --test dist/**/*.test.js"
+    "test": "node --test dist/**/*.test.js",
+    "test:e2e": "npx playwright test --config tests/e2e/playwright.config.ts",
+    "test:e2e:headed": "npx playwright test --config tests/e2e/playwright.config.ts --headed",
+    "install-skills": "bash scripts/install.sh",
+    "install-skills:dry-run": "bash scripts/install.sh --dry-run"
   },
   "keywords": [
     "paperclip",
@@ -35,12 +39,13 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iam-dev/paperclip-skills.git"
+    "url": "https://github.com/iam-dev/paperclip-skills.git"
   },
   "dependencies": {
     "mnemebrain": "^0.1.0-alpha.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "@types/node": "^25.5.0",
     "typescript": "^5.7.0"
   }

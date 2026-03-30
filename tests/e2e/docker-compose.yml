@@ -1,0 +1,64 @@
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: paperclip
+      POSTGRES_PASSWORD: paperclip
+      POSTGRES_DB: paperclip
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U paperclip -d paperclip"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+    tmpfs:
+      - /var/lib/postgresql/data
+
+  paperclip:
+    build:
+      context: https://github.com/paperclipai/paperclip.git
+      dockerfile: Dockerfile
+    ports:
+      - "${PAPERCLIP_PORT:-3199}:3100"
+    environment:
+      DATABASE_URL: postgres://paperclip:paperclip@db:5432/paperclip
+      PORT: "3100"
+      HOST: "0.0.0.0"
+      SERVE_UI: "true"
+      PAPERCLIP_HOME: "/paperclip"
+      PAPERCLIP_DEPLOYMENT_MODE: "local_trusted"
+      PAPERCLIP_DEPLOYMENT_EXPOSURE: "private"
+      MNEMEBRAIN_URL: "http://mnemebrain:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    # Patch loopback check so local_trusted works with 0.0.0.0 binding in Docker
+    entrypoint:
+      - sh
+      - -c
+      - |
+        sed -i 's/return normalized === "127.0.0.1" || normalized === "localhost" || normalized === "::1"/return normalized === "127.0.0.1" || normalized === "localhost" || normalized === "::1" || normalized === "0.0.0.0"/' /app/server/dist/index.js
+        exec node --import ./server/node_modules/tsx/dist/loader.mjs server/dist/index.js
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:3100/api/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+  mnemebrain:
+    build:
+      context: https://github.com/mnemebrain/mnemebrain-lite.git
+      dockerfile: Dockerfile
+    ports:
+      - "${MNEMEBRAIN_PORT:-8000}:8000"
+    environment:
+      MNEMEBRAIN_HOST: "0.0.0.0"
+      MNEMEBRAIN_PORT: "8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 15s
+    tmpfs:
+      - /app/mnemebrain_data

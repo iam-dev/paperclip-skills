@@ -2,3 +2,9 @@ node_modules/
 dist/
 *.tgz
 .env
+
+test-results/
+playwright-report/
+
+.paperclip
+.paperclip-test*
