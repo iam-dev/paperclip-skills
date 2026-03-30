@@ -1,0 +1,14 @@
+{
+  "eval_id": 1,
+  "eval_name": "deployment-strategy",
+  "prompt": "Choose between EKS and Lambda for webhook processing with bursty traffic (0-500 RPS), 8s p95, 30s SLA.",
+  "assertions": [
+    {"id": "has-three-stages", "text": "Output shows all 3 stages: advocate evaluation, critic challenges, and arbiter decision"},
+    {"id": "advocate-covers-both", "text": "Advocate evaluates strengths for both EKS and Lambda options"},
+    {"id": "critic-addresses-cold-starts", "text": "Critic discusses Lambda cold start impact on the 30-second SLA"},
+    {"id": "critic-addresses-k8s-complexity", "text": "Critic discusses K8s operational overhead"},
+    {"id": "arbiter-ranks", "text": "Arbiter ranks the options with clear reasoning"},
+    {"id": "considers-traffic-pattern", "text": "Analysis specifically addresses the bursty 0-500 RPS traffic pattern"},
+    {"id": "has-recommendation", "text": "Clear final recommendation provided"}
+  ]
+}

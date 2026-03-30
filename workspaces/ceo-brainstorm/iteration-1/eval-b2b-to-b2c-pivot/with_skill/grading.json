@@ -1,0 +1,17 @@
+{
+  "eval_id": 0,
+  "eval_name": "b2b-to-b2c-pivot",
+  "configuration": "with_skill",
+  "expectations": [
+    {"text": "Output contains all 4 rounds (Round 1 through Round 4)", "passed": true, "evidence": "Round 1: Visionary Proposes, Round 2: Skeptic Challenges, Round 3: Visionary Defends, Round 4: Pragmatist Decides — all present"},
+    {"text": "Visionary, Skeptic, and Pragmatist personas all appear and are distinct", "passed": true, "evidence": "Visionary proposes bold B2C expansion, Skeptic raises 7 challenges with severity ratings, Pragmatist delivers modify-and-proceed verdict"},
+    {"text": "Round 1 includes a thesis, rationale with 3-5 arguments, timeline, resources needed, and upside scenario", "passed": true, "evidence": "Thesis present, 5 rationale arguments, detailed monthly timeline, specific resource needs ($150K, 5 people), quantified upside scenario"},
+    {"text": "Round 2 contains numbered challenges with severity ratings (critical/significant/minor)", "passed": true, "evidence": "7 numbered challenges: 3 critical, 3 significant, 1 minor — all labeled with severity"},
+    {"text": "Round 3 addresses each numbered challenge from Round 2, with concessions or counters", "passed": true, "evidence": "All 7 challenges addressed: 5 conceded with mitigations, 2 countered with evidence"},
+    {"text": "Round 4 contains a verdict that is one of: proceed, modify-and-proceed, defer, reject", "passed": true, "evidence": "Verdict: modify-and-proceed"},
+    {"text": "Round 4 includes numbered action items with who/what/when", "passed": true, "evidence": "7 numbered action items with specific owners (VP Product, CTO, CFO, CEO), deliverables, and dates"},
+    {"text": "Debate metrics table with challengesRaised, challengesSurvived, challengesDefeated, challengesConceded, confidenceScore", "passed": true, "evidence": "Metrics table present: challengesRaised=7, challengesSurvived=2, challengesDefeated=0, challengesConceded=5, confidenceScore=5"},
+    {"text": "Round 4 includes a risks accepted section referencing specific challenges", "passed": true, "evidence": "4 risks accepted with specific references to team diversion, waitlist conversion, consumer UX, and runway pressure"},
+    {"text": "Round 4 includes a review date for revisiting the decision", "passed": true, "evidence": "Review date: 2026-07-15"}
+  ]
+}

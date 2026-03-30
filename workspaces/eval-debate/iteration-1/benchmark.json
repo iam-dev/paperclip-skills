@@ -1,0 +1,56 @@
+{
+  "skill_name": "eval-debate",
+  "iteration": 1,
+  "configurations": [
+    {
+      "name": "with_skill",
+      "pass_rate": {"mean": 1.0, "stddev": 0.0},
+      "time_seconds": {"mean": 93.6, "stddev": 0.0},
+      "tokens": {"mean": 21538, "stddev": 0},
+      "evals": [
+        {
+          "eval_name": "registration-sprint-qa",
+          "passed": 8,
+          "total": 8,
+          "pass_rate": 1.0,
+          "time_seconds": 93.6,
+          "tokens": 21538
+        },
+        {
+          "eval_name": "dashboard-sprint-pass",
+          "passed": 6,
+          "total": 6,
+          "pass_rate": 1.0
+        },
+        {
+          "eval_name": "csv-export-failing-sprint",
+          "passed": 8,
+          "total": 8,
+          "pass_rate": 1.0
+        }
+      ]
+    },
+    {
+      "name": "without_skill",
+      "pass_rate": {"mean": 0.25, "stddev": 0.0},
+      "time_seconds": {"mean": 32.9, "stddev": 0.0},
+      "tokens": {"mean": 10653, "stddev": 0},
+      "evals": [
+        {
+          "eval_name": "registration-sprint-qa",
+          "passed": 2,
+          "total": 8,
+          "pass_rate": 0.25,
+          "time_seconds": 32.9,
+          "tokens": 10653
+        }
+      ]
+    }
+  ],
+  "delta": {
+    "pass_rate": "+75.0%",
+    "time": "+184.5%",
+    "tokens": "+102.2%"
+  },
+  "notes": "All 3 with_skill evals achieved 100% pass rate. Evals 1-2 have with_skill only."
+}

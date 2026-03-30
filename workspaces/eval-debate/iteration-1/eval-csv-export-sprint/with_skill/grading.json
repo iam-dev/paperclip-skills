@@ -1,0 +1,15 @@
+{
+  "eval_id": 2,
+  "eval_name": "csv-export-failing-sprint",
+  "run_type": "with_skill",
+  "expectations": [
+    {"text": "Output shows all 3 stages: advocate defense, critic challenge, and arbiter ruling", "passed": true, "evidence": "All 3 stages present: Stage 1 Eval-Advocate, Stage 2 Eval-Critic, Stage 3 Eval-Arbiter"},
+    {"text": "Advocate honestly flags gaps with ACKNOWLEDGE_GAP, not inflating", "passed": true, "evidence": "Advocate marks all 4 criteria as ACKNOWLEDGE_GAP, gives low dimension scores (1-2), and lists detailed Honest Gaps"},
+    {"text": "Critic identifies the 5K row crash as a deal-breaker", "passed": true, "evidence": "C-002: Application crashes on valid input (severity: critical). DB-002 confirmed as deal-breaker"},
+    {"text": "Critic identifies missing merchant and status fields", "passed": true, "evidence": "C-003: Missing fields break data contract (severity: critical). Only 3/5 fields implemented"},
+    {"text": "Critic flags the 'Coming soon' placeholder as an integrity violation", "passed": true, "evidence": "C-006: Placeholder UI shipped as 'implementation' (severity: high). 'Coming soon' div is not implementation"},
+    {"text": "Critic identifies no tests written", "passed": true, "evidence": "C-005: Zero test coverage (severity: high). No tests exist for any functionality"},
+    {"text": "Verdict is NEEDS_CHANGES or REGRESSION_DETECTED", "passed": true, "evidence": "Verdict: NEEDS_CHANGES"},
+    {"text": "Functionality score is below the threshold of 7", "passed": true, "evidence": "Arbiter Functionality score: 1/10 (threshold 7, NOT MET)"}
+  ]
+}

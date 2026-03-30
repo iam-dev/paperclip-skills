@@ -1,0 +1,14 @@
+{
+  "eval_id": 2,
+  "eval_name": "database-choice",
+  "run_type": "with_skill",
+  "expectations": [
+    {"text": "Output shows all 3 stages: advocate evaluation, critic challenges, and arbiter decision", "passed": true, "evidence": "All 3 stages: Stage 1 Advocate Report, Stage 2 Critic Report, Stage 3 Arbiter Decision"},
+    {"text": "Advocate evaluates strengths for both PostgreSQL and MongoDB", "passed": true, "evidence": "Advocate covers Option A PostgreSQL (A-001 to A-006) and Option B MongoDB (A-007 to A-011)"},
+    {"text": "Analysis discusses the variable attribute challenge (JSONB vs document model)", "passed": true, "evidence": "A-002 covers PostgreSQL JSONB with GIN indexes. A-007 covers MongoDB native document model. C-001 challenges JSONB as a compromise. Arbiter Dispute 1 resolves this."},
+    {"text": "Analysis weighs the team's PostgreSQL expertise vs MongoDB learning curve", "passed": true, "evidence": "A-001 highlights team expertise with PostgreSQL. C-004 rates zero MongoDB experience as critical risk. Arbiter Dispute 3 calls this the decisive factor."},
+    {"text": "Analysis considers faceted search requirements for both options", "passed": true, "evidence": "A-004 covers PostgreSQL faceted search (GIN, pg_trgm, materialized views). A-010 covers MongoDB $facet. C-002 challenges PostgreSQL faceted search engineering effort."},
+    {"text": "Arbiter provides a clear recommendation with confidence level", "passed": true, "evidence": "Recommendation: PostgreSQL, Confidence: High. Includes schema example and indexing strategy."},
+    {"text": "Includes conditions under which the recommendation would change", "passed": true, "evidence": "4 conditions listed: team had MongoDB experience, catalog 5M+ SKUs, schemas changed daily, team grew to 10+ engineers"}
+  ]
+}

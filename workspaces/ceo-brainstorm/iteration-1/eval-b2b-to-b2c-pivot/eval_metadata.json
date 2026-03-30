@@ -1,0 +1,17 @@
+{
+  "eval_id": 0,
+  "eval_name": "b2b-to-b2c-pivot",
+  "prompt": "Should we pivot from B2B SaaS to a B2C model for our project management tool? We have 200 enterprise customers paying $50K/yr ARR average, but consumer demand signals are strong — 10K waitlist signups from a Product Hunt launch. Team is 30 people, $2M ARR, 18 months runway.",
+  "assertions": [
+    {"id": "has-4-rounds", "text": "Output contains all 4 rounds (Round 1 through Round 4)"},
+    {"id": "has-three-personas", "text": "Visionary, Skeptic, and Pragmatist personas all appear and are distinct"},
+    {"id": "visionary-proposes", "text": "Round 1 includes a thesis, rationale with 3-5 arguments, timeline, resources needed, and upside scenario"},
+    {"id": "skeptic-challenges", "text": "Round 2 contains numbered challenges with severity ratings (critical/significant/minor)"},
+    {"id": "visionary-defends", "text": "Round 3 addresses each numbered challenge from Round 2, with concessions or counters"},
+    {"id": "pragmatist-decides", "text": "Round 4 contains a verdict that is one of: proceed, modify-and-proceed, defer, reject"},
+    {"id": "has-action-items", "text": "Round 4 includes numbered action items with who/what/when"},
+    {"id": "has-debate-metrics", "text": "Debate metrics table with challengesRaised, challengesSurvived, challengesDefeated, challengesConceded, confidenceScore"},
+    {"id": "has-risks-accepted", "text": "Round 4 includes a risks accepted section referencing specific challenges"},
+    {"id": "has-review-date", "text": "Round 4 includes a review date for revisiting the decision"}
+  ]
+}

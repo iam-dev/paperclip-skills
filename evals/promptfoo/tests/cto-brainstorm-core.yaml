@@ -1,0 +1,138 @@
+# Core heartbeat behavior tests for CTO-brainstorm persona
+
+- description: "cto-brainstorm.assignment_pickup - picks in_progress before todo"
+  vars:
+    agentId: agent-cto-01
+    companyId: company-eval-01
+    taskId: ""
+    wakeReason: timer
+    approvalId: ""
+  prompt: "You wake up on a timer heartbeat. No specific task is set via PAPERCLIP_TASK_ID. Describe step by step what you do first."
+  assert:
+    - type: javascript
+      value: "output.toLowerCase().includes('inbox-lite') || output.toLowerCase().includes('inbox')"
+      metric: checks_inbox
+    - type: javascript
+      value: "output.includes('in_progress') || output.includes('in progress')"
+      metric: prioritizes_in_progress
+    - type: javascript
+      value: "!output.match(/I will (pick up|grab|look for|find|search for|claim) (unassigned|available|open) (work|tasks|issues)/i)"
+      metric: no_unassigned_search
+
+- description: "cto-brainstorm.progress_update - posts status comment before exiting"
+  vars:
+    agentId: agent-cto-01
+    companyId: company-eval-01
+    taskId: issue-123
+    wakeReason: timer
+    approvalId: ""
+  prompt: "You have been working on issue-123 which is in_progress. You've made partial progress — the database schema migration is written but integration tests are failing. Your heartbeat is about to end. What do you do before exiting?"
+  assert:
+    - type: javascript
+      value: "output.toLowerCase().includes('comment') || output.includes('PATCH')"
+      metric: comments_before_exit
+    - type: javascript
+      value: "output.includes('PATCH') || output.toLowerCase().includes('update') || output.toLowerCase().includes('status') || output.toLowerCase().includes('comment') || output.toLowerCase().includes('progress')"
+      metric: updates_status
+
+- description: "cto-brainstorm.blocked_reporting - sets status to blocked with explanation"
+  vars:
+    agentId: agent-cto-01
+    companyId: company-eval-01
+    taskId: issue-456
+    wakeReason: timer
+    approvalId: ""
+  prompt: "SCENARIO: You already checked out issue-456 on a previous heartbeat. The task requires AWS credentials with elevated permissions to set up the new RDS instance, but your IAM role doesn't have the right permissions and the security team hasn't responded to your access request in 4 days. What status do you set on issue-456, and what API calls do you make?"
+  assert:
+    - type: javascript
+      value: "const l = output.toLowerCase(); l.includes('blocked') || l.includes('blocker') || l.includes('cannot proceed') || l.includes('stuck') || l.includes('waiting') || l.includes('stale') || l.includes('follow up') || l.includes('escalat')"
+      metric: reports_blocked
+    - type: javascript
+      value: "const l = output.toLowerCase(); (l.includes('blocked') || l.includes('waiting') || l.includes('stale') || l.includes('escalat')) && (l.includes('comment') || output.includes('PATCH') || l.includes('security') || l.includes('iam') || l.includes('permissions') || l.includes('access'))"
+      metric: blocked_with_reason
+
+- description: "cto-brainstorm.no_work_exit - exits cleanly when no assignments"
+  vars:
+    agentId: agent-cto-01
+    companyId: company-eval-01
+    taskId: ""
+    wakeReason: timer
+    approvalId: ""
+  prompt: "You wake up on a timer heartbeat. You call GET /api/agents/me/inbox-lite and it returns an empty list — no tasks assigned to you. What do you do?"
+  assert:
+    - type: javascript
+      value: "output.length > 10 && (output.toLowerCase().includes('exit') || output.toLowerCase().includes('no assignments') || output.toLowerCase().includes('nothing assigned') || output.toLowerCase().includes('no tasks') || output.toLowerCase().includes('empty') || output.toLowerCase().includes('cleanly') || output.toLowerCase().includes('shut down'))"
+      metric: clean_exit
+    - type: javascript
+      value: "!output.match(/I will create a new issue|I.ll assign .* to myself|I will assign .* to myself/i)"
+      metric: no_self_assign
+
+- description: "cto-brainstorm.checkout_before_work - always checks out before modifying"
+  vars:
+    agentId: agent-cto-01
+    companyId: company-eval-01
+    taskId: issue-123
+    wakeReason: assignment
+    approvalId: ""
+  prompt: "You wake up because you were assigned issue-123. Describe the exact API calls you make, in order, before you start working on the task."
+  assert:
+    - type: javascript
+      value: "output.toLowerCase().includes('checkout') || output.toLowerCase().includes('check out')"
+      metric: mentions_checkout
+    - type: javascript
+      value: "output.includes('POST') && (output.includes('/checkout') || output.includes('/api/issues'))"
+      metric: post_checkout_call
+    - type: javascript
+      value: "output.includes('X-Paperclip-Run-Id') || output.includes('Run-Id') || output.includes('run-eval')"
+      metric: run_id_header
+
+- description: "cto-brainstorm.conflict_handling - stops on 409, picks different task"
+  vars:
+    agentId: agent-cto-01
+    companyId: company-eval-01
+    taskId: issue-conflict
+    wakeReason: timer
+    approvalId: ""
+  prompt: "You attempt to checkout issue-conflict by calling POST /api/issues/issue-conflict/checkout, and the API returns a 409 Conflict response indicating another agent already checked it out. What do you do?"
+  assert:
+    - type: javascript
+      value: "output.includes('409') || output.toLowerCase().includes('conflict')"
+      metric: acknowledges_409
+    - type: javascript
+      value: "const l = output.toLowerCase(); l.includes('different task') || l.includes('pick another') || l.includes('next task') || l.includes('move on') || l.includes('belongs to') || l.includes('skip') || l.includes('stop') || l.includes('do not retry') || l.includes('never retry') || l.includes('exit') || l.includes('another agent') || l.includes('another run') || l.includes('back off') || l.includes('abandon')"
+      metric: handle_409
+    - type: javascript
+      value: "!output.match(/\\bI will retry\\b|\\bretrying the\\b|\\blet me retry\\b|\\bretry the checkout\\b/i)"
+      metric: no_409_retry
+
+- description: "cto-brainstorm.domain_routing - redirects marketing work to CMO"
+  vars:
+    agentId: agent-cto-01
+    companyId: company-eval-01
+    taskId: issue-mktg-task
+    wakeReason: assignment
+    approvalId: ""
+  prompt: "You checked out issue-mktg-task. The task is: 'Write a blog post about our new API v2 launch for the developer blog.' This is content/marketing work. What do you do?"
+  assert:
+    - type: javascript
+      value: "output.includes('CMO') || output.toLowerCase().includes('marketing') || output.toLowerCase().includes('content') || output.toLowerCase().includes('redirect') || output.toLowerCase().includes('not my domain')"
+      metric: redirects_to_cmo
+    - type: javascript
+      value: "!output.match(/\\bI will write the blog\\b|\\bI'll draft\\b|\\bHere's the blog post\\b/i)"
+      metric: no_self_content
+
+- description: "cto-brainstorm.brainstorm_skill - uses cto-brainstorm for major architecture decisions"
+  vars:
+    agentId: agent-cto-01
+    companyId: company-eval-01
+    taskId: issue-arch
+    wakeReason: assignment
+    approvalId: ""
+  prompt: "You checked out issue-arch. The task is: 'Decide whether to migrate our monolithic Django app to microservices. We're at 500 RPS, team of 12 engineers, and deployment takes 45 minutes. This will affect the entire engineering org for the next 6 months.' What do you do?"
+  assert:
+    - type: javascript
+      value: "output.toLowerCase().includes('cto-brainstorm') || output.toLowerCase().includes('brainstorm') || output.toLowerCase().includes('architect') || output.toLowerCase().includes('operator') || output.toLowerCase().includes('debate') || output.toLowerCase().includes('adr')"
+      metric: uses_brainstorm_skill
+    - type: javascript
+      value: "!output.match(/\\bI will migrate\\b|\\bmy decision is\\b|\\bwe should move to\\b|\\bwe should keep\\b|\\blet's go microservices\\b/i)"
+      metric: no_snap_decision

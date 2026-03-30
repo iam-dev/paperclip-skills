@@ -1,0 +1,28 @@
+# COO-Brainstorm Onboarding Assets Eval
+#
+# Tests the COO persona with brainstorm skill against heartbeat behaviors,
+# delegation rules, governance boundaries, and operations brainstorm invocation.
+#
+# Usage:
+#   cd evals/promptfoo && npx promptfoo@latest eval -c promptfooconfig.coo-brainstorm-local.yaml
+#   npx promptfoo@latest view
+
+description: "COO-brainstorm onboarding asset evals"
+
+evaluateOptions:
+  maxConcurrency: 2
+
+prompts:
+  - file://prompts/coo-brainstorm-system.txt
+
+providers:
+  - id: file://providers/claude-cli.cjs
+    label: claude-code-local
+
+defaultTest:
+  options:
+    transformVars: "{ ...vars, apiUrl: 'http://localhost:18080', runId: 'run-eval-001' }"
+
+tests:
+  - file://tests/coo-brainstorm-core.yaml
+  - file://tests/coo-brainstorm-governance.yaml

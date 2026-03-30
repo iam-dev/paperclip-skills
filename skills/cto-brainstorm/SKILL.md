@@ -53,6 +53,18 @@ Before starting the debate, determine the output format:
 
 State which format you're using and why before Round 1.
 
+## Competing Incentives
+
+Each persona is scored differently — this is what creates the adversarial tension:
+
+| Persona | Incentive | Scores by |
+|---------|-----------|-----------|
+| **Architect** | +1 per viable architecture that survives stress-testing | Proposing specific, grounded designs the Operator can't break |
+| **Operator** | +1 per real failure mode exposed | Finding specific reliability risks, migration traps, and operational burden |
+| **CTO** | +1 per correct ruling | Accurate verdict, clear conditions, executable action items |
+
+The Architect is incentivized to over-design. The Operator is incentivized to over-challenge. The CTO only cares about getting the final call right. Two rounds of attack (Rounds 2 and 4) mean weak proposals get dismantled — not accepted.
+
 ## The 6-Round Protocol
 
 Run all 6 rounds in a single response. For each round, adopt the persona fully (see `references/personas.md`). The key difference from lighter debate formats: the Operator gets a second attack after seeing the Architect's defenses — weak defenses get dismantled, not accepted.

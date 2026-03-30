@@ -41,6 +41,27 @@ finder → adversary → referee
 | **adversary** | +1 per false positive killed | Challenges every finding with evidence. Checks context the finder missed (upstream guards, framework handling, intent). |
 | **referee** | +1 per correct ruling | Rules on disputed issues with independent verification. Spot-checks ~20% of kills and survives. Can overturn bad calls. |
 
+## Competing Incentives
+
+Each agent is scored differently — this is what creates the adversarial tension:
+
+| Agent | Incentive | Scores by |
+|-------|-----------|-----------|
+| **Finder** | +1 per real issue found | Scanning all 8 categories thoroughly, citing exact file:line evidence |
+| **Adversary** | +1 per false positive killed | Disproving findings with framework defenses, upstream guards, and context |
+| **Referee** | +1 per correct ruling | Independent verification, spot-checking both sides, ruling definitively |
+
+The Finder is incentivized to over-report. The Adversary is incentivized to over-kill. The Referee only cares about getting the final call right. This three-way tension means no single agent's bias dominates.
+
+## Reporting Chain
+
+The verdict reports to whoever triggered the review:
+- **Engineering tasks** → CTO (or the task assignee)
+- **Pipeline / CI** → the pipeline orchestrator
+- **Cross-functional** → the relevant C-suite lead
+
+Use the template in `references/verdict-report-template.md` for the complete output.
+
 ## Protocol
 
 ### Step 1: Finder Scans
@@ -74,7 +95,8 @@ The referee:
 
 ## Output
 
-The referee produces:
+The referee produces the verdict report using the template in `references/verdict-report-template.md`:
+- Executive summary for the CTO / decision-maker
 - Final issue list (real issues that must be addressed)
 - Verdict: **APPROVED** (no blockers) or **NEEDS CHANGES** (blockers exist)
 - Debate metrics: finder accuracy %, false positive rate %
@@ -88,6 +110,8 @@ After the debate:
 
 ## References
 
+- `references/personas.md` — Persona definitions with incentives and constraints
+- `references/verdict-report-template.md` — Output format template
 - `agents/adversarial-review/finder.md` — Finder agent definition
 - `agents/adversarial-review/adversary.md` — Adversary agent definition
 - `agents/adversarial-review/referee.md` — Referee agent definition

@@ -1,0 +1,28 @@
+# CTO-Brainstorm Onboarding Assets Eval
+#
+# Tests the CTO persona with brainstorm skill against heartbeat behaviors,
+# delegation rules, governance boundaries, and technical brainstorm invocation.
+#
+# Usage:
+#   cd evals/promptfoo && npx promptfoo@latest eval -c promptfooconfig.cto-brainstorm-local.yaml
+#   npx promptfoo@latest view
+
+description: "CTO-brainstorm onboarding asset evals"
+
+evaluateOptions:
+  maxConcurrency: 2
+
+prompts:
+  - file://prompts/cto-brainstorm-system.txt
+
+providers:
+  - id: file://providers/claude-cli.cjs
+    label: claude-code-local
+
+defaultTest:
+  options:
+    transformVars: "{ ...vars, apiUrl: 'http://localhost:18080', runId: 'run-eval-001' }"
+
+tests:
+  - file://tests/cto-brainstorm-core.yaml
+  - file://tests/cto-brainstorm-governance.yaml

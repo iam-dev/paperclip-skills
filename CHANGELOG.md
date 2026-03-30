@@ -5,6 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2026-03-30
+
+### Added
+
+#### Competing Incentives
+- All 7 skills now have explicit "+1 per" incentive scoring tables in SKILL.md
+- Brainstorm skills: proposer (+1 per viable idea), challenger (+1 per real risk), decider (+1 per correct ruling)
+- Debate skills: finder/advocate (+1 per valid finding), adversary/critic (+1 per valid challenge), referee/arbiter (+1 per correct ruling)
+
+#### Reporting Chain & Output Templates
+- **adversarial-review**: `references/personas.md`, `references/verdict-report-template.md` (reports to CTO / task assignee)
+- **eval-debate**: `references/personas.md`, `references/sprint-evaluation-template.md` (reports to Implementer / Coordinator)
+- **skill-debate**: `references/personas.md`, `references/ranking-report-template.md` (reports to domain-appropriate C-suite)
+
+#### Safety Considerations
+- All 9 debate agents now have role-specific safety considerations documenting attack surfaces and mitigations
+- All 3 debate group READMEs have pattern-level safety considerations
+- All 4 C-suite AGENTS.md files have expanded safety considerations (prompt injection, authority escalation, data exfiltration)
+- Attack vectors covered: prompt injection to bias rankings, rubber-stamping, report poisoning, severity manipulation, data exfiltration, state recording manipulation
+
+#### Eval Configs
+- Promptfoo eval configs for cmo-brainstorm, coo-brainstorm, cto-brainstorm (local variants)
+- System prompts and test suites (core + governance) for each brainstorm skill
+
+### Fixed
+- **skill-debate agents were broken copies of eval-debate** — advocate.md, critic.md, arbiter.md were copy-pasted from eval-debate and still referenced "sprint contracts". Fully rewritten to correctly evaluate options/approaches
+
+### Changed
+- Debate agents no longer embed output format templates — they reference skill templates in `skills/<name>/references/`
+- Consistent structure: all 7 skills now have `references/personas.md` with persona definitions and incentives
+
 ## [0.1.0] - 2026-03-29
 
 ### Added

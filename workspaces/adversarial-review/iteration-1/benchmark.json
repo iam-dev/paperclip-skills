@@ -1,0 +1,56 @@
+{
+  "skill_name": "adversarial-review",
+  "iteration": 1,
+  "configurations": [
+    {
+      "name": "with_skill",
+      "pass_rate": {"mean": 0.93, "stddev": 0.09},
+      "time_seconds": {"mean": 89.5, "stddev": 0.0},
+      "tokens": {"mean": 20551, "stddev": 0},
+      "evals": [
+        {
+          "eval_name": "auth-endpoint-review",
+          "passed": 9,
+          "total": 9,
+          "pass_rate": 1.0,
+          "time_seconds": 89.5,
+          "tokens": 20551
+        },
+        {
+          "eval_name": "clean-utils-review",
+          "passed": 4,
+          "total": 5,
+          "pass_rate": 0.8
+        },
+        {
+          "eval_name": "file-upload-review",
+          "passed": 7,
+          "total": 7,
+          "pass_rate": 1.0
+        }
+      ]
+    },
+    {
+      "name": "without_skill",
+      "pass_rate": {"mean": 0.33, "stddev": 0.0},
+      "time_seconds": {"mean": 33.9, "stddev": 0.0},
+      "tokens": {"mean": 10970, "stddev": 0},
+      "evals": [
+        {
+          "eval_name": "auth-endpoint-review",
+          "passed": 3,
+          "total": 9,
+          "pass_rate": 0.33,
+          "time_seconds": 33.9,
+          "tokens": 10970
+        }
+      ]
+    }
+  ],
+  "delta": {
+    "pass_rate": "+60.0%",
+    "time": "+164.0%",
+    "tokens": "+87.3%"
+  },
+  "notes": "Clean-utils eval scored 4/5 — the 'verdict-approved' assertion failed because the skill correctly found a real bug (hardcoded fraction digits) in supposedly clean code. This is arguably good behavior. Evals 1-2 have with_skill only."
+}

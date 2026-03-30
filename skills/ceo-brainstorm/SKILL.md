@@ -35,6 +35,18 @@ You need a **strategic question** -- a clear, specific decision to evaluate. Exa
 
 If the task doesn't contain a clear strategic question, extract one from the context before starting.
 
+## Competing Incentives
+
+Each persona is scored differently — this is what creates the adversarial tension:
+
+| Persona | Incentive | Scores by |
+|---------|-----------|-----------|
+| **Visionary** | +1 per bold opportunity surfaced that survives scrutiny | Proposing concrete, grounded strategies the Skeptic can't kill |
+| **Skeptic** | +1 per real flaw exposed | Finding specific risks, dependencies, and flawed assumptions |
+| **Pragmatist** | +1 per correct ruling | Accurate verdict, clear rationale, executable action items |
+
+The Visionary is incentivized to over-propose. The Skeptic is incentivized to over-challenge. The Pragmatist only cares about getting the final call right. This tension is the mechanism — without it, a single agent would confirm its own bias.
+
 ## The 4-Round Protocol
 
 Run all 4 rounds in a single response. For each round, adopt the persona fully (see `references/personas.md`). Use the persona's voice, incentives, and constraints.

@@ -1,0 +1,13 @@
+{
+  "eval_id": 1,
+  "eval_name": "dashboard-sprint-pass",
+  "run_type": "with_skill",
+  "expectations": [
+    {"text": "Output shows all 3 stages: advocate defense, critic challenge, and arbiter ruling", "passed": true, "evidence": "All 3 stages: Stage 1 Eval-Advocate Report, Stage 2 Eval-Critic Report, Stage 3 Eval-Arbiter Report"},
+    {"text": "Advocate marks all 5 criteria as PASS with evidence", "passed": true, "evidence": "All 5 criteria marked PASS with specific evidence (1.2s load time, WebSocket confirmed, both filters working, breakpoints matching Figma, VoiceOver tested)"},
+    {"text": "Critic's challenges are minor or conceded, not deal-breakers", "passed": true, "evidence": "Critic found 5 issues all medium-to-low severity. Explicitly states 'No deal-breakers were identified'"},
+    {"text": "Final verdict is PASS since all criteria met with strong implementation", "passed": true, "evidence": "Verdict: PASS. All 5 criteria pass, all 4 dimensions meet thresholds"},
+    {"text": "Functionality dimension score is 7 or higher", "passed": true, "evidence": "Arbiter Functionality score: 8/10 (threshold 7, status MET)"},
+    {"text": "Dimension scores include specific evidence (not just numbers)", "passed": true, "evidence": "Scores include detailed evidence references (A-001 through A-008 for advocate, C-001 through C-005 for critic), arbiter provides paragraph-level reasoning per dimension"}
+  ]
+}

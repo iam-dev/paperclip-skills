@@ -1,0 +1,15 @@
+{
+  "eval_id": 0,
+  "eval_name": "state-management-choice",
+  "configuration": "without_skill",
+  "expectations": [
+    {"text": "Output shows all 3 stages: advocate evaluation, critic challenges, and arbiter decision", "passed": false, "evidence": "No 3-stage structure — single analysis with per-option tables, analysis section, and recommendation"},
+    {"text": "Advocate evaluates strengths for all 3 options (Redux, Zustand, React Query + Context)", "passed": false, "evidence": "Options evaluated but not by an advocate role — each option has a balanced assessment table, not a strength-focused advocacy"},
+    {"text": "Critic finds weaknesses/risks for all 3 options", "passed": false, "evidence": "Risks mentioned in each option's table but no dedicated critic challenging or numbered weaknesses"},
+    {"text": "Arbiter provides a ranked list from best to worst", "passed": false, "evidence": "Summary table shows Recommended/Not recommended but no explicit 1-2-3 ranking"},
+    {"text": "Arbiter gives a clear final recommendation with reasoning", "passed": true, "evidence": "Clear recommendation: Option C with detailed reasoning about server state dominance"},
+    {"text": "Arbiter identifies the decisive factors that separated the top options", "passed": false, "evidence": "Analysis section explains why but does not frame as 'decisive factors' — reasoning is embedded, not structured"},
+    {"text": "Analysis considers the team's experience level and the app's data-heavy nature", "passed": true, "evidence": "Dedicated section on team experience consideration, and server state vs client state analysis is central"},
+    {"text": "Recommendation includes conditions under which it would change", "passed": true, "evidence": "Migration path section mentions 'if client-side state complexity grows' as the change condition"}
+  ]
+}

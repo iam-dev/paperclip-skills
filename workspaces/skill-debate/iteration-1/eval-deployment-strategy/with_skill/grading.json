@@ -1,0 +1,14 @@
+{
+  "eval_id": 1,
+  "eval_name": "deployment-strategy",
+  "run_type": "with_skill",
+  "expectations": [
+    {"text": "Output shows all 3 stages: advocate evaluation, critic challenges, and arbiter decision", "passed": true, "evidence": "All 3 stages: Stage 1 Advocate Report, Stage 2 Critic Report, Stage 3 Arbiter Decision"},
+    {"text": "Advocate evaluates strengths for both EKS and Lambda options", "passed": true, "evidence": "Advocate covers Option A (K8s/EKS) with 5 strengths (A-001 to A-005) and Option B (Lambda) with 5 strengths (A-006 to A-010)"},
+    {"text": "Critic discusses Lambda cold start impact on the 30-second SLA", "passed": true, "evidence": "C-005: Cold start risk under SLA pressure (severity: high). Discusses 5-10s cold starts + 8s P95 = 13-18s vs 30s SLA"},
+    {"text": "Critic discusses K8s operational overhead", "passed": true, "evidence": "C-001: Operational complexity is real and ongoing (severity: medium). References node upgrades, K8s version upgrades, security patches"},
+    {"text": "Arbiter ranks the options with clear reasoning", "passed": true, "evidence": "Rank 1: Kubernetes (EKS), Rank 2: Lambda. Clear decisive factors listed for each"},
+    {"text": "Analysis specifically addresses the bursty 0-500 RPS traffic pattern", "passed": true, "evidence": "C-002 discusses HPA scaling lag for burst from 0 to 500 RPS. C-009 calculates 500 RPS * 8s = 4,000 concurrent Lambda executions"},
+    {"text": "Clear final recommendation provided", "passed": true, "evidence": "Final Recommendation: Option A — Kubernetes (EKS), Confidence: High (8/10)"}
+  ]
+}

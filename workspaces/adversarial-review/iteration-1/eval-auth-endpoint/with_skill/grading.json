@@ -1,0 +1,16 @@
+{
+  "eval_id": 0,
+  "eval_name": "auth-endpoint-review",
+  "configuration": "with_skill",
+  "expectations": [
+    {"text": "Output shows all 3 stages: finder scan, adversary challenges, and referee ruling", "passed": true, "evidence": "Stage 1: Finder Report, Stage 2: Adversary Report, Stage 3: Referee Verdict — all present with clear separation"},
+    {"text": "Finder identifies SQL injection via string interpolation in the query", "passed": true, "evidence": "F-001: SQL Injection via string interpolation, rated BLOCKER"},
+    {"text": "Finder identifies MD5 as insecure for password hashing", "passed": true, "evidence": "F-002: MD5 used for password hashing, rated BLOCKER"},
+    {"text": "Finder identifies the token generation as predictable/insecure", "passed": true, "evidence": "F-004: Auth token is md5(username) — deterministic and forgeable, rated BLOCKER"},
+    {"text": "Issues have IDs (F-001, F-002, etc.) with severity ratings", "passed": true, "evidence": "8 issues F-001 through F-008 with BLOCKER/WARNING/SUGGESTION severity ratings"},
+    {"text": "Adversary issues KILL/SURVIVE/DISPUTED verdicts for each finding", "passed": true, "evidence": "7 SURVIVE verdicts, 1 DISPUTED (F-005) — all 8 findings addressed"},
+    {"text": "Referee produces a final issue list with definitive severities", "passed": true, "evidence": "Final issue list table with 4 BLOCKER, 1 WARNING, 3 SUGGESTION — includes severity adjustments"},
+    {"text": "Final verdict is NEEDS CHANGES (not APPROVED) given the security issues", "passed": true, "evidence": "Verdict: NEEDS CHANGES with 4 blockers identified"},
+    {"text": "Debate metrics include finder accuracy % and false positive rate %", "passed": true, "evidence": "Finder accuracy: 100%, False positive rate: 0%, Adversary accuracy: 100%"}
+  ]
+}

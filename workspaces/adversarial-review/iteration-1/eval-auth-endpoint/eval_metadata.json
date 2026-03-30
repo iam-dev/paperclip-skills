@@ -1,0 +1,16 @@
+{
+  "eval_id": 0,
+  "eval_name": "auth-endpoint-review",
+  "prompt": "Review this code change for a user authentication endpoint (Flask login with SQL injection, MD5 hashing, predictable tokens).",
+  "assertions": [
+    {"id": "has-three-stages", "text": "Output shows all 3 stages: finder scan, adversary challenges, and referee ruling"},
+    {"id": "finds-sql-injection", "text": "Finder identifies SQL injection via string interpolation in the query"},
+    {"id": "finds-weak-hashing", "text": "Finder identifies MD5 as insecure for password hashing"},
+    {"id": "finds-predictable-token", "text": "Finder identifies the token generation as predictable/insecure"},
+    {"id": "has-issue-ids", "text": "Issues have IDs (F-001, F-002, etc.) with severity ratings"},
+    {"id": "adversary-verdicts", "text": "Adversary issues KILL/SURVIVE/DISPUTED verdicts for each finding"},
+    {"id": "referee-final-list", "text": "Referee produces a final issue list with definitive severities"},
+    {"id": "verdict-needs-changes", "text": "Final verdict is NEEDS CHANGES (not APPROVED) given the security issues"},
+    {"id": "has-accuracy-metrics", "text": "Debate metrics include finder accuracy % and false positive rate %"}
+  ]
+}

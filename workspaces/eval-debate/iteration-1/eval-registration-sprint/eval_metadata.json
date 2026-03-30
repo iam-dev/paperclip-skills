@@ -1,0 +1,15 @@
+{
+  "eval_id": 0,
+  "eval_name": "registration-sprint-qa",
+  "prompt": "Evaluate registration sprint implementation against 5 acceptance criteria (happy path tests only, error messages expose DB column names).",
+  "assertions": [
+    {"id": "has-three-stages", "text": "Output shows all 3 stages: advocate defense, critic challenge, and arbiter ruling"},
+    {"id": "advocate-assesses-criteria", "text": "Advocate assesses each of the 5 acceptance criteria as PASS or ACKNOWLEDGE_GAP"},
+    {"id": "advocate-scores-dimensions", "text": "Advocate scores 4 dimensions: Functionality, Correctness, Design Fidelity, Code Quality"},
+    {"id": "critic-finds-test-gap", "text": "Critic identifies the missing edge case tests as a gap"},
+    {"id": "critic-finds-info-leak", "text": "Critic identifies the DB column name exposure in error messages"},
+    {"id": "arbiter-resolves-scores", "text": "Arbiter sets definitive per-dimension scores"},
+    {"id": "has-verdict", "text": "Verdict is one of: PASS, NEEDS_CHANGES, or REGRESSION_DETECTED"},
+    {"id": "scores-have-thresholds", "text": "Dimension scores are compared against thresholds (Functionality: 7, Correctness: 7, Design Fidelity: 6, Code Quality: 5)"}
+  ]
+}

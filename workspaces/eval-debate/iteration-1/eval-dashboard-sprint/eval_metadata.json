@@ -1,0 +1,13 @@
+{
+  "eval_id": 1,
+  "eval_name": "dashboard-sprint-pass",
+  "prompt": "Evaluate dashboard sprint where all criteria met with strong implementation — should produce PASS verdict.",
+  "assertions": [
+    {"id": "has-three-stages", "text": "Output shows all 3 stages: advocate defense, critic challenge, and arbiter ruling"},
+    {"id": "advocate-passes-all", "text": "Advocate marks all 5 criteria as PASS with evidence"},
+    {"id": "critic-concedes-or-minor", "text": "Critic's challenges are minor or conceded, not deal-breakers"},
+    {"id": "verdict-pass", "text": "Final verdict is PASS since all criteria met with strong implementation"},
+    {"id": "high-functionality-score", "text": "Functionality dimension score is 7 or higher"},
+    {"id": "scores-with-evidence", "text": "Dimension scores include specific evidence (not just numbers)"}
+  ]
+}

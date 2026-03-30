@@ -1,0 +1,16 @@
+{
+  "eval_id": 0,
+  "eval_name": "auth-endpoint-review",
+  "configuration": "without_skill",
+  "expectations": [
+    {"text": "Output shows all 3 stages: finder scan, adversary challenges, and referee ruling", "passed": false, "evidence": "No 3-stage structure — single-pass review organized by severity (Critical/High/Medium)"},
+    {"text": "Finder identifies SQL injection via string interpolation in the query", "passed": true, "evidence": "Issue 1: SQL Injection Vulnerability identified with fix example"},
+    {"text": "Finder identifies MD5 as insecure for password hashing", "passed": true, "evidence": "Issue 2: Use of MD5 for Password Hashing identified"},
+    {"text": "Finder identifies the token generation as predictable/insecure", "passed": true, "evidence": "Issue 4: Insecure Token Generation identified"},
+    {"text": "Issues have IDs (F-001, F-002, etc.) with severity ratings", "passed": false, "evidence": "Issues numbered 1-11 but no F-### format; severity is Critical/High/Medium, not BLOCKER/WARNING/SUGGESTION"},
+    {"text": "Adversary issues KILL/SURVIVE/DISPUTED verdicts for each finding", "passed": false, "evidence": "No adversary stage — no challenging of findings"},
+    {"text": "Referee produces a final issue list with definitive severities", "passed": false, "evidence": "No referee — no independent verification or severity adjustments"},
+    {"text": "Final verdict is NEEDS CHANGES (not APPROVED) given the security issues", "passed": false, "evidence": "Summary says 'unsuitable for production use' but no formal APPROVED/NEEDS CHANGES verdict"},
+    {"text": "Debate metrics include finder accuracy % and false positive rate %", "passed": false, "evidence": "No debate metrics"}
+  ]
+}

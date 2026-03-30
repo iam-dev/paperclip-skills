@@ -40,6 +40,27 @@ eval-advocate → eval-critic → eval-arbiter
 | **eval-critic** | +1 per valid issue | Challenges advocate's claims. Re-runs tests, traces code, finds gaps. Every challenge needs evidence. |
 | **eval-arbiter** | +1 per correct ruling | Resolves disputes, spot-checks ~20%, writes final evaluation file, records QA round. |
 
+## Competing Incentives
+
+Each agent is scored differently — this is what creates the adversarial tension:
+
+| Agent | Incentive | Scores by |
+|-------|-----------|-----------|
+| **Eval-Advocate** | +1 per valid strength defended with evidence | Grounding every PASS in file:line, test output, and code traces |
+| **Eval-Critic** | +1 per valid issue found with evidence | Verifying claims, running tests, finding gaps the Advocate missed |
+| **Eval-Arbiter** | +1 per correct ruling | Independent verification, spot-checking both sides, definitive scoring |
+
+The Advocate is incentivized to defend. The Critic is incentivized to attack. The Arbiter only cares about getting the verdict right. This three-way tension eliminates single-evaluator bias.
+
+## Reporting Chain
+
+The evaluation reports to:
+- **Implementer** — receives specific feedback on what passed and what needs work
+- **Coordinator** — receives the verdict for workflow progression (next sprint or fix cycle)
+- **CTO** — if the sprint is part of a CTO-owned initiative, the CTO sees the verdict summary
+
+Use the template in `references/sprint-evaluation-template.md` for the complete output.
+
 ## Protocol
 
 ### Step 1: Advocate Defends
@@ -72,7 +93,7 @@ The arbiter receives both reports and:
 
 ## Output
 
-The arbiter produces:
+The arbiter produces the sprint evaluation using the template in `references/sprint-evaluation-template.md`:
 - Sprint evaluation document with definitive scores
 - Per-criterion results: PASS/FAIL with evidence
 - Per-dimension scores with dispute resolutions
@@ -96,6 +117,8 @@ After the debate:
 
 ## References
 
+- `references/personas.md` — Persona definitions with incentives and constraints
+- `references/sprint-evaluation-template.md` — Output format template
 - `agents/eval-debate/eval-advocate.md` — Advocate agent definition
 - `agents/eval-debate/eval-critic.md` — Critic agent definition
 - `agents/eval-debate/eval-arbiter.md` — Arbiter agent definition

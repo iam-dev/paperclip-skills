@@ -1,0 +1,17 @@
+{
+  "eval_id": 0,
+  "eval_name": "b2b-to-b2c-pivot",
+  "configuration": "without_skill",
+  "expectations": [
+    {"text": "Output contains all 4 rounds (Round 1 through Round 4)", "passed": false, "evidence": "No round structure — output is a single linear recommendation document"},
+    {"text": "Visionary, Skeptic, and Pragmatist personas all appear and are distinct", "passed": false, "evidence": "No personas — single authorial voice throughout"},
+    {"text": "Round 1 includes a thesis, rationale with 3-5 arguments, timeline, resources needed, and upside scenario", "passed": false, "evidence": "No Round 1 — document is structured as problem/recommendation, not adversarial debate"},
+    {"text": "Round 2 contains numbered challenges with severity ratings (critical/significant/minor)", "passed": false, "evidence": "No Round 2, no severity ratings on challenges"},
+    {"text": "Round 3 addresses each numbered challenge from Round 2, with concessions or counters", "passed": false, "evidence": "No Round 3, no defense/counter structure"},
+    {"text": "Round 4 contains a verdict that is one of: proceed, modify-and-proceed, defer, reject", "passed": false, "evidence": "Recommendation is 'No. Do not pivot' — not using the formal verdict vocabulary"},
+    {"text": "Round 4 includes numbered action items with who/what/when", "passed": false, "evidence": "Has a phased plan but no numbered action items with specific owners and dates"},
+    {"text": "Debate metrics table with challengesRaised, challengesSurvived, challengesDefeated, challengesConceded, confidenceScore", "passed": false, "evidence": "No debate metrics table"},
+    {"text": "Round 4 includes a risks accepted section referencing specific challenges", "passed": false, "evidence": "Has a risk table but not in the context of accepted debate challenges"},
+    {"text": "Round 4 includes a review date for revisiting the decision", "passed": false, "evidence": "No explicit review date"}
+  ]
+}

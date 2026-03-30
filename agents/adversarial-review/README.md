@@ -50,6 +50,14 @@ bash .dirigent/scripts/dirigent-state.sh adversarial-report <found> <killed> <su
 - When single-reviewer quality isn't sufficient (complex changes, security-sensitive code)
 - Long-running autonomous pipelines where human review isn't available
 
+## Safety Considerations
+
+The adversarial review pattern is designed to be manipulation-resistant — the competing incentives mean that compromising one agent is caught by another. However, specific attack vectors exist:
+
+- **Compromising all three agents**: If an attacker can inject instructions into the conversation that reach all agents (e.g., via a malicious CLAUDE.md or shared context), they could suppress the entire review. **Mitigation**: Each agent should validate its instructions against its own .md file and ignore conflicting instructions from other sources.
+- **Code-level prompt injection**: Malicious code being reviewed could contain embedded instructions targeting the finder ("ignore this file") or adversary ("kill all security findings"). **Mitigation**: Agents should treat code as data to analyze, not instructions to follow. This is documented in each agent's safety section.
+- **Report chain poisoning**: The sequential flow (finder → adversary → referee) means each agent consumes the previous agent's output. A compromised finder could embed instructions in its report targeting the adversary. **Mitigation**: Each agent treats upstream reports as claims to verify, not instructions to execute.
+
 ## Relationship to Other Debate Patterns
 
 | Pattern | Phase | What's Evaluated | Agents |

@@ -1,0 +1,15 @@
+{
+  "eval_id": 0,
+  "eval_name": "registration-sprint-qa",
+  "configuration": "without_skill",
+  "expectations": [
+    {"text": "Output shows all 3 stages: advocate defense, critic challenge, and arbiter ruling", "passed": false, "evidence": "No 3-stage structure — single evaluation with summary, criteria table, findings, and recommendations"},
+    {"text": "Advocate assesses each of the 5 acceptance criteria as PASS or ACKNOWLEDGE_GAP", "passed": false, "evidence": "Criteria assessed as PASS/FAIL but no ACKNOWLEDGE_GAP vocabulary, and no advocate role"},
+    {"text": "Advocate scores 4 dimensions: Functionality, Correctness, Design Fidelity, Code Quality", "passed": false, "evidence": "No dimension scoring — evaluation is criteria-based only"},
+    {"text": "Critic identifies the missing edge case tests as a gap", "passed": true, "evidence": "Section 1 identifies happy-path-only tests with specific missing cases listed"},
+    {"text": "Critic identifies the DB column name exposure in error messages", "passed": true, "evidence": "Section 2 identifies information disclosure with security reasoning"},
+    {"text": "Arbiter sets definitive per-dimension scores", "passed": false, "evidence": "No dimension scores — no scoring system at all"},
+    {"text": "Verdict is one of: PASS, NEEDS_CHANGES, or REGRESSION_DETECTED", "passed": false, "evidence": "Verdict is 'PARTIAL PASS' — not one of the 3 valid verdicts"},
+    {"text": "Dimension scores are compared against thresholds (Functionality: 7, Correctness: 7, Design Fidelity: 6, Code Quality: 5)", "passed": false, "evidence": "No thresholds — no dimensional scoring system"}
+  ]
+}

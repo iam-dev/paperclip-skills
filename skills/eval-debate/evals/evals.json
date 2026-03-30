@@ -1,0 +1,51 @@
+{
+  "skill_name": "eval-debate",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Evaluate this sprint implementation against the acceptance criteria:\n\nAcceptance Criteria:\n1. User can create an account with email and password\n2. Passwords must be at least 8 characters with 1 uppercase and 1 number\n3. Duplicate emails should return a 409 error\n4. Successful registration returns a JWT token\n5. All endpoints have integration tests\n\nImplementation:\n- POST /api/register endpoint created and working\n- Password validation: minimum 8 chars, requires uppercase + number ✓\n- Duplicate email check returns 409 ✓\n- JWT token returned on success ✓\n- Tests written for happy path only (no edge case tests)\n- Error messages expose internal DB column names in some cases",
+      "expected_output": "A 3-stage sprint evaluation (advocate → critic → arbiter) with per-criterion results, dimension scores, and a verdict addressing the missing edge case tests and info leakage.",
+      "files": [],
+      "assertions": [
+        {"id": "has-three-stages", "text": "Output shows all 3 stages: advocate defense, critic challenge, and arbiter ruling"},
+        {"id": "advocate-assesses-criteria", "text": "Advocate assesses each of the 5 acceptance criteria as PASS or ACKNOWLEDGE_GAP"},
+        {"id": "advocate-scores-dimensions", "text": "Advocate scores 4 dimensions: Functionality, Correctness, Design Fidelity, Code Quality"},
+        {"id": "critic-finds-test-gap", "text": "Critic identifies the missing edge case tests as a gap"},
+        {"id": "critic-finds-info-leak", "text": "Critic identifies the DB column name exposure in error messages"},
+        {"id": "arbiter-resolves-scores", "text": "Arbiter sets definitive per-dimension scores"},
+        {"id": "has-verdict", "text": "Verdict is one of: PASS, NEEDS_CHANGES, or REGRESSION_DETECTED"},
+        {"id": "scores-have-thresholds", "text": "Dimension scores are compared against thresholds (Functionality: 7, Correctness: 7, Design Fidelity: 6, Code Quality: 5)"}
+      ]
+    },
+    {
+      "id": 1,
+      "prompt": "Evaluate this sprint implementation:\n\nAcceptance Criteria:\n1. Dashboard page loads within 2 seconds\n2. Shows real-time data with WebSocket updates\n3. Supports filtering by date range and status\n4. Mobile responsive design matches Figma mockup\n5. Accessible with screen readers (WCAG 2.1 AA)\n\nImplementation:\n- Dashboard loads in 1.2s (lighthouse score 92)\n- WebSocket connection established, real-time updates working\n- Date range filter works, status filter implemented\n- Responsive breakpoints at 768px and 1024px matching Figma\n- aria-labels on all interactive elements, tested with VoiceOver\n- All acceptance criteria have passing integration tests\n- Code is clean, well-structured, follows project conventions",
+      "expected_output": "A 3-stage sprint evaluation where the advocate makes a strong case, critic finds minimal issues, and arbiter delivers a PASS verdict with high scores.",
+      "files": [],
+      "assertions": [
+        {"id": "has-three-stages", "text": "Output shows all 3 stages: advocate defense, critic challenge, and arbiter ruling"},
+        {"id": "advocate-passes-all", "text": "Advocate marks all 5 criteria as PASS with evidence"},
+        {"id": "critic-concedes-or-minor", "text": "Critic's challenges are minor or conceded, not deal-breakers"},
+        {"id": "verdict-pass", "text": "Final verdict is PASS since all criteria met with strong implementation"},
+        {"id": "high-functionality-score", "text": "Functionality dimension score is 7 or higher"},
+        {"id": "scores-with-evidence", "text": "Dimension scores include specific evidence (not just numbers)"}
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Evaluate this sprint implementation:\n\nAcceptance Criteria:\n1. CSV export of transaction history (up to 100K rows)\n2. Export includes all fields: date, amount, category, merchant, status\n3. Large exports should be async with email notification\n4. Export history page shows past exports with download links\n\nImplementation:\n- CSV export works for up to 5K rows, crashes on larger datasets\n- Export includes date, amount, category (missing merchant and status fields)\n- No async handling — all exports are synchronous, blocking the request\n- Export history page not implemented (placeholder div with 'Coming soon')\n- No tests written",
+      "expected_output": "A 3-stage sprint evaluation finding multiple criteria failures and NEEDS_CHANGES or REGRESSION_DETECTED verdict.",
+      "files": [],
+      "assertions": [
+        {"id": "has-three-stages", "text": "Output shows all 3 stages: advocate defense, critic challenge, and arbiter ruling"},
+        {"id": "advocate-acknowledges-gaps", "text": "Advocate honestly flags gaps with ACKNOWLEDGE_GAP, not inflating"},
+        {"id": "critic-finds-crash", "text": "Critic identifies the 5K row crash as a deal-breaker"},
+        {"id": "critic-finds-missing-fields", "text": "Critic identifies missing merchant and status fields"},
+        {"id": "critic-finds-placeholder", "text": "Critic flags the 'Coming soon' placeholder as an integrity violation"},
+        {"id": "critic-finds-no-tests", "text": "Critic identifies no tests written"},
+        {"id": "verdict-needs-changes", "text": "Verdict is NEEDS_CHANGES or REGRESSION_DETECTED"},
+        {"id": "low-functionality-score", "text": "Functionality score is below the threshold of 7"}
+      ]
+    }
+  ]
+}

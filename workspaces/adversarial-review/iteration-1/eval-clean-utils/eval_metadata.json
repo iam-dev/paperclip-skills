@@ -1,0 +1,12 @@
+{
+  "eval_id": 1,
+  "eval_name": "clean-utils-review",
+  "prompt": "Review clean TypeScript utility functions (formatCurrency, clamp) — should produce APPROVED verdict.",
+  "assertions": [
+    {"id": "has-three-stages", "text": "Output shows all 3 stages: finder scan, adversary challenges, and referee ruling"},
+    {"id": "adversary-kills-false-positives", "text": "Adversary kills at least some findings as false positives with evidence"},
+    {"id": "verdict-approved", "text": "Final verdict is APPROVED (no blockers in clean utility code)"},
+    {"id": "no-phantom-security-issues", "text": "No BLOCKER-level security issues are confirmed in the final list for this safe code"},
+    {"id": "has-accuracy-metrics", "text": "Debate metrics include finder accuracy %"}
+  ]
+}

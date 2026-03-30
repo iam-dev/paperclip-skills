@@ -1,0 +1,15 @@
+{
+  "eval_id": 1,
+  "eval_name": "ml-acquisition-vs-hire",
+  "run_type": "with_skill",
+  "expectations": [
+    {"text": "Output contains all 4 rounds (Round 1 through Round 4)", "passed": true, "evidence": "All 4 rounds present: Round 1 Visionary Proposes, Round 2 Skeptic Challenges, Round 3 Visionary Defends, Round 4 Pragmatist Decides"},
+    {"text": "Visionary, Skeptic, and Pragmatist personas all appear and are distinct", "passed": true, "evidence": "Visionary proposes acquisition, Skeptic raises 7 challenges, Pragmatist decides with modify-and-proceed"},
+    {"text": "Round 2 challenges are specific to the proposal, referencing details like cost, integration risk, or team dynamics", "passed": true, "evidence": "Challenges reference $3M = 37.5% ARR, integration risk, retention risk, scoping the problem, opportunity cost, cultural contamination, aggressive timeline"},
+    {"text": "Round 3 references specific challenge numbers from Round 2", "passed": true, "evidence": "Round 3 responds to each numbered challenge with Concede/Counter labels"},
+    {"text": "Round 4 contains one of the 4 valid verdicts (proceed/modify-and-proceed/defer/reject)", "passed": true, "evidence": "Verdict: modify-and-proceed"},
+    {"text": "Debate metrics table with all 5 metrics filled in", "passed": true, "evidence": "Table includes challengesRaised: 7, challengesSurvived: 3, challengesDefeated: 0, challengesConceded: 4, confidenceScore: 7"},
+    {"text": "Numbered action items with concrete next steps", "passed": true, "evidence": "7 numbered action items with owners, specific tasks, and deadlines"},
+    {"text": "Round 4 rationale references arguments from both Visionary and Skeptic", "passed": true, "evidence": "Pragmatist references Visionary's core argument about time-to-capability and Skeptic's challenges on price, timeline, and retention"}
+  ]
+}

@@ -1,4 +1,4 @@
-# @paperclip/skills
+# @iam-dev/paperclip-skills
 
 Adversarial debate skills and agent assets for [Paperclip](https://github.com/paperclipai/paperclip) AI agents.
 
@@ -46,6 +46,11 @@ This package provides **7 debate protocols** and **8 agent groups** covering fou
 | **eval-debate** | eval-advocate → eval-critic → eval-arbiter | 3 | Sprint QA, implementation quality assessment |
 | **skill-debate** | advocate → critic → arbiter | 3 | Option evaluation, architecture choices, tech selection |
 
+All 7 skills include:
+- **Competing incentives** — each agent scored with "+1 per" metrics that create adversarial tension
+- **Reporting chain** — output templates specify who receives the report (Board, CEO, CTO, Implementer, etc.)
+- **Reference files** — `references/personas.md` (persona definitions) and output format templates
+
 ## Agents
 
 ### C-Suite Agents (Onboarding Assets)
@@ -62,7 +67,7 @@ Each has AGENTS.md (role), SOUL.md (persona), HEARTBEAT.md (execution checklist)
 
 ### Debate Agent Groups
 
-Each is a group of 3 agents with competing incentives, loaded from markdown files with frontmatter.
+Each is a group of 3 agents with competing incentives, loaded from markdown files with frontmatter. All agents include role-specific **safety considerations** documenting attack surfaces and mitigations.
 
 | Group | Agents | Phase |
 |-------|--------|-------|
@@ -80,14 +85,14 @@ Referenced by debate agents:
 ## Structure
 
 ```
-├── skills/                    # Skill definitions (SKILL.md + references + evals)
-│   ├── ceo-brainstorm/
-│   ├── cmo-brainstorm/
-│   ├── coo-brainstorm/
-│   ├── cto-brainstorm/
-│   ├── adversarial-review/
-│   ├── eval-debate/
-│   └── skill-debate/
+├── skills/                    # Skill definitions (SKILL.md + references/ + evals/)
+│   ├── ceo-brainstorm/        # references/personas.md
+│   ├── cmo-brainstorm/        # references/personas.md
+│   ├── coo-brainstorm/        # references/personas.md
+│   ├── cto-brainstorm/        # references/personas.md
+│   ├── adversarial-review/    # references/personas.md, verdict-report-template.md
+│   ├── eval-debate/           # references/personas.md, sprint-evaluation-template.md
+│   └── skill-debate/          # references/personas.md, ranking-report-template.md
 ├── agents/                    # Agent definitions
 │   ├── _shared/               # Shared protocols (evaluation criteria, verification)
 │   ├── ceo-brainstorm/        # Onboarding: AGENTS.md, SOUL.md, HEARTBEAT.md, TOOLS.md

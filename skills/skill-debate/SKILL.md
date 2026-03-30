@@ -34,13 +34,28 @@ advocate → critic → arbiter
 - Sprint QA / implementation quality → use `eval-debate`
 - Strategic business decisions → use brainstorm skills (ceo/cto/cmo/coo)
 
-## Agent Roles
+## Competing Incentives
 
-| Agent | Incentive | Job |
-|-------|-----------|-----|
-| **advocate** | Thorough analysis | Argues FOR each option's strengths. Identifies unique benefits, best-fit scenarios, and hidden advantages. |
-| **critic** | Find weaknesses | Challenges each option. Finds risks, scalability issues, maintenance burden, edge cases, hidden costs. |
-| **arbiter** | Accurate ranking | Weighs advocate and critic arguments, ranks options, provides final recommendation with reasoning. |
+Each agent is scored differently — this is what creates the adversarial tension:
+
+| Agent | Incentive | Scores by |
+|-------|-----------|-----------|
+| **Advocate** | +1 per valid strength identified with evidence | Grounding benefits in benchmarks, prior art, and code compatibility |
+| **Critic** | +1 per valid weakness found with evidence | Finding hidden costs, scaling limits, and failure scenarios |
+| **Arbiter** | +1 per correct ranking | Independent verification, resolving disputes, definitive recommendation |
+
+The Advocate is incentivized to find every benefit. The Critic is incentivized to find every risk. The Arbiter only cares about getting the ranking right. This three-way tension ensures no option wins on hype alone.
+
+## Reporting Chain
+
+The ranking reports to whoever triggered the debate:
+- **Technical options** → CTO
+- **Marketing options** → CMO
+- **Operational options** → COO
+- **Strategic options** → CEO
+- **If the decision needs superior approval**, format the recommendation section as a brief for that superior
+
+Use the template in `references/ranking-report-template.md` for the complete output.
 
 ## Protocol
 
@@ -70,9 +85,10 @@ The arbiter:
 
 ## Output
 
-The arbiter produces:
+The arbiter produces the ranking report using the template in `references/ranking-report-template.md`:
+- Executive summary for the decision-maker
 - Ranked options with reasoning
-- Per-option strength/weakness summary
+- Per-option strength/weakness summary (scorecards)
 - Final recommendation with confidence level
 - Conditions under which the recommendation would change
 
@@ -85,6 +101,8 @@ After the debate:
 
 ## References
 
+- `references/personas.md` — Persona definitions with incentives and constraints
+- `references/ranking-report-template.md` — Output format template
 - `agents/skill-debate/advocate.md` — Advocate agent definition
 - `agents/skill-debate/critic.md` — Critic agent definition
 - `agents/skill-debate/arbiter.md` — Arbiter agent definition

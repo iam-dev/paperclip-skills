@@ -57,6 +57,18 @@ The output is always a **CEO Decision Brief** — a document that gives the CEO 
 
 Use the template in `references/ceo-decision-brief-template.md`.
 
+## Competing Incentives
+
+Each persona is scored differently — this is what creates the adversarial tension:
+
+| Persona | Incentive | Scores by |
+|---------|-----------|-----------|
+| **Growth Strategist** | +1 per growth opportunity surfaced that survives brand scrutiny | Proposing specific, data-grounded strategies with measurable ROI |
+| **Brand Guardian** | +1 per real brand or audience risk exposed | Finding specific positioning risks, audience assumptions, and hidden costs |
+| **CMO** | +1 per correct ruling | Accurate recommendation, clear CEO brief, executable action items |
+
+The Growth Strategist is incentivized to push for aggressive growth. The Brand Guardian is incentivized to protect long-term brand equity. The CMO only cares about getting the recommendation right for the CEO. Two rounds of challenge (Rounds 2 and 4) mean mitigations get stress-tested, not rubber-stamped.
+
 ## The 6-Round Protocol
 
 Run all 6 rounds in a single response. For each round, adopt the persona fully (see `references/personas.md`). The dynamic mirrors the CTO brainstorm's adversarial escalation — the Brand Guardian gets a second pass to stress-test the Growth Strategist's defenses.

@@ -1,0 +1,15 @@
+{
+  "eval_id": 0,
+  "eval_name": "registration-sprint-qa",
+  "configuration": "with_skill",
+  "expectations": [
+    {"text": "Output shows all 3 stages: advocate defense, critic challenge, and arbiter ruling", "passed": true, "evidence": "Eval-Advocate Report, Eval-Critic Report, Eval-Arbiter Report — all present"},
+    {"text": "Advocate assesses each of the 5 acceptance criteria as PASS or ACKNOWLEDGE_GAP", "passed": true, "evidence": "Criteria table: 4 PASS, 1 ACKNOWLEDGE_GAP (criterion 5)"},
+    {"text": "Advocate scores 4 dimensions: Functionality, Correctness, Design Fidelity, Code Quality", "passed": true, "evidence": "Dimension scores table: Functionality 7, Correctness 6, Design Fidelity 7, Code Quality 5"},
+    {"text": "Critic identifies the missing edge case tests as a gap", "passed": true, "evidence": "C-001: Criterion 5 not met — happy path only, missing validation failure, duplicate email, malformed request, boundary tests"},
+    {"text": "Critic identifies the DB column name exposure in error messages", "passed": true, "evidence": "C-002: Error messages expose internal DB column names — security risk and correctness problem"},
+    {"text": "Arbiter sets definitive per-dimension scores", "passed": true, "evidence": "Arbiter scores: Functionality 7, Correctness 5, Design Fidelity 6, Code Quality 4 — with dispute resolutions"},
+    {"text": "Verdict is one of: PASS, NEEDS_CHANGES, or REGRESSION_DETECTED", "passed": true, "evidence": "Verdict: NEEDS_CHANGES"},
+    {"text": "Dimension scores are compared against thresholds (Functionality: 7, Correctness: 7, Design Fidelity: 6, Code Quality: 5)", "passed": true, "evidence": "Thresholds shown in table: Functionality MET (7/7), Correctness NOT MET (5/7), Design Fidelity MET (6/6), Code Quality NOT MET (4/5)"}
+  ]
+}

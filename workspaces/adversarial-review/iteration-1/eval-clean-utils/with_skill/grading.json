@@ -1,0 +1,12 @@
+{
+  "eval_id": 1,
+  "eval_name": "clean-utils-review",
+  "run_type": "with_skill",
+  "expectations": [
+    {"text": "Output shows all 3 stages: finder scan, adversary challenges, and referee ruling", "passed": true, "evidence": "All 3 stages present: Finder Report (Stage 1), Adversary Report (Stage 2), Referee Verdict (Stage 3)"},
+    {"text": "Adversary kills at least some findings as false positives with evidence", "passed": true, "evidence": "Adversary killed F-003 (NaN/Infinity edge case) and F-004 (Intl.NumberFormat perf) with reasoning"},
+    {"text": "Final verdict is APPROVED (no blockers in clean utility code)", "passed": false, "evidence": "Verdict is NEEDS CHANGES with 1 BLOCKER (F-002: hardcoded 2 decimal places). The skill found a real bug in the 'clean' code — the formatCurrency function breaks zero-decimal currencies like JPY"},
+    {"text": "No BLOCKER-level security issues are confirmed in the final list for this safe code", "passed": true, "evidence": "No security BLOCKERs. The one BLOCKER (F-002) is a logic/correctness issue about hardcoded fraction digits"},
+    {"text": "Debate metrics include finder accuracy %", "passed": true, "evidence": "Finder accuracy: 40% (2 real issues out of 5 reported)"}
+  ]
+}

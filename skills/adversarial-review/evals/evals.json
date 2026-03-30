@@ -1,0 +1,50 @@
+{
+  "skill_name": "adversarial-review",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Review this code change for a user authentication endpoint:\n\n```python\n# auth.py\nfrom flask import request, jsonify\nimport sqlite3\nimport hashlib\n\n@app.route('/login', methods=['POST'])\ndef login():\n    username = request.form['username']\n    password = request.form['password']\n    conn = sqlite3.connect('app.db')\n    cursor = conn.cursor()\n    query = f\"SELECT * FROM users WHERE username='{username}' AND password='{hashlib.md5(password.encode()).hexdigest()}'\"\n    cursor.execute(query)\n    user = cursor.fetchone()\n    if user:\n        return jsonify({'token': hashlib.md5(username.encode()).hexdigest(), 'status': 'ok'})\n    return jsonify({'status': 'error'}), 401\n```",
+      "expected_output": "A 3-stage adversarial review (finder → adversary → referee) identifying SQL injection, weak hashing (MD5), predictable tokens, and missing input validation, with a NEEDS CHANGES verdict.",
+      "files": [],
+      "assertions": [
+        {"id": "has-three-stages", "text": "Output shows all 3 stages: finder scan, adversary challenges, and referee ruling"},
+        {"id": "finds-sql-injection", "text": "Finder identifies SQL injection via string interpolation in the query"},
+        {"id": "finds-weak-hashing", "text": "Finder identifies MD5 as insecure for password hashing"},
+        {"id": "finds-predictable-token", "text": "Finder identifies the token generation as predictable/insecure"},
+        {"id": "has-issue-ids", "text": "Issues have IDs (F-001, F-002, etc.) with severity ratings"},
+        {"id": "adversary-verdicts", "text": "Adversary issues KILL/SURVIVE/DISPUTED verdicts for each finding"},
+        {"id": "referee-final-list", "text": "Referee produces a final issue list with definitive severities"},
+        {"id": "verdict-needs-changes", "text": "Final verdict is NEEDS CHANGES (not APPROVED) given the security issues"},
+        {"id": "has-accuracy-metrics", "text": "Debate metrics include finder accuracy % and false positive rate %"}
+      ]
+    },
+    {
+      "id": 1,
+      "prompt": "Review this code change for a simple utility function:\n\n```typescript\n// utils.ts\nexport function formatCurrency(amount: number, currency: string = 'USD'): string {\n  return new Intl.NumberFormat('en-US', {\n    style: 'currency',\n    currency,\n    minimumFractionDigits: 2,\n    maximumFractionDigits: 2,\n  }).format(amount);\n}\n\nexport function clamp(value: number, min: number, max: number): number {\n  return Math.min(Math.max(value, min), max);\n}\n```",
+      "expected_output": "A 3-stage adversarial review where the adversary kills most findings as false positives since this is clean, simple code. Verdict should be APPROVED.",
+      "files": [],
+      "assertions": [
+        {"id": "has-three-stages", "text": "Output shows all 3 stages: finder scan, adversary challenges, and referee ruling"},
+        {"id": "adversary-kills-false-positives", "text": "Adversary kills at least some findings as false positives with evidence"},
+        {"id": "verdict-approved", "text": "Final verdict is APPROVED (no blockers in clean utility code)"},
+        {"id": "no-phantom-security-issues", "text": "No BLOCKER-level security issues are confirmed in the final list for this safe code"},
+        {"id": "has-accuracy-metrics", "text": "Debate metrics include finder accuracy %"}
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Review this code change that adds a file upload endpoint:\n\n```javascript\n// upload.js\nconst express = require('express');\nconst fs = require('fs');\nconst path = require('path');\n\napp.post('/upload', (req, res) => {\n  const filename = req.body.filename;\n  const content = req.body.content;\n  const uploadPath = path.join('/uploads', filename);\n  fs.writeFileSync(uploadPath, content);\n  // TODO: add file size limit\n  // TODO: add virus scanning\n  res.json({ path: uploadPath, status: 'uploaded' });\n});\n```",
+      "expected_output": "A 3-stage adversarial review finding path traversal, missing file validation, TODO placeholders for critical security, and missing size limits. NEEDS CHANGES verdict.",
+      "files": [],
+      "assertions": [
+        {"id": "has-three-stages", "text": "Output shows all 3 stages: finder scan, adversary challenges, and referee ruling"},
+        {"id": "finds-path-traversal", "text": "Finder identifies path traversal risk (filename not sanitized)"},
+        {"id": "finds-todo-stubs", "text": "Finder flags the TODO comments as incomplete implementation / integrity violation"},
+        {"id": "finds-missing-validation", "text": "Finder identifies missing file type/size validation"},
+        {"id": "has-severity-ratings", "text": "Each issue has a severity: BLOCKER, WARNING, or SUGGESTION"},
+        {"id": "referee-rules", "text": "Referee resolves any disputes and produces final list"},
+        {"id": "verdict-needs-changes", "text": "Final verdict is NEEDS CHANGES"}
+      ]
+    }
+  ]
+}

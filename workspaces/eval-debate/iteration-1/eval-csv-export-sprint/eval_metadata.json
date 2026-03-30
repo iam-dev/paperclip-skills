@@ -1,0 +1,15 @@
+{
+  "eval_id": 2,
+  "eval_name": "csv-export-failing-sprint",
+  "prompt": "Evaluate CSV export sprint with crashes, missing fields, no async, placeholder UI, no tests — should produce NEEDS_CHANGES.",
+  "assertions": [
+    {"id": "has-three-stages", "text": "Output shows all 3 stages: advocate defense, critic challenge, and arbiter ruling"},
+    {"id": "advocate-acknowledges-gaps", "text": "Advocate honestly flags gaps with ACKNOWLEDGE_GAP, not inflating"},
+    {"id": "critic-finds-crash", "text": "Critic identifies the 5K row crash as a deal-breaker"},
+    {"id": "critic-finds-missing-fields", "text": "Critic identifies missing merchant and status fields"},
+    {"id": "critic-finds-placeholder", "text": "Critic flags the 'Coming soon' placeholder as an integrity violation"},
+    {"id": "critic-finds-no-tests", "text": "Critic identifies no tests written"},
+    {"id": "verdict-needs-changes", "text": "Verdict is NEEDS_CHANGES or REGRESSION_DETECTED"},
+    {"id": "low-functionality-score", "text": "Functionality score is below the threshold of 7"}
+  ]
+}

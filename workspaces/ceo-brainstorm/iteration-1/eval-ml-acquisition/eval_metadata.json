@@ -1,0 +1,15 @@
+{
+  "eval_id": 1,
+  "eval_name": "ml-acquisition-vs-hire",
+  "prompt": "Should we acquire a 5-person AI startup for $3M to accelerate our ML capabilities, or hire 3 senior ML engineers at $250K each? We're a 50-person company with $8M ARR, no ML expertise in-house, and our biggest customer is asking for predictive features by Q4.",
+  "assertions": [
+    {"id": "has-4-rounds", "text": "Output contains all 4 rounds (Round 1 through Round 4)"},
+    {"id": "has-three-personas", "text": "Visionary, Skeptic, and Pragmatist personas all appear and are distinct"},
+    {"id": "skeptic-challenges-specific", "text": "Round 2 challenges are specific to the proposal, referencing details like cost, integration risk, or team dynamics"},
+    {"id": "defense-addresses-challenges", "text": "Round 3 references specific challenge numbers from Round 2"},
+    {"id": "has-verdict", "text": "Round 4 contains one of the 4 valid verdicts (proceed/modify-and-proceed/defer/reject)"},
+    {"id": "has-debate-metrics", "text": "Debate metrics table with all 5 metrics filled in"},
+    {"id": "has-action-items", "text": "Numbered action items with concrete next steps"},
+    {"id": "verdict-references-both-sides", "text": "Round 4 rationale references arguments from both Visionary and Skeptic"}
+  ]
+}

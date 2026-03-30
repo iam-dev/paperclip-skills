@@ -1,0 +1,14 @@
+{
+  "eval_id": 2,
+  "eval_name": "file-upload-review",
+  "run_type": "with_skill",
+  "expectations": [
+    {"text": "Output shows all 3 stages: finder scan, adversary challenges, and referee ruling", "passed": true, "evidence": "All 3 stages present: Stage 1 Finder (10 issues), Stage 2 Adversary (1 kill, 7 survive, 2 disputed), Stage 3 Referee Verdict"},
+    {"text": "Finder identifies path traversal risk (filename not sanitized)", "passed": true, "evidence": "F-001: Path traversal via unsanitized filename at upload.js:9, severity BLOCKER"},
+    {"text": "Finder flags the TODO comments as incomplete implementation / integrity violation", "passed": true, "evidence": "F-005: TODO comments indicate incomplete implementation, flagged as BLOCKER integrity issue"},
+    {"text": "Finder identifies missing file type/size validation", "passed": true, "evidence": "F-003: No input validation or size limit on content, severity BLOCKER"},
+    {"text": "Each issue has a severity: BLOCKER, WARNING, or SUGGESTION", "passed": true, "evidence": "All 10 findings have severity ratings: 5 BLOCKERs, 4 WARNINGs, 0 SUGGESTIONs in final list"},
+    {"text": "Referee resolves any disputes and produces final list", "passed": true, "evidence": "Referee resolved 2 disputes: F-004 ruled REAL ISSUE (WARNING), F-009 ruled NOT AN ISSUE. Final list has 8 issues."},
+    {"text": "Final verdict is NEEDS CHANGES", "passed": true, "evidence": "Verdict: NEEDS CHANGES with 4 BLOCKERs and 4 WARNINGs"}
+  ]
+}

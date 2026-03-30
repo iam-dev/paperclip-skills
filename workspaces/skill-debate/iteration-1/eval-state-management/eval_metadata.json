@@ -1,0 +1,15 @@
+{
+  "eval_id": 0,
+  "eval_name": "state-management-choice",
+  "prompt": "Choose a state management solution for a React dashboard app: Redux Toolkit vs Zustand vs React Query + Context. Team of 4 mid-level devs with Redux experience, heavy server-side data fetching.",
+  "assertions": [
+    {"id": "has-three-stages", "text": "Output shows all 3 stages: advocate evaluation, critic challenges, and arbiter decision"},
+    {"id": "advocate-covers-all-options", "text": "Advocate evaluates strengths for all 3 options (Redux, Zustand, React Query + Context)"},
+    {"id": "critic-covers-all-options", "text": "Critic finds weaknesses/risks for all 3 options"},
+    {"id": "arbiter-ranks-options", "text": "Arbiter provides a ranked list from best to worst"},
+    {"id": "has-recommendation", "text": "Arbiter gives a clear final recommendation with reasoning"},
+    {"id": "has-decisive-factors", "text": "Arbiter identifies the decisive factors that separated the top options"},
+    {"id": "considers-team-context", "text": "Analysis considers the team's experience level and the app's data-heavy nature"},
+    {"id": "has-conditions", "text": "Recommendation includes conditions under which it would change"}
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "skill_name": "skill-debate",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "We need to choose a state management solution for our new React app. The options are:\n\nOption A: Redux Toolkit — battle-tested, middleware ecosystem, DevTools, team has 2 years Redux experience\nOption B: Zustand — minimal boilerplate, no providers needed, simpler mental model\nOption C: React Query + Context — server state via React Query, minimal client state via Context\n\nThe app is a dashboard with heavy server-side data fetching, some client-side filters, and a team of 4 mid-level React developers.",
+      "expected_output": "A 3-stage debate (advocate → critic → arbiter) evaluating all 3 options with ranked recommendation.",
+      "files": [],
+      "assertions": [
+        {"id": "has-three-stages", "text": "Output shows all 3 stages: advocate evaluation, critic challenges, and arbiter decision"},
+        {"id": "advocate-covers-all-options", "text": "Advocate evaluates strengths for all 3 options (Redux, Zustand, React Query + Context)"},
+        {"id": "critic-covers-all-options", "text": "Critic finds weaknesses/risks for all 3 options"},
+        {"id": "arbiter-ranks-options", "text": "Arbiter provides a ranked list from best to worst"},
+        {"id": "has-recommendation", "text": "Arbiter gives a clear final recommendation with reasoning"},
+        {"id": "has-decisive-factors", "text": "Arbiter identifies the decisive factors that separated the top options"},
+        {"id": "considers-team-context", "text": "Analysis considers the team's experience level and the app's data-heavy nature"},
+        {"id": "has-conditions", "text": "Recommendation includes conditions under which it would change"}
+      ]
+    },
+    {
+      "id": 1,
+      "prompt": "We need to decide on our deployment strategy for a new microservice. Options:\n\nOption A: Kubernetes (EKS) — full orchestration, auto-scaling, existing k8s cluster, but adds operational complexity\nOption B: AWS Lambda — serverless, pay-per-invocation, no server management, but cold starts and 15-min timeout\n\nThe service handles webhook processing: bursty traffic (0-500 RPS), 95th percentile processing time is 8 seconds, and we need to process within 30 seconds SLA. Team has strong K8s experience but no Lambda production experience.",
+      "expected_output": "A 3-stage debate evaluating both deployment options with specific attention to the traffic pattern, processing time, and team experience.",
+      "files": [],
+      "assertions": [
+        {"id": "has-three-stages", "text": "Output shows all 3 stages: advocate evaluation, critic challenges, and arbiter decision"},
+        {"id": "advocate-covers-both", "text": "Advocate evaluates strengths for both EKS and Lambda options"},
+        {"id": "critic-addresses-cold-starts", "text": "Critic discusses Lambda cold start impact on the 30-second SLA"},
+        {"id": "critic-addresses-k8s-complexity", "text": "Critic discusses K8s operational overhead"},
+        {"id": "arbiter-ranks", "text": "Arbiter ranks the options with clear reasoning"},
+        {"id": "considers-traffic-pattern", "text": "Analysis specifically addresses the bursty 0-500 RPS traffic pattern"},
+        {"id": "has-recommendation", "text": "Clear final recommendation provided"}
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Should we use PostgreSQL or MongoDB for our new e-commerce product catalog? Context:\n\nOption A: PostgreSQL — ACID compliance, strong typing, team knows it well, but catalog items have highly variable attributes (clothing has size/color, electronics have specs/warranty, books have ISBN/author)\nOption B: MongoDB — flexible schema for variable attributes, horizontal scaling, but weaker consistency guarantees and the team has no MongoDB experience\n\nWe expect 50K SKUs, 100K daily queries, and need to support faceted search. Team is 3 backend engineers, all experienced with PostgreSQL.",
+      "expected_output": "A 3-stage debate about database choice considering schema flexibility vs consistency vs team expertise.",
+      "files": [],
+      "assertions": [
+        {"id": "has-three-stages", "text": "Output shows all 3 stages: advocate evaluation, critic challenges, and arbiter decision"},
+        {"id": "advocate-covers-both", "text": "Advocate evaluates strengths for both PostgreSQL and MongoDB"},
+        {"id": "addresses-schema-flexibility", "text": "Analysis discusses the variable attribute challenge (JSONB vs document model)"},
+        {"id": "addresses-team-experience", "text": "Analysis weighs the team's PostgreSQL expertise vs MongoDB learning curve"},
+        {"id": "addresses-faceted-search", "text": "Analysis considers faceted search requirements for both options"},
+        {"id": "arbiter-recommends", "text": "Arbiter provides a clear recommendation with confidence level"},
+        {"id": "has-change-conditions", "text": "Includes conditions under which the recommendation would change"}
+      ]
+    }
+  ]
+}

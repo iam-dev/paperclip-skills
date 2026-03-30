@@ -1,0 +1,15 @@
+{
+  "eval_id": 0,
+  "eval_name": "state-management-choice",
+  "configuration": "with_skill",
+  "expectations": [
+    {"text": "Output shows all 3 stages: advocate evaluation, critic challenges, and arbiter decision", "passed": true, "evidence": "Stage 1: Advocate Report, Stage 2: Critic Report, Stage 3: Arbiter Decision — all present"},
+    {"text": "Advocate evaluates strengths for all 3 options (Redux, Zustand, React Query + Context)", "passed": true, "evidence": "Each option has detailed strengths (A-001 to A-018), best-fit scenarios, and hidden advantages"},
+    {"text": "Critic finds weaknesses/risks for all 3 options", "passed": true, "evidence": "Each option has numbered challenges: Redux (C-001 to C-005), Zustand (C-006 to C-010), React Query+Context (C-011 to C-015)"},
+    {"text": "Arbiter provides a ranked list from best to worst", "passed": true, "evidence": "Rank 1: React Query+Context (8.5/10), Rank 2: Redux Toolkit (6.5/10), Rank 3: Zustand (5/10)"},
+    {"text": "Arbiter gives a clear final recommendation with reasoning", "passed": true, "evidence": "Recommended: Option C with high confidence (8/10), detailed reasoning about server state fit"},
+    {"text": "Arbiter identifies the decisive factors that separated the top options", "passed": true, "evidence": "3 decisive factors identified: primary use case alignment, team productivity, completeness"},
+    {"text": "Analysis considers the team's experience level and the app's data-heavy nature", "passed": true, "evidence": "Team experience discussed as 'minor advantage, not decisive' (C-004 dispute), server-heavy nature is the central argument throughout"},
+    {"text": "Recommendation includes conditions under which it would change", "passed": true, "evidence": "4 conditions listed: complex client state → Redux, team resists → RTK Query, multi-team scale → Redux, bundle constraint → stays Option C"}
+  ]
+}

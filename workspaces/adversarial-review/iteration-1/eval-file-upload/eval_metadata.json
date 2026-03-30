@@ -1,0 +1,14 @@
+{
+  "eval_id": 2,
+  "eval_name": "file-upload-review",
+  "prompt": "Review file upload endpoint with path traversal, TODO stubs, and missing validation — should produce NEEDS CHANGES.",
+  "assertions": [
+    {"id": "has-three-stages", "text": "Output shows all 3 stages: finder scan, adversary challenges, and referee ruling"},
+    {"id": "finds-path-traversal", "text": "Finder identifies path traversal risk (filename not sanitized)"},
+    {"id": "finds-todo-stubs", "text": "Finder flags the TODO comments as incomplete implementation / integrity violation"},
+    {"id": "finds-missing-validation", "text": "Finder identifies missing file type/size validation"},
+    {"id": "has-severity-ratings", "text": "Each issue has a severity: BLOCKER, WARNING, or SUGGESTION"},
+    {"id": "referee-rules", "text": "Referee resolves any disputes and produces final list"},
+    {"id": "verdict-needs-changes", "text": "Final verdict is NEEDS CHANGES"}
+  ]
+}

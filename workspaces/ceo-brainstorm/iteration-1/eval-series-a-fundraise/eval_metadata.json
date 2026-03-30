@@ -1,0 +1,15 @@
+{
+  "eval_id": 2,
+  "eval_name": "series-a-fundraise",
+  "prompt": "We're considering raising a Series A at $15M pre-money. We're profitable at $4M ARR with 40% margins, growing 10% MoM. The VC wants 20% equity and a board seat. Should we take the money or stay bootstrapped?",
+  "assertions": [
+    {"id": "has-4-rounds", "text": "Output contains all 4 rounds (Round 1 through Round 4)"},
+    {"id": "has-three-personas", "text": "Visionary, Skeptic, and Pragmatist personas all appear and are distinct"},
+    {"id": "skeptic-has-severity", "text": "Every challenge in Round 2 has a severity rating (critical/significant/minor)"},
+    {"id": "concessions-exist", "text": "Round 3 contains at least one concession where the Visionary acknowledges a valid challenge"},
+    {"id": "has-verdict", "text": "Round 4 contains one of the 4 valid verdicts"},
+    {"id": "has-confidence-score", "text": "Debate metrics include a confidenceScore between 1-10"},
+    {"id": "has-review-date", "text": "A review date is specified for revisiting the decision"},
+    {"id": "has-risks-accepted", "text": "Risks accepted section exists with specific risk references"}
+  ]
+}

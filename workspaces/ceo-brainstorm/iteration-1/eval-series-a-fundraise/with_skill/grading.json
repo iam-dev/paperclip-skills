@@ -1,0 +1,15 @@
+{
+  "eval_id": 2,
+  "eval_name": "series-a-fundraise",
+  "run_type": "with_skill",
+  "expectations": [
+    {"text": "Output contains all 4 rounds (Round 1 through Round 4)", "passed": true, "evidence": "All 4 rounds present: Round 1 Visionary Proposes, Round 2 Skeptic Challenges, Round 3 Visionary Defends, Round 4 Pragmatist Decides"},
+    {"text": "Visionary, Skeptic, and Pragmatist personas all appear and are distinct", "passed": true, "evidence": "Visionary argues for raising, Skeptic raises 7 challenges, Pragmatist decides modify-and-proceed with conditions"},
+    {"text": "Every challenge in Round 2 has a severity rating (critical/significant/minor)", "passed": true, "evidence": "All 7 challenges have severity: critical (2), significant (4), minor (1)"},
+    {"text": "Round 3 contains at least one concession where the Visionary acknowledges a valid challenge", "passed": true, "evidence": "Multiple concessions including full concession on valuation (Challenge 2), partial concessions on need for money and opportunity cost"},
+    {"text": "Round 4 contains one of the 4 valid verdicts", "passed": true, "evidence": "Verdict: modify-and-proceed"},
+    {"text": "Debate metrics include a confidenceScore between 1-10", "passed": true, "evidence": "confidenceScore: 7"},
+    {"text": "A review date is specified for revisiting the decision", "passed": true, "evidence": "Review date: 2026-05-31"},
+    {"text": "Risks accepted section exists with specific risk references", "passed": true, "evidence": "Risks accepted section lists 3 specific risks: sales hiring execution risk (Challenge 4), culture change risk (Challenge 5), downside dilution asymmetry (Challenge 7)"}
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "eval_id": 2,
+  "eval_name": "database-choice",
+  "prompt": "Choose between PostgreSQL and MongoDB for e-commerce catalog with variable attributes, 50K SKUs, faceted search.",
+  "assertions": [
+    {"id": "has-three-stages", "text": "Output shows all 3 stages: advocate evaluation, critic challenges, and arbiter decision"},
+    {"id": "advocate-covers-both", "text": "Advocate evaluates strengths for both PostgreSQL and MongoDB"},
+    {"id": "addresses-schema-flexibility", "text": "Analysis discusses the variable attribute challenge (JSONB vs document model)"},
+    {"id": "addresses-team-experience", "text": "Analysis weighs the team's PostgreSQL expertise vs MongoDB learning curve"},
+    {"id": "addresses-faceted-search", "text": "Analysis considers faceted search requirements for both options"},
+    {"id": "arbiter-recommends", "text": "Arbiter provides a clear recommendation with confidence level"},
+    {"id": "has-change-conditions", "text": "Includes conditions under which the recommendation would change"}
+  ]
+}

@@ -44,6 +44,15 @@ PASS → next sprint  |  NEEDS_CHANGES → implementer fixes, re-evaluate
 - Features with complex acceptance criteria where single-evaluator bias is a risk
 - When you want the same rigor as `--adversarial-review` but applied during implementation, not just at validate
 
+## Safety Considerations
+
+The evaluator debate pattern is manipulation-resistant by design — competing incentives mean one compromised agent gets caught by another. However, specific attack vectors exist:
+
+- **Sprint contract manipulation**: If an attacker can modify the contract file, they can redefine what "passing" means — making a broken sprint look good. **Mitigation**: Contract files should be versioned and reviewed. The arbiter should flag if the contract seems inconsistent with the feature scope.
+- **Test result manipulation**: An attacker could inject tests that always pass or always fail to influence the debate. **Mitigation**: All three agents independently run tests. Discrepancies between agents' test results should trigger investigation.
+- **Evaluation file tampering**: The arbiter writes evaluation files to disk. An attacker could try to make it write falsified results. **Mitigation**: Evaluation file content must match the arbiter's JSON return format. State recording is mandatory and auditable.
+- **Report chain poisoning**: The sequential flow means each agent consumes the previous agent's output. **Mitigation**: Each agent treats upstream reports as claims to verify against actual code and tests.
+
 ## Relationship to Other Debate Patterns
 
 | Pattern | Phase | What's Evaluated | Agents |
