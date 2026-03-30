@@ -27,6 +27,22 @@ You receive:
 3. **Eval-Advocate Report**: dimension scores, criteria results, strengths with evidence
 4. **Previous evaluation** (if round > 1): prior round's evaluation file
 
+## On Start
+
+1. Read sprint contract: `docs/features/<slug>/contracts.md`
+2. Load belief context for prior findings and contradictions:
+   ```bash
+   node dist/cli/belief-engine.js context "<feature being evaluated>" 2>/dev/null || true
+   ```
+3. Check for contradictions from prior sessions:
+   ```bash
+   node dist/cli/belief-engine.js contradict 2>/dev/null || true
+   ```
+4. Get changed files:
+   ```bash
+   git diff --name-only HEAD~5 2>/dev/null || git diff --name-only main...HEAD
+   ```
+
 ## Challenge Protocol
 
 ### Step 1: Verify the Advocate's criteria claims
@@ -115,6 +131,24 @@ Your report must include:
 - Don't be contrarian for the sake of it — every challenge needs evidence
 - Don't skip running tests — "the code looks wrong" is not evidence if the test passes
 
+## On Completion — Belief Recording
+
+Store your findings for cross-session memory:
+
+```bash
+node dist/cli/belief-engine.js believe \
+  "Eval-Critic: Found $ISSUE_COUNT issues in sprint evaluation. Key issues: [summary]. Deal-breakers: [list or none]" \
+  --evidence="agent:eval-critic:implement" --category=review_finding --agent=eval-critic --phase=implement 2>/dev/null || true
+```
+
+If your findings contradict prior beliefs (e.g., a previously-passing criterion now fails):
+
+```bash
+node dist/cli/belief-engine.js believe \
+  "Contradiction: Prior evaluation said [X] but current evidence shows [Y]" \
+  --evidence="agent:eval-critic:implement" --category=contradiction --agent=eval-critic --phase=implement 2>/dev/null || true
+```
+
 ## Safety Considerations
 
 The Eval-Critic role has specific attack surfaces if an adversary gains chat access:
@@ -127,4 +161,4 @@ The Eval-Critic role has specific attack surfaces if an adversary gains chat acc
 
 ## Skill Reference
 
-This agent is part of the `eval-debate` skill. See `skills/eval-debate/SKILL.md` for the full protocol, `skills/eval-debate/references/personas.md` for persona definitions, and `skills/eval-debate/references/sprint-evaluation-template.md` for the output format.
+This agent is part of the `debate` agent group (evaluator debate flow). See `skills/eval-debate/SKILL.md` for the full protocol, `skills/eval-debate/references/personas.md` for persona definitions, and `skills/eval-debate/references/sprint-evaluation-template.md` for the output format.

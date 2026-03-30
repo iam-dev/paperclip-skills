@@ -33,6 +33,29 @@ test(auth): add unit tests for token validation
 - Document what blocked you in your completion summary
 - The coordinator will handle cross-agent issues during merge
 
+## Belief Engine — Record Your Work
+
+Before reporting completion, persist your key findings and decisions for long-term memory:
+
+```bash
+# Load prior context for your task
+node dist/cli/belief-engine.js context "<your task description>" 2>/dev/null || true
+
+# Record what you accomplished and any key decisions
+node dist/cli/belief-engine.js believe \
+  "<summary of what you implemented and key decisions made>" \
+  --evidence="agent:<your-name>:<phase>" \
+  --category=decision --agent=<your-name> --phase=<phase> 2>/dev/null || true
+
+# If you found contradictions with prior beliefs, record them
+node dist/cli/belief-engine.js believe \
+  "<contradiction: prior belief said X but implementation required Y>" \
+  --evidence="agent:<your-name>:<phase>" \
+  --category=contradiction --agent=<your-name> --phase=<phase> 2>/dev/null || true
+```
+
+This ensures the next agent (or your future self) has context about what was done and why.
+
 ## Completion Summary
 
 When done, return a summary including:

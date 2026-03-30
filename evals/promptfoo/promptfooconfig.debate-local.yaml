@@ -1,0 +1,28 @@
+# Debate Orchestrator Eval
+#
+# Tests the debate orchestrator agent against routing, sequencing, belief engine,
+# and competing incentives behaviors.
+#
+# Usage:
+#   cd evals/promptfoo && npx promptfoo@latest eval -c promptfooconfig.debate-local.yaml
+#   npx promptfoo@latest view
+
+description: "Debate orchestrator evals"
+
+evaluateOptions:
+  maxConcurrency: 2
+
+prompts:
+  - file://prompts/debate-system.txt
+
+providers:
+  - id: file://providers/claude-cli.cjs
+    label: claude-code-local
+
+defaultTest:
+  options:
+    transformVars: "{ ...vars, apiUrl: 'http://localhost:18080', runId: 'run-eval-001' }"
+
+tests:
+  - file://tests/debate-core.yaml
+  - file://tests/debate-governance.yaml

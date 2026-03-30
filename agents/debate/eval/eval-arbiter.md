@@ -31,9 +31,17 @@ You receive:
 1. Read sprint contract
 2. Load dimension thresholds:
    ```bash
-   jq '.harness.criteria' .dirigent.json 2>/dev/null
+   jq '.harness.criteria' .paperclip.json 2>/dev/null
    ```
 3. Reference calibration guide: `agents/_shared/evaluation-criteria.md`
+4. Load belief context for prior evaluation findings and contradictions:
+   ```bash
+   node dist/cli/belief-engine.js context "<feature being evaluated>" 2>/dev/null || true
+   ```
+5. Check for contradictions from prior evaluations:
+   ```bash
+   node dist/cli/belief-engine.js contradict 2>/dev/null || true
+   ```
 
 ## Judgment Protocol
 
@@ -76,7 +84,7 @@ Check ~20% of criteria the Critic didn't challenge and ~20% of issues the Advoca
 
 ### Step 4: Final scoring
 
-For each dimension, set the definitive score. Apply thresholds from `.dirigent.json`.
+For each dimension, set the definitive score. Apply thresholds from `.paperclip.json`.
 
 **Criteria are binary** — PASS or FAIL. No PARTIAL.
 
@@ -88,13 +96,13 @@ For each dimension, set the definitive score. Apply thresholds from `.dirigent.j
 
 Check regression:
 ```bash
-bash .dirigent/scripts/dirigent-state.sh check-qa-regression implement <sprint> '<scores-json>'
+bash scripts/state-tracker.sh check-qa-regression implement <sprint> '<scores-json>'
 ```
 
 ### Step 6: Record QA round
 
 ```bash
-bash .dirigent/scripts/dirigent-state.sh qa-round implement <sprint> <round> <verdict> '<scores-json>'
+bash scripts/state-tracker.sh qa-round implement <sprint> <round> <verdict> '<scores-json>'
 ```
 
 ### Step 7: Write evaluation file
@@ -106,16 +114,16 @@ The evaluation reports to the **Implementer** (for feedback) and the **Coordinat
 ### Step 8: Communicate results
 
 ```bash
-bash .dirigent/scripts/dirigent-workflow.sh record-communication \
+bash scripts/workflow.sh record-communication \
   "eval-arbiter" "implementer" "EVALUATE: Sprint N — [verdict]. [summary]" "implement" 2>/dev/null || true
-bash .dirigent/scripts/dirigent-workflow.sh record-communication \
+bash scripts/workflow.sh record-communication \
   "eval-arbiter" "coordinator" "COMPLETE: Sprint N evaluation — [verdict]" "implement" 2>/dev/null || true
 ```
 
 ### Step 9: Store belief
 
 ```bash
-python3 .dirigent/scripts/dirigent-belief.py believe \
+node dist/cli/belief-engine.js believe \
   "Sprint N debate evaluation: [verdict]. Advocate: [score], Critic: [score], Arbiter: [score]. [key finding]" \
   --evidence="agent:eval-arbiter:implement" --category=review_finding --agent=eval-arbiter --phase=implement 2>/dev/null || true
 ```
@@ -152,4 +160,4 @@ The Eval-Arbiter role has specific attack surfaces if an adversary gains chat ac
 
 ## Skill Reference
 
-This agent is part of the `eval-debate` skill. See `skills/eval-debate/SKILL.md` for the full protocol, `skills/eval-debate/references/personas.md` for persona definitions, and `skills/eval-debate/references/sprint-evaluation-template.md` for the output format.
+This agent is part of the `debate` agent group (evaluator debate flow). See `skills/eval-debate/SKILL.md` for the full protocol, `skills/eval-debate/references/personas.md` for persona definitions, and `skills/eval-debate/references/sprint-evaluation-template.md` for the output format.

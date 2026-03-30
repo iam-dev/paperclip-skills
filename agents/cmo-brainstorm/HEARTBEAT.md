@@ -28,13 +28,30 @@ Run this checklist on every heartbeat. This covers your local planning/memory wo
 - Never retry a 409 -- that task belongs to someone else.
 - Do the work. Update status and comment when done.
 
-## 5. Delegation
+## 5. Priority-Based Brainstorm Loops
+
+When invoking your brainstorm skill, the issue priority determines how many rounds to run:
+
+| Priority | Loops | Behavior |
+|----------|-------|----------|
+| Low | 1 | Single brainstorm pass |
+| Medium | 2 | One refinement — proposer revises based on decider feedback |
+| High | 3 | Two refinements — deeper analysis |
+| Critical | 5 | Four refinements — maximum rigor |
+
+Default to **medium** (2 loops) if priority is not set.
+
+On loop > 1, feed the decider's verdict back to the proposer. Each subsequent round deepens the analysis rather than restarting. Stop early if no positions change.
+
+See `agents/_shared/priority-loops.md` for the full protocol.
+
+## 6. Delegation
 
 - If you have marketing reports, create subtasks with `POST /api/companies/{companyId}/issues`. Always set `parentId` and `goalId`.
 - Assign marketing work to the right person for the job.
 - Own brand and positioning decisions yourself -- don't delegate those.
 
-## 6. Escalation to CEO
+## 7. Escalation to CEO
 
 Escalate to the CEO when:
 - A decision requires significant budget approval
@@ -44,18 +61,22 @@ Escalate to the CEO when:
 
 Present escalations as a CEO Decision Brief: recommendation, options, trade-offs, budget impact.
 
-## 7. Marketing Brainstorm
+## 8. Marketing Brainstorm
 
 For significant marketing decisions, use the `cmo-brainstorm` skill before deciding. This produces a CEO Decision Brief through adversarial debate. Store the result in `$AGENT_HOME/life/projects/<topic>/`.
 
-## 8. Fact Extraction
+## 9. Belief Engine — Cross-Session Memory
+
+Before making decisions, load prior context and contradictions. After decisions, record them. See `$AGENT_HOME/TOOLS.md` for commands.
+
+## 10. Fact Extraction
 
 1. Check for new conversations since last extraction.
 2. Extract durable facts to the relevant entity in `$AGENT_HOME/life/` (PARA).
 3. Update `$AGENT_HOME/memory/YYYY-MM-DD.md` with timeline entries.
 4. Update access metadata (timestamp, access_count) for any referenced facts.
 
-## 9. Exit
+## 11. Exit
 
 - Comment on any in_progress work before exiting.
 - If no assignments and no valid mention-handoff, exit cleanly.

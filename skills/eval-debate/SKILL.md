@@ -61,6 +61,19 @@ The evaluation reports to:
 
 Use the template in `references/sprint-evaluation-template.md` for the complete output.
 
+## Priority-Based Loops
+
+The issue priority determines how many times the full evaluation chain runs:
+
+| Priority | Loops | Effect |
+|----------|-------|--------|
+| **Low** | 1 | Single pass |
+| **Medium** | 2 | Advocate strengthens defense based on arbiter feedback |
+| **High** | 3 | Two refinement rounds |
+| **Critical** | 5 | Four refinement rounds — maximum rigor |
+
+On loop > 1, the advocate receives the arbiter's verdict and focuses on contested criteria, weak evidence, and dimensions that scored lowest. Each loop deepens analysis. Stop early if no scores change.
+
 ## Protocol
 
 ### Step 1: Advocate Defends
@@ -119,8 +132,8 @@ After the debate:
 
 - `references/personas.md` — Persona definitions with incentives and constraints
 - `references/sprint-evaluation-template.md` — Output format template
-- `agents/eval-debate/eval-advocate.md` — Advocate agent definition
-- `agents/eval-debate/eval-critic.md` — Critic agent definition
-- `agents/eval-debate/eval-arbiter.md` — Arbiter agent definition
+- `agents/debate/eval/eval-advocate.md` — Advocate agent definition
+- `agents/debate/eval/eval-critic.md` — Critic agent definition
+- `agents/debate/eval/eval-arbiter.md` — Arbiter agent definition
 - `agents/_shared/evaluation-criteria.md` — Scoring calibration guide
 - `agents/_shared/verification-protocol.md` — Shared verification protocol

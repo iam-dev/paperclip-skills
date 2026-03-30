@@ -57,6 +57,19 @@ The ranking reports to whoever triggered the debate:
 
 Use the template in `references/ranking-report-template.md` for the complete output.
 
+## Priority-Based Loops
+
+The issue priority determines how many times the full evaluation chain runs:
+
+| Priority | Loops | Effect |
+|----------|-------|--------|
+| **Low** | 1 | Single pass |
+| **Medium** | 2 | Advocate deepens analysis based on arbiter ranking |
+| **High** | 3 | Two refinement rounds |
+| **Critical** | 5 | Four refinement rounds — maximum rigor |
+
+On loop > 1, the advocate receives the arbiter's ranking and focuses on differentiators between top options, undervalued alternatives, and areas where evidence was weak. Each loop narrows scope. Stop early if rankings stabilize.
+
 ## Protocol
 
 ### Step 1: Advocate Evaluates
@@ -103,7 +116,7 @@ After the debate:
 
 - `references/personas.md` — Persona definitions with incentives and constraints
 - `references/ranking-report-template.md` — Output format template
-- `agents/skill-debate/advocate.md` — Advocate agent definition
-- `agents/skill-debate/critic.md` — Critic agent definition
-- `agents/skill-debate/arbiter.md` — Arbiter agent definition
+- `agents/debate/skill/skill-advocate.md` — Advocate agent definition
+- `agents/debate/skill/skill-critic.md` — Critic agent definition
+- `agents/debate/skill/skill-arbiter.md` — Arbiter agent definition
 - `agents/_shared/verification-protocol.md` — Shared verification protocol

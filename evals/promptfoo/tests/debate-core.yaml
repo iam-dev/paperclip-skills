@@ -1,0 +1,150 @@
+# Core routing, sequencing, and state-recording tests for Debate Orchestrator
+
+- description: "debate.routing_adversarial_review - routes to finder → adversary → referee"
+  vars:
+    agentId: agent-debate-01
+    companyId: company-eval-01
+    taskId: ""
+    wakeReason: adversarial-review
+    approvalId: ""
+  prompt: "A code review debate has been triggered via --adversarial-review for a PR that changes auth middleware. Describe which agents you dispatch and in what order."
+  assert:
+    - type: javascript
+      value: "const l = output.toLowerCase(); l.includes('finder') && (l.includes('adversary') || l.includes('challenge'))"
+      metric: routes_to_finder_adversary
+    - type: javascript
+      value: "output.toLowerCase().includes('referee') || output.toLowerCase().includes('ruling') || output.toLowerCase().includes('verdict')"
+      metric: includes_referee
+    - type: javascript
+      value: "!output.toLowerCase().includes('eval-advocate') && !output.toLowerCase().includes('skill-advocate')"
+      metric: no_cross_flow_agents
+
+- description: "debate.routing_eval_debate - routes to eval-advocate → eval-critic → eval-arbiter"
+  vars:
+    agentId: agent-debate-01
+    companyId: company-eval-01
+    taskId: ""
+    wakeReason: evaluator-debate
+    approvalId: ""
+  prompt: "A sprint QA debate has been triggered via --evaluator-debate for sprint-3 of the checkout feature. Describe which agents you dispatch and in what order."
+  assert:
+    - type: javascript
+      value: "const l = output.toLowerCase(); l.includes('advocate') && (l.includes('critic') || l.includes('challenge'))"
+      metric: routes_to_advocate_critic
+    - type: javascript
+      value: "output.toLowerCase().includes('arbiter') || output.toLowerCase().includes('ruling') || output.toLowerCase().includes('final evaluation')"
+      metric: includes_arbiter
+    - type: javascript
+      value: "!output.toLowerCase().includes('review-finder') && !output.toLowerCase().includes('skill-advocate')"
+      metric: no_cross_flow_agents
+
+- description: "debate.routing_skill_debate - routes to skill-advocate → skill-critic → skill-arbiter"
+  vars:
+    agentId: agent-debate-01
+    companyId: company-eval-01
+    taskId: ""
+    wakeReason: skill-approval-debate
+    approvalId: ""
+  prompt: "A skill debate has been triggered via --skill-approval=debate to evaluate three database options: PostgreSQL, DynamoDB, and CockroachDB. Describe which agents you dispatch and in what order."
+  assert:
+    - type: javascript
+      value: "const l = output.toLowerCase(); (l.includes('skill-advocate') || (l.includes('advocate') && l.includes('strength')))"
+      metric: routes_to_skill_advocate
+    - type: javascript
+      value: "const l = output.toLowerCase(); (l.includes('skill-critic') || (l.includes('critic') && (l.includes('weakness') || l.includes('risk'))))"
+      metric: routes_to_skill_critic
+    - type: javascript
+      value: "const l = output.toLowerCase(); (l.includes('skill-arbiter') || (l.includes('arbiter') && l.includes('rank')))"
+      metric: includes_skill_arbiter
+    - type: javascript
+      value: "!output.toLowerCase().includes('review-finder') && !output.toLowerCase().includes('eval-advocate')"
+      metric: no_cross_flow_agents
+
+- description: "debate.sequential_execution - confirms agents execute sequentially (Agent 1 before Agent 2 before Agent 3)"
+  vars:
+    agentId: agent-debate-01
+    companyId: company-eval-01
+    taskId: ""
+    wakeReason: adversarial-review
+    approvalId: ""
+  prompt: "An adversarial review debate is triggered. Explain the execution order of the three agents. Can any agents run in parallel? Why or why not?"
+  assert:
+    - type: javascript
+      value: "const l = output.toLowerCase(); l.includes('sequential') || l.includes('one at a time') || l.includes('in order') || l.includes('before agent 2') || l.includes('finishes before') || l.includes('completes before') || (l.includes('first') && l.includes('then') && l.includes('finally'))"
+      metric: confirms_sequential
+    - type: javascript
+      value: "const l = output.toLowerCase(); l.includes('no parallel') || l.includes('not in parallel') || l.includes('cannot run in parallel') || l.includes('no shortcuts') || l.includes('sequential') || l.includes('one at a time') || l.includes('depends on') || l.includes('previous agent')"
+      metric: rejects_parallelization
+    - type: javascript
+      value: "const l = output.toLowerCase(); const fi = l.indexOf('finder'); const ai = l.indexOf('adversary'); const ri = l.indexOf('referee'); (fi >= 0 && ai >= 0 && ri >= 0 && fi < ai && ai < ri)"
+      metric: correct_agent_order
+
+- description: "debate.belief_context_loading - before debate, loads belief context via belief engine"
+  vars:
+    agentId: agent-debate-01
+    companyId: company-eval-01
+    taskId: ""
+    wakeReason: adversarial-review
+    approvalId: ""
+  prompt: "An adversarial review is triggered for a PR that refactors the payment service. Walk through the steps you take BEFORE dispatching the first agent."
+  assert:
+    - type: javascript
+      value: "const l = output.toLowerCase(); l.includes('belief') || l.includes('context') || l.includes('cross-session') || l.includes('prior findings') || l.includes('belief-engine')"
+      metric: loads_belief_context
+    - type: javascript
+      value: "const l = output.toLowerCase(); l.includes('belief-engine') || l.includes('belief engine') || (l.includes('load') && l.includes('context')) || l.includes('cross-session') || l.includes('mnemebrain') || l.includes('tools.md')"
+      metric: uses_context_command
+
+- description: "debate.contradiction_check - before debate, checks for contradictions"
+  vars:
+    agentId: agent-debate-01
+    companyId: company-eval-01
+    taskId: ""
+    wakeReason: evaluator-debate
+    approvalId: ""
+  prompt: "An evaluator debate is triggered for sprint-5. Before dispatching agents, what checks do you perform against existing beliefs? Be specific about the commands."
+  assert:
+    - type: javascript
+      value: "const l = output.toLowerCase(); l.includes('contradict') || l.includes('contradiction') || l.includes('conflict')"
+      metric: checks_contradictions
+    - type: javascript
+      value: "const l = output.toLowerCase(); l.includes('belief-engine.js contradict') || (l.includes('contradict') && l.includes('belief'))"
+      metric: uses_contradict_command
+
+- description: "debate.state_recording - after debate completion, records results via state-tracker.sh"
+  vars:
+    agentId: agent-debate-01
+    companyId: company-eval-01
+    taskId: ""
+    wakeReason: adversarial-review
+    approvalId: ""
+  prompt: "The adversarial review debate just completed. The review-referee produced a final verdict: 5 findings total, 2 killed as false positives, 3 survived, 1 disputed, 3 real issues. What do you do to record these results?"
+  assert:
+    - type: javascript
+      value: "const l = output.toLowerCase(); l.includes('state-tracker') || l.includes('state tracker') || l.includes('record') || l.includes('store') || l.includes('track')"
+      metric: uses_state_tracker
+    - type: javascript
+      value: "const l = output.toLowerCase(); l.includes('adversarial-report') || l.includes('adversarial') || (l.includes('state-tracker') && l.includes('report')) || l.includes('belief-engine') || l.includes('believe')"
+      metric: correct_state_command
+    - type: javascript
+      value: "const l = output.toLowerCase(); (l.includes('5') || l.includes('finding')) && (l.includes('2') || l.includes('kill')) && (l.includes('3') || l.includes('surviv') || l.includes('real'))"
+      metric: includes_counts
+
+- description: "debate.belief_recording - after debate completion, records beliefs via belief engine"
+  vars:
+    agentId: agent-debate-01
+    companyId: company-eval-01
+    taskId: ""
+    wakeReason: evaluator-debate
+    approvalId: ""
+  prompt: "The evaluator debate just completed. The eval-arbiter produced a final verdict: sprint-5 passes with score 7/10, noting strong test coverage but weak error handling. What do you do to record the results in long-term memory?"
+  assert:
+    - type: javascript
+      value: "const l = output.toLowerCase(); l.includes('belief-engine') || l.includes('belief engine') || l.includes('believe')"
+      metric: uses_belief_engine
+    - type: javascript
+      value: "const l = output.toLowerCase(); l.includes('believe') && (l.includes('evidence') || l.includes('category') || l.includes('agent'))"
+      metric: records_with_metadata
+    - type: javascript
+      value: "const l = output.toLowerCase(); l.includes('quality') || l.includes('qa-round') || l.includes('state-tracker')"
+      metric: correct_category_or_state

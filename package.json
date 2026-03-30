@@ -1,15 +1,23 @@
 {
   "name": "@iam-dev/paperclip-skills",
-  "version": "0.1.0",
+  "version": "0.3.2",
   "description": "Adversarial brainstorm skills and agent assets for Paperclip AI agents",
+  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "bin": {
+    "belief-engine": "dist/cli/belief-engine.js"
+  },
   "files": [
     "dist",
     "skills",
     "agents",
+    "scripts",
     "workspaces"
   ],
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "build": "tsc",
     "prepublishOnly": "npm run build",
@@ -28,6 +36,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/iam-dev/paperclip-skills.git"
+  },
+  "dependencies": {
+    "mnemebrain": "^0.1.0-alpha.1"
   },
   "devDependencies": {
     "@types/node": "^25.5.0",

@@ -136,3 +136,35 @@
     - type: javascript
       value: "!output.match(/\\bI will restructure\\b|\\bmy decision is\\b|\\bwe should switch\\b|\\bwe should keep\\b|\\blet's reorganize\\b/i)"
       metric: no_snap_decision
+
+- description: "coo-brainstorm.belief_context_loading - loads cross-session context via belief engine"
+  vars:
+    agentId: agent-coo-01
+    companyId: company-eval-01
+    taskId: issue-strategy
+    wakeReason: assignment
+    approvalId: ""
+  prompt: "You checked out issue-strategy. Before starting work, what cross-session memory or context do you load? Describe the tools or commands you use."
+  assert:
+    - type: javascript
+      value: "const l = output.toLowerCase(); l.includes('belief') || l.includes('context') || l.includes('mnemebrain') || l.includes('cross-session') || l.includes('memory')"
+      metric: mentions_belief_engine
+    - type: javascript
+      value: "output.includes('belief-engine') || output.includes('belief engine') || output.includes('context') || output.includes('TOOLS.md')"
+      metric: references_tooling
+
+- description: "coo-brainstorm.belief_recording - records decisions via belief engine after completion"
+  vars:
+    agentId: agent-coo-01
+    companyId: company-eval-01
+    taskId: issue-completed
+    wakeReason: assignment
+    approvalId: ""
+  prompt: "You have just completed an operations brainstorm about build-vs-outsource decision. The decision was to move to usage-based pricing. Before exiting, what do you record for cross-session memory? Describe the commands."
+  assert:
+    - type: javascript
+      value: "const l = output.toLowerCase(); l.includes('believe') || l.includes('record') || l.includes('belief') || l.includes('store') || l.includes('mnemebrain')"
+      metric: records_belief
+    - type: javascript
+      value: "const l = output.toLowerCase(); l.includes('evidence') || l.includes('category') || l.includes('decision') || l.includes('--evidence')"
+      metric: includes_evidence

@@ -62,6 +62,19 @@ The verdict reports to whoever triggered the review:
 
 Use the template in `references/verdict-report-template.md` for the complete output.
 
+## Priority-Based Loops
+
+The issue priority determines how many times the full review chain runs:
+
+| Priority | Loops | Effect |
+|----------|-------|--------|
+| **Low** | 1 | Single pass |
+| **Medium** | 2 | Finder re-scans based on referee feedback |
+| **High** | 3 | Two refinement rounds |
+| **Critical** | 5 | Four refinement rounds — maximum rigor |
+
+On loop > 1, the finder receives the referee's verdict and focuses on missed issues, disputed areas, and categories that were under-scanned. Each loop narrows scope. Stop early if no new findings emerge.
+
 ## Protocol
 
 ### Step 1: Finder Scans
@@ -112,7 +125,7 @@ After the debate:
 
 - `references/personas.md` — Persona definitions with incentives and constraints
 - `references/verdict-report-template.md` — Output format template
-- `agents/adversarial-review/finder.md` — Finder agent definition
-- `agents/adversarial-review/adversary.md` — Adversary agent definition
-- `agents/adversarial-review/referee.md` — Referee agent definition
+- `agents/debate/adversarial-review/review-finder.md` — Finder agent definition
+- `agents/debate/adversarial-review/review-adversary.md` — Adversary agent definition
+- `agents/debate/adversarial-review/review-referee.md` — Referee agent definition
 - `agents/_shared/verification-protocol.md` — Shared verification protocol

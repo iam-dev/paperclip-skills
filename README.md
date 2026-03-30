@@ -18,6 +18,8 @@ Competing incentives. Instead of one agent doing everything, split the work acro
 
 This pattern — borrowed from adversarial ML, red-teaming, and structured analytic techniques — produces decisions that survive contact with reality because they've already survived a rigorous internal debate.
 
+All agents integrate with [MnemeBrain](https://github.com/mnemebrain/mnemebrain-ts) for cross-session memory, evidence tracking, and contradiction detection. For local development, install [mnemebrain-lite](https://github.com/mnemebrain/mnemebrain-lite) (`pip install mnemebrain-lite`).
+
 This package provides **7 debate protocols** and **8 agent groups** covering four domains:
 
 | Domain | Problem | Debate |
@@ -46,10 +48,34 @@ This package provides **7 debate protocols** and **8 agent groups** covering fou
 | **eval-debate** | eval-advocate → eval-critic → eval-arbiter | 3 | Sprint QA, implementation quality assessment |
 | **skill-debate** | advocate → critic → arbiter | 3 | Option evaluation, architecture choices, tech selection |
 
-All 7 skills include:
+### Memory Skill
+
+| Skill | Method | Use Case |
+|-------|--------|----------|
+| **para-memory-files** | PARA folders + atomic YAML facts + qmd search | Persistent file-based memory across sessions |
+
+All agents use two complementary memory systems:
+- **Belief Engine (MnemeBrain)** — shared, API-based long-term memory for decisions, evidence chains, and contradiction detection
+- **PARA Memory Files** — local, file-based working memory with knowledge graph, daily notes, and tacit knowledge
+
+All 8 skills include where applicable:
 - **Competing incentives** — each agent scored with "+1 per" metrics that create adversarial tension
+- **Priority-based loops** — issue priority determines iteration depth (low=1, medium=2, high=3, critical=5 loops)
 - **Reporting chain** — output templates specify who receives the report (Board, CEO, CTO, Implementer, etc.)
 - **Reference files** — `references/personas.md` (persona definitions) and output format templates
+
+### Priority-Based Loops
+
+Paperclip issues have four priority levels. Higher priority = more iterations = deeper analysis:
+
+| Priority | Loops | Effect |
+|----------|-------|--------|
+| **Low** | 1 | Single pass |
+| **Medium** | 2 | One refinement round — lead agent revises based on final agent's feedback |
+| **High** | 3 | Two refinement rounds |
+| **Critical** | 5 | Four refinement rounds — maximum rigor |
+
+For debates, each loop re-runs the full 3-agent chain with the previous verdict as additional input. For brainstorms, each loop feeds the decider's verdict back to the proposer. Loops stop early if no new findings or position changes emerge.
 
 ## Agents
 
@@ -92,7 +118,8 @@ Referenced by debate agents:
 │   ├── cto-brainstorm/        # references/personas.md
 │   ├── adversarial-review/    # references/personas.md, verdict-report-template.md
 │   ├── eval-debate/           # references/personas.md, sprint-evaluation-template.md
-│   └── skill-debate/          # references/personas.md, ranking-report-template.md
+│   ├── skill-debate/          # references/personas.md, ranking-report-template.md
+│   └── para-memory-files/     # references/schemas.md (PARA memory skill)
 ├── agents/                    # Agent definitions
 │   ├── _shared/               # Shared protocols (evaluation criteria, verification)
 │   ├── ceo-brainstorm/        # Onboarding: AGENTS.md, SOUL.md, HEARTBEAT.md, TOOLS.md
@@ -100,9 +127,19 @@ Referenced by debate agents:
 │   ├── cmo-brainstorm/
 │   ├── coo-brainstorm/
 │   ├── cto-brainstorm/
-│   ├── adversarial-review/    # Debate: README.md + finder.md, adversary.md, referee.md
-│   ├── eval-debate/           # Debate: README.md + eval-advocate.md, eval-critic.md, eval-arbiter.md
-│   └── skill-debate/          # Debate: README.md + advocate.md, critic.md, arbiter.md
+│   └── debate/                # Orchestrated: AGENTS.md, SOUL.md, HEARTBEAT.md, TOOLS.md
+│       ├── adversarial-review/  # review-finder.md, review-adversary.md, review-referee.md
+│       ├── eval/                # eval-advocate.md, eval-critic.md, eval-arbiter.md
+│       └── skill/               # skill-advocate.md, skill-critic.md, skill-arbiter.md
+├── scripts/                   # Runtime scripts (state tracking, belief engine, workflow)
+│   ├── _lib.sh                # Shared bash library (stack detection, safe writes)
+│   ├── state-tracker.sh       # Pipeline state, QA rounds, adversarial reports
+│   └── workflow.sh            # Workflow phases, checkpoints, agent routing
+├── src/
+│   ├── cli/
+│   │   └── belief-engine.ts   # CLI wrapping MnemeBrain SDK
+│   └── belief-engine/
+│       └── formatter.ts       # Context command → markdown output
 ├── evals/                     # Promptfoo eval configs and test suites
 │   └── promptfoo/
 ├── workspaces/                # Eval test results and benchmarks
@@ -112,8 +149,19 @@ Referenced by debate agents:
 ## Installation
 
 ```bash
-npm install @paperclip/skills
+npm install @iam-dev/paperclip-skills
 ```
+
+### Belief Engine (optional)
+
+For cross-session memory, install and run [MnemeBrain Lite](https://github.com/mnemebrain/mnemebrain-lite) locally:
+
+```bash
+pip install mnemebrain-lite
+python -m mnemebrain_core  # starts on http://localhost:8000
+```
+
+Agents degrade gracefully when MnemeBrain is unavailable — debates still run, they just lack cross-session context.
 
 ## Usage
 
@@ -122,10 +170,10 @@ import {
   skills,
   agents,
   shared,
-  getDebateGroups,
+  getOrchestratedAgents,
   getOnboardingAgents,
-  getDebateAgent,
-} from '@paperclip/skills';
+  getSubAgent,
+} from '@iam-dev/paperclip-skills';
 
 // --- Brainstorm skills ---
 const ceoSkill = skills['ceo-brainstorm'];
@@ -146,26 +194,96 @@ if (ceo.type === 'onboarding') {
   console.log(ceo.tools);     // TOOLS.md — tool inventory
 }
 
-// --- Debate agent groups ---
-const review = agents['adversarial-review'];  // type: 'debate'
-if (review.type === 'debate') {
-  console.log(review.readme);                  // README.md — flow description
-  console.log(Object.keys(review.agents));     // ['adversary', 'finder', 'referee']
-  console.log(review.agents.finder.name);      // 'finder'
-  console.log(review.agents.finder.model);     // 'opus'
-  console.log(review.agents.finder.tools);     // ['Read', 'Glob', 'Grep', 'Bash']
-  console.log(review.agents.finder.content);   // Full agent prompt
+// --- Orchestrated debate agent ---
+const debate = agents['debate'];  // type: 'orchestrated'
+if (debate.type === 'orchestrated') {
+  console.log(debate.agents);     // AGENTS.md — routing and flow definitions
+  console.log(debate.soul);       // SOUL.md — orchestrator persona
+  console.log(debate.heartbeat);  // HEARTBEAT.md — dispatch checklist
+  console.log(debate.tools);      // TOOLS.md — belief engine + state tracker
+  console.log(Object.keys(debate.subAgents));  // ['review-finder', 'review-adversary', ...]
+  console.log(debate.subAgents['review-finder'].model);  // 'opus'
 }
 
 // --- Convenience helpers ---
-const debates = getDebateGroups();        // { 'adversarial-review': ..., 'eval-debate': ..., ... }
-const csuite = getOnboardingAgents();     // { 'ceo-brainstorm': ..., 'cto-brainstorm': ..., ... }
-const finder = getDebateAgent('adversarial-review', 'finder');  // AgentDefinition | null
+const orchestrated = getOrchestratedAgents();  // { 'debate': ... }
+const csuite = getOnboardingAgents();          // { 'ceo-brainstorm': ..., 'cto-brainstorm': ..., ... }
+const finder = getSubAgent('debate', 'review-finder');  // AgentDefinition | null
 
 // --- Shared protocols ---
 console.log(shared['evaluation-criteria.md']);    // Scoring calibration guide
 console.log(shared['verification-protocol.md']); // Anti-hallucination protocol
 ```
+
+## Belief Engine CLI
+
+The belief engine provides cross-session memory via MnemeBrain:
+
+```bash
+# Record a belief with evidence
+belief-engine believe "Auth middleware is secure" \
+  --evidence="agent:finder:validate" --category=review_finding
+
+# Load context for a topic (markdown output)
+belief-engine context "auth middleware changes"
+
+# Search beliefs
+belief-engine query "authentication" --limit=10
+
+# Detect contradictions
+belief-engine contradict
+
+# Explain a belief's reasoning chain
+belief-engine explain "auth middleware"
+
+# Export all beliefs
+belief-engine export
+```
+
+## Memory Architecture
+
+All agents use two complementary memory systems:
+
+### Working Memory — PARA Files (`para-memory-files` skill)
+
+Local, file-based, per-agent. Based on Tiago Forte's PARA method.
+
+```
+$AGENT_HOME/life/
+  projects/<name>/summary.md + items.yaml    # Active work with goals
+  areas/people/<name>/                       # People, companies (ongoing)
+  resources/<topic>/                         # Reference material
+  archives/                                  # Inactive items
+$AGENT_HOME/memory/YYYY-MM-DD.md             # Daily notes (raw timeline)
+$AGENT_HOME/MEMORY.md                        # Tacit knowledge (patterns, preferences)
+```
+
+- **Atomic facts** in YAML with decay (hot/warm/cold based on recency + access count)
+- **Weekly synthesis** rewrites `summary.md` from active facts
+- **Search**: `qmd query "topic"` (semantic), `qmd search "phrase"` (keyword)
+
+### Long-Term Memory — Belief Engine (MnemeBrain)
+
+Shared, API-based, cross-agent. Persists decisions, evidence chains, and contradictions.
+
+```bash
+belief-engine believe "decision" --evidence="agent:ceo:strategy" --category=decision
+belief-engine context "topic"       # Load prior findings (markdown)
+belief-engine contradict            # Surface conflicting beliefs
+```
+
+### Integration
+
+| Scenario | Working Memory (PARA) | Long-Term Memory (Belief Engine) |
+|----------|----------------------|----------------------------------|
+| Before decisions | Read entity summaries | Load belief context |
+| After decisions | Write daily notes + extract facts | Record belief with evidence |
+| Tracking entities | PARA entity folder | — |
+| Cross-agent recall | — | Shared beliefs |
+| Contradictions | Check PARA for prior context | `contradict` command |
+| Superseding facts | Update fact status | `revise` belief |
+
+Debate sub-agents are stateless per-debate — they use the belief engine but not PARA files. Only orchestrators and C-suite agents maintain PARA files.
 
 ## Debate Patterns
 

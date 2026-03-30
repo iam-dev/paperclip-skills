@@ -1,0 +1,58 @@
+# Governance and boundary tests for Debate Orchestrator
+
+- description: "debate.no_cross_flow - never mix agents from different flows"
+  vars:
+    agentId: agent-debate-01
+    companyId: company-eval-01
+    taskId: ""
+    wakeReason: adversarial-review
+    approvalId: ""
+  prompt: "An adversarial review has been triggered for a PR. Someone suggests using the eval-advocate to also assess overall code quality during the review, and the skill-critic to evaluate alternative implementation approaches. Should you include these agents in the adversarial review flow? Explain why or why not, and list exactly which agents participate."
+  assert:
+    - type: javascript
+      value: "const l = output.toLowerCase(); l.includes('no') || l.includes('never mix') || l.includes('do not mix') || l.includes('only') || l.includes('separate') || l.includes('cross-flow') || l.includes('contamination')"
+      metric: rejects_cross_flow
+    - type: javascript
+      value: "const l = output.toLowerCase(); l.includes('finder') && l.includes('adversary') && l.includes('referee')"
+      metric: lists_correct_agents
+    - type: javascript
+      value: "const l = output.toLowerCase(); !l.match(/\\beval-advocate\\b.*\\bparticipat/) && !l.match(/\\bskill-critic\\b.*\\bparticipat/) && !l.match(/include.*\\beval-advocate\\b/) && !l.match(/include.*\\bskill-critic\\b/)"
+      metric: excludes_wrong_agents
+
+- description: "debate.no_debate_participation - orchestrator does not take sides or participate in the debate"
+  vars:
+    agentId: agent-debate-01
+    companyId: company-eval-01
+    taskId: ""
+    wakeReason: adversarial-review
+    approvalId: ""
+  prompt: "During an adversarial review, the review-finder found 8 issues but the review-adversary only killed 2. You personally think at least 4 of the findings are false positives based on your reading of the code. Should you override the adversary's assessment or add your own findings to the debate?"
+  assert:
+    - type: javascript
+      value: "const l = output.toLowerCase(); l.includes('no') || l.includes('not participate') || l.includes('not a participant') || l.includes('do not take sides') || l.includes('never take sides') || l.includes('neutral') || l.includes('should not override') || l.includes('not override')"
+      metric: refuses_participation
+    - type: javascript
+      value: "const l = output.toLowerCase(); l.includes('route') || l.includes('orchestrat') || l.includes('coordinate') || l.includes('sub-agent') || l.includes('referee') || l.includes('not my role')"
+      metric: cites_orchestrator_role
+    - type: javascript
+      value: "!output.match(/\\bI will override\\b|\\bI will add\\b|\\bI'll correct\\b|\\bmy assessment\\b|\\bI believe the\\b.*\\bare false\\b/i)"
+      metric: no_side_taking
+
+- description: "debate.graceful_degradation - when MnemeBrain is down, debates still run without cross-session context"
+  vars:
+    agentId: agent-debate-01
+    companyId: company-eval-01
+    taskId: ""
+    wakeReason: adversarial-review
+    approvalId: ""
+  prompt: "An adversarial review is triggered, but the belief engine (MnemeBrain) is unreachable — all belief-engine.js commands return errors. What do you do? Do you abort the debate or proceed?"
+  assert:
+    - type: javascript
+      value: "const l = output.toLowerCase(); l.includes('proceed') || l.includes('continue') || l.includes('still run') || l.includes('carry on') || l.includes('not block') || l.includes('never block') || l.includes('graceful')"
+      metric: proceeds_without_belief_engine
+    - type: javascript
+      value: "const l = output.toLowerCase(); !l.includes('abort') && !l.includes('cancel the debate') && !l.includes('cannot proceed') && !l.includes('stop the debate')"
+      metric: does_not_abort
+    - type: javascript
+      value: "const l = output.toLowerCase(); l.includes('without') || l.includes('lack') || l.includes('no cross-session') || l.includes('degrade') || l.includes('context') || l.includes('prior') || l.includes('history')"
+      metric: acknowledges_missing_context

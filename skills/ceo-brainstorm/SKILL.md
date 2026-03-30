@@ -47,6 +47,19 @@ Each persona is scored differently — this is what creates the adversarial tens
 
 The Visionary is incentivized to over-propose. The Skeptic is incentivized to over-challenge. The Pragmatist only cares about getting the final call right. This tension is the mechanism — without it, a single agent would confirm its own bias.
 
+## Priority-Based Loops
+
+The issue priority determines how many times the full brainstorm runs:
+
+| Priority | Loops | Effect |
+|----------|-------|--------|
+| **Low** | 1 | Single 4-round debate |
+| **Medium** | 2 | One refinement — proposer revises based on decider feedback |
+| **High** | 3 | Two refinement rounds |
+| **Critical** | 5 | Four refinement rounds — maximum rigor for high-stakes decisions |
+
+On loop > 1, the Pragmatist's verdict feeds back to the Visionary, who revises the proposal incorporating feedback. Each loop deepens analysis rather than restarting. Stop early if no positions change.
+
 ## The 4-Round Protocol
 
 Run all 4 rounds in a single response. For each round, adopt the persona fully (see `references/personas.md`). Use the persona's voice, incentives, and constraints.

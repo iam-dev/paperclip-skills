@@ -1,6 +1,9 @@
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
-import { join, resolve, extname } from 'node:path';
+import { join, resolve, extname, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 const PKG_ROOT = resolve(__dirname, '..');
 
 // --- Skill types ---
@@ -47,7 +50,17 @@ export interface AgentDefinition {
   content: string;
 }
 
-/** Debate agent group (adversarial-review, eval-debate, skill-debate) */
+/** Orchestrated agent with onboarding assets AND sub-agents (debate) */
+export interface OrchestratedAgent {
+  type: 'orchestrated';
+  agents: string;
+  soul: string;
+  heartbeat: string;
+  tools: string;
+  subAgents: Record<string, AgentDefinition>;
+}
+
+/** @deprecated Use OrchestratedAgent instead. Kept for backwards compatibility. */
 export interface DebateAgentGroup {
   type: 'debate';
   readme: string;
@@ -59,7 +72,7 @@ export interface SharedProtocols {
   [filename: string]: string;
 }
 
-export type AgentEntry = OnboardingAgent | DebateAgentGroup;
+export type AgentEntry = OnboardingAgent | OrchestratedAgent | DebateAgentGroup;
 
 // --- Loaders ---
 
@@ -90,11 +103,29 @@ function parseAgentDefinition(filePath: string): AgentDefinition {
   };
 }
 
-function isDebateDir(dirPath: string): boolean {
-  // Debate dirs have a README.md + multiple .md agent files (no AGENTS.md)
-  const hasReadme = existsSync(join(dirPath, 'README.md'));
+const ONBOARDING_FILES = new Set(['AGENTS.md', 'SOUL.md', 'HEARTBEAT.md', 'TOOLS.md', 'README.md']);
+
+function getSubAgentFiles(dirPath: string): string[] {
+  return readdirSync(dirPath).filter(f => extname(f) === '.md' && !ONBOARDING_FILES.has(f));
+}
+
+function hasSubAgentDirs(dirPath: string): boolean {
+  return readdirSync(dirPath, { withFileTypes: true }).some(
+    e => e.isDirectory() && !e.name.startsWith('_')
+  );
+}
+
+function classifyAgentDir(dirPath: string): 'orchestrated' | 'debate' | 'onboarding' {
   const hasAgentsMd = existsSync(join(dirPath, 'AGENTS.md'));
-  return hasReadme && !hasAgentsMd;
+  const hasReadme = existsSync(join(dirPath, 'README.md'));
+  const topLevelSubAgents = getSubAgentFiles(dirPath);
+
+  // Has AGENTS.md + sub-agent .md files or subdirectories → orchestrated
+  if (hasAgentsMd && (topLevelSubAgents.length > 0 || hasSubAgentDirs(dirPath))) return 'orchestrated';
+  // Has README.md but no AGENTS.md → legacy debate group
+  if (hasReadme && !hasAgentsMd) return 'debate';
+  // Has AGENTS.md only → onboarding
+  return 'onboarding';
 }
 
 function loadOnboardingAgent(agentDir: string): OnboardingAgent {
@@ -104,6 +135,36 @@ function loadOnboardingAgent(agentDir: string): OnboardingAgent {
     soul: readIfExists(join(agentDir, 'SOUL.md')),
     heartbeat: readIfExists(join(agentDir, 'HEARTBEAT.md')),
     tools: readIfExists(join(agentDir, 'TOOLS.md')),
+  };
+}
+
+function loadOrchestratedAgent(agentDir: string): OrchestratedAgent {
+  const subAgents: Record<string, AgentDefinition> = {};
+
+  // Load sub-agent .md files from the top level
+  for (const file of getSubAgentFiles(agentDir)) {
+    const name = file.replace('.md', '');
+    subAgents[name] = parseAgentDefinition(join(agentDir, file));
+  }
+
+  // Load sub-agent .md files from subdirectories
+  for (const entry of readdirSync(agentDir, { withFileTypes: true })) {
+    if (!entry.isDirectory() || entry.name.startsWith('_')) continue;
+    const subDir = join(agentDir, entry.name);
+    for (const file of readdirSync(subDir)) {
+      if (extname(file) !== '.md') continue;
+      const name = file.replace('.md', '');
+      subAgents[name] = parseAgentDefinition(join(subDir, file));
+    }
+  }
+
+  return {
+    type: 'orchestrated',
+    agents: readIfExists(join(agentDir, 'AGENTS.md')),
+    soul: readIfExists(join(agentDir, 'SOUL.md')),
+    heartbeat: readIfExists(join(agentDir, 'HEARTBEAT.md')),
+    tools: readIfExists(join(agentDir, 'TOOLS.md')),
+    subAgents,
   };
 }
 
@@ -175,7 +236,10 @@ function loadAgents(): Record<string, AgentEntry> {
   for (const entry of readdirSync(baseDir, { withFileTypes: true })) {
     if (!entry.isDirectory() || entry.name.startsWith('_')) continue;
     const dirPath = join(baseDir, entry.name);
-    if (isDebateDir(dirPath)) {
+    const kind = classifyAgentDir(dirPath);
+    if (kind === 'orchestrated') {
+      result[entry.name] = loadOrchestratedAgent(dirPath);
+    } else if (kind === 'debate') {
       result[entry.name] = loadDebateAgentGroup(dirPath);
     } else {
       result[entry.name] = loadOnboardingAgent(dirPath);
@@ -190,11 +254,20 @@ export const shared: SharedProtocols = loadSharedProtocols(join(PKG_ROOT, 'agent
 
 // --- Convenience helpers ---
 
-/** Get all debate agent groups */
-export function getDebateGroups(): Record<string, DebateAgentGroup> {
-  const result: Record<string, DebateAgentGroup> = {};
+/** Get all orchestrated agents (agents with AGENTS.md + sub-agents) */
+export function getOrchestratedAgents(): Record<string, OrchestratedAgent> {
+  const result: Record<string, OrchestratedAgent> = {};
   for (const [name, agent] of Object.entries(agents)) {
-    if (agent.type === 'debate') result[name] = agent;
+    if (agent.type === 'orchestrated') result[name] = agent;
+  }
+  return result;
+}
+
+/** @deprecated Use getOrchestratedAgents instead. Kept for backwards compatibility. */
+export function getDebateGroups(): Record<string, DebateAgentGroup | OrchestratedAgent> {
+  const result: Record<string, DebateAgentGroup | OrchestratedAgent> = {};
+  for (const [name, agent] of Object.entries(agents)) {
+    if (agent.type === 'debate' || agent.type === 'orchestrated') result[name] = agent;
   }
   return result;
 }
@@ -208,9 +281,16 @@ export function getOnboardingAgents(): Record<string, OnboardingAgent> {
   return result;
 }
 
-/** Get a specific agent definition from a debate group by name */
-export function getDebateAgent(groupName: string, agentName: string): AgentDefinition | null {
+/** Get a specific sub-agent definition by name */
+export function getSubAgent(groupName: string, agentName: string): AgentDefinition | null {
   const group = agents[groupName];
-  if (!group || group.type !== 'debate') return null;
-  return group.agents[agentName] || null;
+  if (!group) return null;
+  if (group.type === 'orchestrated') return group.subAgents[agentName] || null;
+  if (group.type === 'debate') return group.agents[agentName] || null;
+  return null;
+}
+
+/** @deprecated Use getSubAgent instead */
+export function getDebateAgent(groupName: string, agentName: string): AgentDefinition | null {
+  return getSubAgent(groupName, agentName);
 }

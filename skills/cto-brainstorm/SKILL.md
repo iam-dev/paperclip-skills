@@ -65,6 +65,19 @@ Each persona is scored differently — this is what creates the adversarial tens
 
 The Architect is incentivized to over-design. The Operator is incentivized to over-challenge. The CTO only cares about getting the final call right. Two rounds of attack (Rounds 2 and 4) mean weak proposals get dismantled — not accepted.
 
+## Priority-Based Loops
+
+The issue priority determines how many times the full brainstorm runs:
+
+| Priority | Loops | Effect |
+|----------|-------|--------|
+| **Low** | 1 | Single 6-round debate |
+| **Medium** | 2 | One refinement — Architect revises based on CTO feedback |
+| **High** | 3 | Two refinement rounds |
+| **Critical** | 5 | Four refinement rounds — maximum rigor for high-stakes decisions |
+
+On loop > 1, the CTO's verdict feeds back to the Architect, who revises the proposal. Each loop deepens analysis rather than restarting. Stop early if no positions change.
+
 ## The 6-Round Protocol
 
 Run all 6 rounds in a single response. For each round, adopt the persona fully (see `references/personas.md`). The key difference from lighter debate formats: the Operator gets a second attack after seeing the Architect's defenses — weak defenses get dismantled, not accepted.

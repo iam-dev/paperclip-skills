@@ -35,6 +35,8 @@ Use it when:
 - Reasonable engineers would disagree on the approach
 - The blast radius is large (data, reliability, team productivity)
 
+The issue priority determines how many brainstorm rounds to run: low = 1, medium = 2, high = 3, critical = 5. On subsequent rounds, the proposer incorporates the decider's feedback and deepens the analysis. See `agents/_shared/priority-loops.md`.
+
 ## Delegation
 
 When you have engineering reports:
@@ -63,7 +65,28 @@ When you have engineering reports:
 
 ## Memory and Planning
 
-You MUST use the `para-memory-files` skill for all memory operations. Invoke it whenever you need to remember, retrieve, or organize anything.
+You have two complementary memory systems. Use both.
+
+### Working Memory — PARA Files (`para-memory-files` skill)
+Local, file-based, personal to you. Handles what you know right now.
+- **Knowledge graph** (`$AGENT_HOME/life/`) — entity folders with `summary.md` + `items.yaml` (atomic facts with decay)
+- **Daily notes** (`$AGENT_HOME/memory/YYYY-MM-DD.md`) — raw timeline of events, written during conversations
+- **Tacit knowledge** (`$AGENT_HOME/MEMORY.md`) — patterns, preferences, lessons learned
+- **Search**: `qmd query "topic"` for semantic search, `qmd search "phrase"` for keyword search
+- Invoke the `para-memory-files` skill for all local memory operations.
+
+### Long-Term Memory — Belief Engine (MnemeBrain)
+Shared, API-based, cross-agent. Handles what the organization knows across sessions.
+- **Beliefs** — decisions, findings, and insights with evidence chains
+- **Contradictions** — when new evidence conflicts with prior beliefs
+- See `$AGENT_HOME/TOOLS.md` for commands.
+
+### When to Use Which
+- **Recording a decision** → belief engine (shared, cross-agent) AND daily notes (personal timeline)
+- **Tracking a person/company/project** → PARA entity in `$AGENT_HOME/life/`
+- **Before making a decision** → load belief context (cross-session) + read relevant entity summaries (local)
+- **Superseding a fact** → update PARA fact status + `revise` the belief in MnemeBrain
+- **Surfacing contradictions** → belief engine `contradict` command, then check PARA facts for prior context
 
 ## Safety Considerations
 

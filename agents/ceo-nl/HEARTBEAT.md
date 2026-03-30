@@ -34,20 +34,41 @@ Draai deze checklist bij elke heartbeat. Dit dekt zowel je lokale planning/geheu
 - Probeer een `409` nooit opnieuw -- die taak is van iemand anders.
 - Doe het werk. Update status en geef commentaar wanneer klaar.
 
-## 6. Delegeren
+## 6. Priority-Based Brainstorm Loops
+
+When invoking your brainstorm skill, the issue priority determines how many rounds to run:
+
+| Priority | Loops | Behavior |
+|----------|-------|----------|
+| Low | 1 | Single brainstorm pass |
+| Medium | 2 | One refinement — proposer revises based on decider feedback |
+| High | 3 | Two refinements — deeper analysis |
+| Critical | 5 | Four refinements — maximum rigor |
+
+Default to **medium** (2 loops) if priority is not set.
+
+On loop > 1, feed the decider's verdict back to the proposer. Each subsequent round deepens the analysis rather than restarting. Stop early if no positions change.
+
+See `agents/_shared/priority-loops.md` for the full protocol.
+
+## 7. Delegeren
 
 - Maak subtaken aan met `POST /api/companies/{companyId}/issues`. Stel altijd `parentId` en `goalId` in.
 - Gebruik de `paperclip-create-agent` skill bij het aannemen van nieuwe agents.
 - Wijs werk toe aan de juiste agent voor de klus.
 
-## 7. Feiten Extractie
+## 8. Belief Engine — Cross-Sessie Geheugen
+
+Laad voor beslissingen eerdere context en contradicties. Leg na beslissingen resultaten vast. Zie `$AGENT_HOME/TOOLS.md` voor commando's.
+
+## 9. Feiten Extractie
 
 - Controleer op nieuwe gesprekken sinds de laatste extractie.
 - Extraheer duurzame feiten naar de relevante entiteit in `$AGENT_HOME/life/` (PARA).
 - Update `$AGENT_HOME/memory/YYYY-MM-DD.md` met tijdlijnvermeldingen.
 - Update toegangsmetadata (timestamp, access_count) voor gerefereerde feiten.
 
-## 8. Afsluiten
+## 10. Afsluiten
 
 - Geef commentaar op al het `in_progress` werk voordat je afsluit.
 - Als er geen opdrachten zijn en geen geldige mention-overdracht, sluit netjes af.

@@ -69,6 +69,19 @@ Each persona is scored differently — this is what creates the adversarial tens
 
 The Optimizer is incentivized to push for efficiency and scale. The Frontline Operator is incentivized to surface ground-truth reality — the gap between how leadership thinks the operation works and how it actually works. The COO only cares about getting the recommendation right for the CEO. Two rounds of challenge (Rounds 2 and 4) mean proposed mitigations get tested against real operational scenarios.
 
+## Priority-Based Loops
+
+The issue priority determines how many times the full brainstorm runs:
+
+| Priority | Loops | Effect |
+|----------|-------|--------|
+| **Low** | 1 | Single 6-round debate |
+| **Medium** | 2 | One refinement — Optimizer revises based on COO feedback |
+| **High** | 3 | Two refinement rounds |
+| **Critical** | 5 | Four refinement rounds — maximum rigor for high-stakes decisions |
+
+On loop > 1, the COO's verdict feeds back to the Optimizer, who revises the proposal. Each loop deepens analysis rather than restarting. Stop early if no positions change.
+
 ## The 6-Round Protocol
 
 Run all 6 rounds in a single response. For each round, adopt the persona fully (see `references/personas.md`).

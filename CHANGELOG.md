@@ -5,6 +5,92 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.2] - 2026-03-30
+
+### Added
+
+#### Priority-Based Iteration Loops
+- **Shared protocol** (`agents/_shared/priority-loops.md`) — loop table (low=1, medium=2, high=3, critical=5), how loops work for debates vs brainstorms, diminishing returns / early exit rule
+- **Debate orchestrator** — HEARTBEAT.md gets "Determine Loop Count" step; AGENTS.md gets "Priority-Based Loops" section; dispatch now loops with feedback from final agent
+- **Debate sub-agents** — finder, eval-advocate, and skill-advocate get "Refinement Rounds (Loop > 1)" sections: on subsequent loops they receive the previous verdict and focus on gaps, disputed areas, and deeper analysis rather than re-scanning everything
+- **All 7 SKILL.md files** — "Priority-Based Loops" section with role-specific feedback patterns (e.g., CTO verdict feeds back to Architect, CMO verdict feeds back to Growth Strategist)
+- **All 5 C-suite HEARTBEATs** — new step for priority-based brainstorm loops with loop table
+- **All 5 C-suite AGENTS.md** — brainstorm sections updated with loop paragraph referencing shared protocol
+
+## [0.3.1] - 2026-03-30
+
+### Added
+
+#### Unified Two-Layer Memory System
+- **`para-memory-files` skill** added to repo (`skills/para-memory-files/`) — PARA-method file-based memory with knowledge graph, daily notes, tacit knowledge, qmd search, and memory decay
+- All C-suite agents (CEO, CEO-NL, CTO, CMO, COO) now have unified "Memory and Planning" section in AGENTS.md documenting both memory systems and when to use which
+- All C-suite TOOLS.md files updated with PARA Memory section (qmd commands, entity structure, daily notes) alongside existing belief engine docs
+- Debate orchestrator gets PARA memory for tracking debate history and patterns; sub-agents remain stateless per-debate
+- `agents/_shared/verification-protocol.md` rewritten: "Memory Systems" section replaces belief-engine-only section, documents both layers and their integration points
+
+### Changed
+- **Agent memory architecture** — all agents now use two complementary systems:
+  - **Working Memory** (PARA files) — local, file-based, per-agent: knowledge graph in `$AGENT_HOME/life/`, daily notes, tacit knowledge
+  - **Long-Term Memory** (Belief Engine/MnemeBrain) — shared, API-based, cross-agent: beliefs with evidence chains, contradiction detection
+- **Debate orchestrator HEARTBEAT.md** — step 2 expanded from belief-engine-only to loading context from both memory systems
+- CEO safety consideration updated to reference both PARA files and belief engine for memory manipulation mitigation
+
+## [0.3.0] - 2026-03-30
+
+### Added
+
+#### Belief Engine — Cross-Session Memory
+- **TypeScript CLI** (`src/cli/belief-engine.ts`) wrapping the `mnemebrain` SDK — replaces 1100-line Python script
+- **Formatter** (`src/belief-engine/formatter.ts`) for `context` command markdown output with confidence %, truth state, contradiction surfacing
+- 9 CLI commands: `believe`, `context`, `query`, `explain`, `revise`, `retract`, `contradict`, `stats`, `export`
+- Graceful degradation: exit 0 even when MnemeBrain is unreachable (errors to stderr)
+- All agents (C-suite + debate) now integrate belief engine for cross-session memory, contradiction detection, and decision recording
+
+#### Orchestrated Agent Type
+- New `OrchestratedAgent` interface combining onboarding structure (AGENTS.md, SOUL.md, HEARTBEAT.md, TOOLS.md) with sub-agent definitions in subdirectories
+- `classifyAgentDir()` auto-detects orchestrated, debate (legacy), or onboarding agent types
+- `loadOrchestratedAgent()` scans both top-level .md files and subdirectories for sub-agents
+- New helpers: `getOrchestratedAgents()`, `getSubAgent()`
+
+#### Unified Debate Orchestrator (`agents/debate/`)
+- Single orchestrated agent replacing 3 separate debate agent directories
+- AGENTS.md — routes to 3 debate flows, documents competing incentives pattern
+- SOUL.md — impartial orchestrator persona with zero-bias principles
+- HEARTBEAT.md — sequential dispatch chains referencing TOOLS.md
+- TOOLS.md — belief engine and state tracker command reference
+- Sub-agents organized in subdirectories: `adversarial-review/`, `eval/`, `skill/`
+- All 9 sub-agents have belief engine integration (context loading on start, belief recording on completion)
+
+#### Debate Agent Evals
+- Promptfoo eval config for debate orchestrator (`promptfooconfig.debate-local.yaml`)
+- System prompt combining AGENTS.md + SOUL.md + HEARTBEAT.md + TOOLS.md
+- Core tests: routing, sequential execution, belief context loading, contradiction checking, state recording
+- Governance tests: cross-flow isolation, orchestrator neutrality, graceful degradation
+
+#### C-Suite Belief Engine Integration
+- All 5 C-suite TOOLS.md files updated with full belief engine documentation and role-specific categories
+- All 5 C-suite HEARTBEAT.md files reference TOOLS.md for belief engine commands
+- C-suite eval tests updated to verify mnemebrain toolcall integration (context loading + belief recording)
+
+### Changed
+- **ESM migration** — project switched from CommonJS to ESM (`"type": "module"`, `module: "Node16"`) for mnemebrain SDK compatibility
+- **Package dependency** — `mnemebrain` SDK from npm registry (was local file reference)
+- **Agent references** — all paths updated from `agents/adversarial-review/`, `agents/eval-debate/`, `agents/skill-debate/` to `agents/debate/{adversarial-review,eval,skill}/`
+- **workflow.sh** — `BELIEF_SCRIPT` changed from `scripts/belief-engine.py` to `node dist/cli/belief-engine.js`
+- **Shared protocols** — `verification-protocol.md` and `team-protocol.md` updated with belief engine sections
+
+### Deprecated
+- `DebateAgentGroup` type — use `OrchestratedAgent` instead
+- `getDebateGroups()` — use `getOrchestratedAgents()` instead
+- `getDebateAgent()` — use `getSubAgent()` instead
+
+### Removed
+- `scripts/belief-engine.py` — replaced by TypeScript CLI
+- `scripts/requirements.txt` — no longer needed (Python dependency removed)
+- `agents/adversarial-review/` (standalone) — consolidated into `agents/debate/adversarial-review/`
+- `agents/eval-debate/` (standalone) — consolidated into `agents/debate/eval/`
+- `agents/skill-debate/` (standalone) — consolidated into `agents/debate/skill/`
+
 ## [0.2.0] - 2026-03-30
 
 ### Added

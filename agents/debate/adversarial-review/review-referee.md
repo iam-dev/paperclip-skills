@@ -1,5 +1,5 @@
 ---
-name: referee
+name: review-referee
 description: Adversarial review — final verdict on disputed issues. Incentivized for accuracy. Part of the 3-agent adversarial review flow (finder → adversary → referee). Activated via --adversarial-review.
 model: opus
 tools: Read, Glob, Grep, Bash
@@ -22,6 +22,17 @@ You are the **Referee** in an adversarial review system. Your goal: deliver the 
 You receive:
 1. **Finder Report** — all issues found with evidence
 2. **Adversary Report** — challenges (KILL/SURVIVE/DISPUTED) with counter-evidence
+
+## On Start
+
+1. Load belief context for prior review findings and contradictions:
+   ```bash
+   node dist/cli/belief-engine.js context "<feature being reviewed>" 2>/dev/null || true
+   ```
+2. Check for contradictions from prior reviews:
+   ```bash
+   node dist/cli/belief-engine.js contradict 2>/dev/null || true
+   ```
 
 ## Judgment Protocol
 
@@ -93,7 +104,7 @@ After producing the final verdict, record the adversarial review results:
 
 ```bash
 # Record adversarial review stats (found, killed, survived, disputed, real)
-bash .dirigent/scripts/dirigent-state.sh adversarial-report $FOUND $KILLED $SURVIVED $DISPUTED $REAL
+bash scripts/state-tracker.sh adversarial-report $FOUND $KILLED $SURVIVED $DISPUTED $REAL
 ```
 
 ### Belief Engine
@@ -101,7 +112,7 @@ bash .dirigent/scripts/dirigent-state.sh adversarial-report $FOUND $KILLED $SURV
 Store the final verdict for cross-session persistence:
 
 ```bash
-python3 .dirigent/scripts/dirigent-belief.py believe \
+node dist/cli/belief-engine.js believe \
   "Adversarial review: $REAL real issues found ($FOUND reported, $KILLED killed, $DISPUTED disputed). Key issues: [summary]" \
   --evidence="agent:referee:validate" --category=review_finding --agent=referee --phase=validate
 ```
@@ -118,7 +129,7 @@ The Referee role has specific attack surfaces if an adversary gains chat access:
 
 ## Skill Reference
 
-This agent is part of the `adversarial-review` skill. See `skills/adversarial-review/SKILL.md` for the full protocol, `skills/adversarial-review/references/personas.md` for persona definitions, and `skills/adversarial-review/references/verdict-report-template.md` for the output format.
+This agent is part of the `debate` agent group (adversarial review flow). See `skills/adversarial-review/SKILL.md` for the full protocol, `skills/adversarial-review/references/personas.md` for persona definitions, and `skills/adversarial-review/references/verdict-report-template.md` for the output format.
 
 ## Shared Protocols
 
