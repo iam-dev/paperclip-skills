@@ -190,16 +190,22 @@ Environment variables:
 
 The script tries bulk filesystem import first, then falls back to uploading skill content via the API individually. Agents are created with role mappings and skill assignments. Existing agents are skipped to avoid duplicates.
 
-### Belief Engine (optional)
+### Belief Engine (MnemeBrain)
 
-For cross-session memory, install and run [MnemeBrain Lite](https://github.com/mnemebrain/mnemebrain-lite) locally:
+The install script automatically handles MnemeBrain setup. If MnemeBrain is not reachable, it will:
+
+1. Install `mnemebrain-lite` via pip (if not already installed)
+2. Start it as a background process
+3. Wait up to 15 seconds for it to become healthy
+
+If pip is not available or installation fails, the script continues without MnemeBrain — agents degrade gracefully, debates still run but lack cross-session context.
+
+To install and run MnemeBrain manually:
 
 ```bash
 pip install mnemebrain-lite
 python -m mnemebrain_core  # starts on http://localhost:8000
 ```
-
-Agents degrade gracefully when MnemeBrain is unavailable — debates still run, they just lack cross-session context.
 
 ## Usage
 

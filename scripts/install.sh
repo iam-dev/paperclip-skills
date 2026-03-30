@@ -31,7 +31,8 @@ SCRIPTS_DIR="$PKG_ROOT/scripts"
 
 PAPERCLIP_URL="${PAPERCLIP_URL:-http://localhost:3100}"
 COMPANY_ID="${PAPERCLIP_COMPANY:-}"
-MNEMEBRAIN_URL="${MNEMEBRAIN_URL:-http://localhost:8000}"
+MNEMEBRAIN_PORT="${MNEMEBRAIN_PORT:-8000}"
+MNEMEBRAIN_URL="${MNEMEBRAIN_URL:-http://localhost:${MNEMEBRAIN_PORT}}"
 
 INSTALL_SKILLS=true
 INSTALL_AGENTS=true
@@ -110,11 +111,45 @@ preflight() {
   fi
   log "Paperclip server: OK (${PAPERCLIP_URL})"
 
-  # Check MnemeBrain (optional — warn but don't fail)
+  # Check MnemeBrain — install and start if not available
   if curl -sf "${MNEMEBRAIN_URL}/health" >/dev/null 2>&1; then
     log "MnemeBrain server: OK (${MNEMEBRAIN_URL})"
   else
-    log "MnemeBrain server: not reachable (${MNEMEBRAIN_URL}) — belief engine features will be unavailable"
+    log "MnemeBrain server not reachable at ${MNEMEBRAIN_URL}, attempting to install and start..."
+    if ! command -v pip >/dev/null 2>&1 && ! command -v pip3 >/dev/null 2>&1; then
+      log "pip not found — skipping MnemeBrain install. Belief engine features will be unavailable."
+    else
+      local pip_cmd="pip"
+      command -v pip3 >/dev/null 2>&1 && pip_cmd="pip3"
+
+      if ! $pip_cmd show mnemebrain-lite >/dev/null 2>&1; then
+        log "Installing mnemebrain-lite..."
+        $pip_cmd install mnemebrain-lite || {
+          log "Failed to install mnemebrain-lite. Belief engine features will be unavailable."
+          return 0
+        }
+      fi
+
+      log "Starting MnemeBrain on port ${MNEMEBRAIN_PORT:-8000}..."
+      python3 -m mnemebrain_core --port "${MNEMEBRAIN_PORT:-8000}" &
+      MNEMEBRAIN_PID=$!
+
+      # Wait up to 15 seconds for health
+      local waited=0
+      while [[ $waited -lt 15 ]]; do
+        if curl -sf "${MNEMEBRAIN_URL}/health" >/dev/null 2>&1; then
+          log "MnemeBrain server: OK (${MNEMEBRAIN_URL}) — started as PID ${MNEMEBRAIN_PID}"
+          break
+        fi
+        sleep 1
+        ((waited++))
+      done
+
+      if [[ $waited -ge 15 ]]; then
+        log "MnemeBrain failed to start within 15s. Belief engine features will be unavailable."
+        kill "$MNEMEBRAIN_PID" 2>/dev/null || true
+      fi
+    fi
   fi
 
   # Check local directories exist
